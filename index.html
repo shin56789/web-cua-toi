@@ -30,7 +30,7 @@
     <!-- HEADER NAVIGATION -->
     <header class="sticky top-0 z-50 bg-[#0b0f19]/95 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- LOGO / TRANG CHỦ (Tải lại hoàn toàn, không dính dấu #) -->
+            <!-- LOGO / TRANG CHỦ -->
             <a href="https://parisktv.top" class="flex items-center space-x-3 group cursor-pointer">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition">
                     <i class="fa-solid fa-crown text-white text-lg"></i>
@@ -53,7 +53,7 @@
                     <i class="fa-solid fa-comment-dots text-sm"></i>
                     <span>Chat Zalo</span>
                 </a>
-                <a href="tel:0869806906" class="bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-lg shadow-blue-600/20 flex items-center space-x-2">
+                <a href="tel:0869806906" class="bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-lg shadow-brand-500/20 flex items-center space-x-2">
                     <i class="fa-solid fa-phone"></i>
                     <span class="hidden sm:inline">Gọi Ngay</span>
                 </a>
@@ -252,7 +252,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-white">Hệ Thống Quản Trị Booking</h2>
-                        <span class="text-xs text-green-400 flex items-center mt-0.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Đang hoạt động</span>
+                        <span class="text-xs text-green-400 flex items-center mt-0.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Toàn quyền quản trị</span>
                     </div>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="text-gray-400 hover:text-white bg-gray-800 p-2.5 rounded-xl"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -299,7 +299,7 @@
                 <div id="adminTabServices" class="hidden space-y-6">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-white">Danh sách phòng & dịch vụ</h3>
-                        <button onclick="openServiceModal()" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus mr-1"></i>Thêm Mới</button>
+                        <button onclick="openServiceModal()" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus mr-1"></i>Thêm Mới Phòng</button>
                     </div>
                     <div id="adminServicesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
@@ -344,10 +344,10 @@
                 <input type="hidden" id="servImageBase64">
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Tên phòng / Loại hình</label>
-                    <input type="text" id="servName" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
+                    <input type="text" id="servName" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm" placeholder="Ví dụ: Phòng VIP 01">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Danh mục</label>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Danh mục phòng</label>
                     <select id="servCategory" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
                         <option value="Phòng VIP">Phòng VIP</option>
                         <option value="Lounge">Lounge</option>
@@ -356,7 +356,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Mức giá</label>
-                    <input type="text" id="servPrice" required placeholder="Ví dụ: 300.000đ / giờ" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
+                    <input type="text" id="servPrice" required placeholder="Ví dụ: 350.000đ / giờ" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Tải ảnh trực tiếp từ máy tính</label>
@@ -368,9 +368,9 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Mô tả chi tiết</label>
-                    <textarea id="servDesc" rows="2" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm"></textarea>
+                    <textarea id="servDesc" rows="2" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm" placeholder="Mô tả tiện ích, sức chứa..."></textarea>
                 </div>
-                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl text-sm transition">Lưu Thông Tin</button>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl text-sm transition">Lưu Thông Tin Phòng</button>
             </form>
         </div>
     </div>
@@ -417,9 +417,9 @@
             return data ? JSON.parse(data) : fallback;
         }
 
-        let services = getStoredData('ktv_services_v3', defaultServices);
-        let settings = getStoredData('ktv_settings_v3', defaultSettings);
-        let bookings = getStoredData('ktv_bookings_v3', []);
+        let services = getStoredData('ktv_services_v4', defaultServices);
+        let settings = getStoredData('ktv_settings_v4', defaultSettings);
+        let bookings = getStoredData('ktv_bookings_v4', []);
         let currentFilter = 'all';
 
         function initUI() {
@@ -456,15 +456,20 @@
                 filtered = services.filter(s => s.category === category);
             }
 
+            if(filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-3 text-center py-10 text-gray-500 text-sm">Chưa có phòng nào trong danh mục này.</div>`;
+                return;
+            }
+
             filtered.forEach(s => {
                 container.innerHTML += `
                     <div class="bg-gray-900/90 border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-brand-500/50 transition shadow-xl group">
-                        <div class="h-56 overflow-hidden relative">
+                        <div class="h-56 overflow-hidden relative bg-gray-950">
                             <img src="${s.image}" alt="${s.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
                             <div class="absolute top-4 right-4 bg-[#07090e]/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-brand-400 font-extrabold text-xs border border-gray-800">
                                 ${s.price}
                             </div>
-                            <div class="absolute bottom-4 left-4 bg-brand-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                            <div class="absolute bottom-4 left-4 bg-brand-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider shadow">
                                 ${s.category}
                             </div>
                         </div>
@@ -515,7 +520,7 @@
             };
 
             bookings.unshift(newBooking);
-            localStorage.setItem('ktv_bookings_v3', JSON.stringify(bookings));
+            localStorage.setItem('ktv_bookings_v4', JSON.stringify(bookings));
 
             document.getElementById('bookingForm').reset();
             const successBox = document.getElementById('bookingSuccessBox');
@@ -631,14 +636,14 @@
 
         function updateBookingStatus(id, status) {
             bookings = bookings.map(b => b.id === id ? {...b, status} : b);
-            localStorage.setItem('ktv_bookings_v3', JSON.stringify(bookings));
+            localStorage.setItem('ktv_bookings_v4', JSON.stringify(bookings));
             loadBookingsTable();
         }
 
         function deleteBooking(id) {
             if(confirm('Bạn có chắc chắn muốn xóa đơn đặt bàn này?')) {
                 bookings = bookings.filter(b => b.id !== id);
-                localStorage.setItem('ktv_bookings_v3', JSON.stringify(bookings));
+                localStorage.setItem('ktv_bookings_v4', JSON.stringify(bookings));
                 loadBookingsTable();
             }
         }
@@ -649,7 +654,7 @@
             services.forEach(s => {
                 list.innerHTML += `
                     <div class="bg-[#07090e] p-4 rounded-2xl border border-gray-800 flex items-center justify-between space-x-4">
-                        <img src="${s.image}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+                        <img src="${s.image}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 bg-gray-950">
                         <div class="flex-grow">
                             <span class="text-[10px] uppercase font-bold text-brand-400">${s.category}</span>
                             <h4 class="font-bold text-white text-sm">${s.name}</h4>
@@ -674,7 +679,7 @@
                 const s = services.find(x => x.id === id);
                 document.getElementById('serviceId').value = s.id;
                 document.getElementById('servName').value = s.name;
-                document.getElementById('servCategory').value = s.category;
+                document.getElementById('servCategory').value = s.category || 'Phòng VIP';
                 document.getElementById('servPrice').value = s.price;
                 document.getElementById('servImageBase64').value = s.image;
                 document.getElementById('servDesc').value = s.desc;
@@ -707,7 +712,7 @@
                 services.push({ id: Date.now(), name, category, price, image, desc });
             }
 
-            localStorage.setItem('ktv_services_v3', JSON.stringify(services));
+            localStorage.setItem('ktv_services_v4', JSON.stringify(services));
             closeModal('serviceModal');
             loadAdminServices();
             renderVenues(currentFilter);
@@ -717,7 +722,7 @@
         function deleteService(id) {
             if(confirm('Bạn có chắc chắn muốn xóa mục này?')) {
                 services = services.filter(s => s.id !== id);
-                localStorage.setItem('ktv_services_v3', JSON.stringify(services));
+                localStorage.setItem('ktv_services_v4', JSON.stringify(services));
                 loadAdminServices();
                 renderVenues(currentFilter);
                 renderBookingSelect();
@@ -741,7 +746,7 @@
                 hotline: document.getElementById('settingHotline').value,
                 address: document.getElementById('settingAddress').value
             };
-            localStorage.setItem('ktv_settings_v3', JSON.stringify(settings));
+            localStorage.setItem('ktv_settings_v4', JSON.stringify(settings));
             initUI();
             alert('Lưu cấu hình thành công!');
         }
