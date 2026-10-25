@@ -1,406 +1,808 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PARIS KTV - Đặt Phòng Karaoke Sang Trọng</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090a0f; color: #f3f4f6; }
-        .neon-glow { text-shadow: 0 0 10px rgba(236, 72, 153, 0.7), 0 0 20px rgba(236, 72, 153, 0.5); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0b">
+
+  <title>PARIS KTV | Karaoke cao cấp tại 69 Trần Thái Tông, Hà Nội</title>
+  <meta name="description" content="Khám phá PARIS KTV tại 69 Trần Thái Tông, Cầu Giấy, Hà Nội. Liên hệ Anh Tú để được tư vấn và hỗ trợ đặt phòng karaoke.">
+  <meta name="keywords" content="PARIS KTV, karaoke Cầu Giấy, karaoke Trần Thái Tông, đặt phòng karaoke Hà Nội">
+  <meta property="og:title" content="PARIS KTV - Không gian giải trí đẳng cấp">
+  <meta property="og:description" content="PARIS KTV - 69 Trần Thái Tông, Cầu Giấy, Hà Nội. Liên hệ đặt phòng ngay.">
+  <meta property="og:type" content="website">
+
+  <style>
+    :root {
+      --gold: #d9b36c;
+      --gold-light: #f4dca5;
+      --black: #090909;
+      --panel: #151515;
+      --text: #f7f3eb;
+      --muted: #b8b3a8;
+      --border: rgba(217,179,108,.24);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    button, input, select, textarea { font: inherit; }
+
+    .container { width: min(1120px, 90%); margin: auto; }
+
+    .topbar {
+      background: #111;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      padding: 8px 0;
+      text-align: center;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9,9,9,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--gold);
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      line-height: 1.2;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--text);
+      font-weight: 500;
+      margin-top: 5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      font-size: 14px;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #17120a;
+    }
+
+    .btn-gold:hover { background: var(--gold-light); }
+
+    .btn-outline {
+      color: var(--gold-light);
+      background: transparent;
+    }
+
+    .btn-outline:hover { background: rgba(217,179,108,.1); }
+
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.74) 52%, rgba(0,0,0,.35) 100%),
+        linear-gradient(0deg, #090909 0%, transparent 35%),
+        url("https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=2000&q=85") center/cover;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      padding: 85px 0 100px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+    }
+
+    h1 span, .gold { color: var(--gold); }
+
+    .hero p {
+      color: #ded9cf;
+      max-width: 570px;
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .hero-note {
+      margin-top: 30px;
+      color: #c8c0b2;
+      font-size: 13px;
+    }
+
+    section { padding: 85px 0; }
+
+    .section-head {
+      max-width: 720px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      font-size: clamp(29px, 4vw, 43px);
+      line-height: 1.25;
+      margin-bottom: 15px;
+    }
+
+    .section-head p { color: var(--muted); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .about-image {
+      min-height: 410px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background:
+        linear-gradient(0deg, rgba(0,0,0,.55), transparent),
+        url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1100&q=85") center/cover;
+    }
+
+    .about-copy h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .about-copy p { color: var(--muted); margin-bottom: 16px; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .feature {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 17px 12px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .feature strong {
+      display: block;
+      color: var(--gold);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .feature span { color: var(--muted); font-size: 12px; }
+
+    .gallery { background: #101010; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .gallery-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 245px;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s;
+    }
+
+    .gallery-card:hover img { transform: scale(1.04); }
+
+    .gallery-caption {
+      padding: 14px 16px;
+      color: var(--gold-light);
+      font-size: 14px;
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 35px;
+      align-items: start;
+    }
+
+    .booking-info {
+      background: linear-gradient(145deg, #191611, #101010);
+      border: 1px solid var(--border);
+      padding: 30px;
+      border-radius: 7px;
+    }
+
+    .booking-info h3 { font-size: 27px; margin-bottom: 14px; }
+
+    .booking-info p { color: var(--muted); margin-bottom: 22px; }
+
+    .contact-line {
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-line small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .contact-line strong { color: var(--gold-light); }
+
+    .booking-form {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 30px;
+    }
+
+    .booking-form h3 { font-size: 25px; margin-bottom: 8px; }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+      color: #e5dfd3;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 13px;
+      color: white;
+      background: #0d0d0d;
+      border: 1px solid #38342d;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+
+    input::placeholder, textarea::placeholder { color: #777; }
+
+    textarea { min-height: 95px; resize: vertical; }
+
+    .booking-form .btn { width: 100%; margin-top: 5px; }
+
+    .form-status {
+      color: var(--gold-light);
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .location {
+      background: #101010;
+    }
+
+    .location-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .location-copy { padding: 38px; }
+
+    .location-copy h3 { font-size: 29px; margin-bottom: 15px; }
+
+    .location-copy p { color: var(--muted); margin-bottom: 20px; }
+
+    .map-frame { min-height: 350px; background: #1b1b1b; }
+
+    .map-frame iframe { width: 100%; height: 100%; min-height: 350px; border: 0; }
+
+    .cta {
+      text-align: center;
+      background: linear-gradient(120deg, #211a0d, #0c0c0c 70%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cta h2 { font-size: clamp(30px, 5vw, 45px); margin-bottom: 14px; }
+
+    .cta p { color: var(--muted); margin-bottom: 25px; }
+
+    footer {
+      padding: 30px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer strong { color: var(--gold); }
+
+    .floating-contact {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .float-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 17px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 5px 20px #0008;
+    }
+
+    .float-call { background: var(--gold); color: #17120a; }
+    .float-zalo { background: #1677ff; color: white; }
+
+    @media (max-width: 800px) {
+      .nav { min-height: 68px; }
+      .nav-links { gap: 12px; }
+      .nav-links a:not(.btn) { display: none; }
+      .brand { font-size: 21px; }
+      .hero { min-height: 570px; background-position: 60% center; }
+      .hero-content { padding: 75px 0; }
+      .about-grid, .booking-grid, .location-card { grid-template-columns: 1fr; }
+      .about-image { min-height: 300px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-card img { height: 210px; }
+      .location-copy { padding: 27px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { width: 91%; }
+      section { padding: 62px 0; }
+      .topbar { font-size: 11px; }
+      .nav-links .btn { padding: 10px 12px; font-size: 12px; }
+      .hero { min-height: 540px; }
+      .hero p { font-size: 15px; }
+      .hero-actions .btn { width: 100%; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-card img { height: 230px; }
+      .features { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; gap: 0; }
+      .field.full { grid-column: auto; }
+      .booking-form, .booking-info { padding: 22px; }
+      .floating-contact { right: 10px; bottom: 10px; }
+      .float-btn { padding: 10px 13px; }
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col">
 
-    <!-- Header -->
-    <header class="bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-microphone-lines text-pink-500 text-2xl animate-pulse"></i>
-                <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">PARIS KTV</span>
-            </div>
-            <div class="flex items-center space-x-3">
-                <button onclick="openAdminLogin()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-700 transition">
-                    <i class="fa-solid fa-lock mr-1"></i> Admin
-                </button>
-            </div>
+<body>
+  <div class="topbar">
+    PARIS KTV · 69 TRẦN THÁI TÔNG · CẦU GIẤY · HÀ NỘI
+  </div>
+
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home">
+        PARIS KTV
+        <small>KARAOKE & ENTERTAINMENT</small>
+      </a>
+
+      <nav class="nav-links" aria-label="Điều hướng chính">
+        <a href="#about">Giới thiệu</a>
+        <a href="#gallery">Hình ảnh</a>
+        <a href="#location">Địa chỉ</a>
+        <a class="btn btn-gold" href="#booking">ĐẶT PHÒNG</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">Your Night · Your Experience</div>
+          <h1>Đêm thăng hoa<br>tại <span>PARIS KTV</span></h1>
+          <p>
+            Không gian giải trí dành cho những cuộc vui đáng nhớ.
+            Liên hệ Anh Tú để được tư vấn và hỗ trợ đặt phòng tại
+            69 Trần Thái Tông, Cầu Giấy, Hà Nội.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#booking">✦ ĐẶT PHÒNG NGAY</a>
+            <a class="btn btn-outline" href="tel:0386342147">☎ 0386 342 147</a>
+          </div>
+
+          <div class="hero-note">
+            PARIS KTV — Điểm hẹn cho những khoảnh khắc đáng nhớ.
+          </div>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="relative py-16 px-4 text-center bg-gradient-to-b from-purple-950/40 to-transparent border-b border-gray-900">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-4 neon-glow">PARIS KTV - ĐẲNG CẤP ÂM THANH</h1>
-        <p class="text-gray-400 max-w-xl mx-auto mb-2 text-sm md:text-base"><i class="fa-solid fa-location-dot text-pink-500 mr-2"></i>69 Trần Thái Tông, Cầu Giấy, Hà Nội</p>
-        <p class="text-gray-400 max-w-xl mx-auto mb-6 text-sm md:text-base"><i class="fa-solid fa-phone text-green-500 mr-2"></i>Hotline: 0386342147</p>
+      </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <!-- Danh sách phòng (2 cột) -->
-        <div class="lg:col-span-2 space-y-6">
-            <div class="flex flex-wrap justify-between items-center gap-2">
-                <h2 class="text-2xl font-bold border-l-4 border-pink-500 pl-3">Danh Sách Phòng Hát</h2>
-                <div class="flex space-x-2">
-                    <button id="addRoomBtn" onclick="openAddRoomModal()" class="hidden bg-pink-600 hover:bg-pink-500 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition">
-                        <i class="fa-solid fa-plus mr-1"></i> Thêm phòng
-                    </button>
-                    <button id="exportCodeBtn" onclick="exportGitHubCode()" class="hidden bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition">
-                        <i class="fa-solid fa-code mr-1"></i> Sao chép Code (GitHub)
-                    </button>
-                </div>
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-image" role="img" aria-label="Không gian giải trí tham khảo"></div>
+
+        <div class="about-copy">
+          <div class="eyebrow">About Paris</div>
+          <h2>Không chỉ là một cuộc vui, mà là một <span class="gold">trải nghiệm</span></h2>
+          <p>
+            PARIS KTV tọa lạc tại 69 Trần Thái Tông, Cầu Giấy, Hà Nội.
+            Đây là địa điểm để bạn gặp gỡ bạn bè, tổ chức những buổi liên hoan
+            và tận hưởng thời gian giải trí cùng mọi người.
+          </p>
+          <p>
+            Cần tư vấn đặt phòng? Hãy liên hệ Anh Tú để trao đổi trước về
+            thời gian, số lượng khách và nhu cầu của nhóm.
+          </p>
+
+          <div class="features">
+            <div class="feature">
+              <strong>Không gian</strong>
+              <span>Giải trí cùng bạn bè</span>
             </div>
-            <div id="roomList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Render từ JS -->
+            <div class="feature">
+              <strong>Hỗ trợ</strong>
+              <span>Tư vấn đặt phòng</span>
             </div>
+            <div class="feature">
+              <strong>Liên hệ</strong>
+              <span>Trao đổi trước khi đến</span>
+            </div>
+          </div>
         </div>
-
-        <!-- Bảng tin mạng xã hội / Feed (1 cột) -->
-        <div class="space-y-6">
-            <h2 class="text-2xl font-bold border-l-4 border-purple-500 pl-3">Bảng Tin Check-in</h2>
-            
-            <!-- Ô đăng bài -->
-            <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 space-y-3">
-                <input type="text" id="postAuthor" placeholder="Tên của bạn..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500">
-                <textarea id="postContent" rows="3" placeholder="Bạn đang hát bài gì ở Paris KTV hôm nay?" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500 resize-none"></textarea>
-                <div class="flex justify-between items-center">
-                    <input type="file" id="postImageFile" accept="image/*" class="text-xs text-gray-400 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-800 file:text-pink-400 hover:file:bg-gray-700">
-                    <button onclick="createPost()" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">Đăng bài</button>
-                </div>
-            </div>
-
-            <!-- Danh sách bài đăng -->
-            <div id="feedList" class="space-y-4">
-                <!-- Render từ JS -->
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal Admin Login -->
-    <div id="adminModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 max-w-sm w-full space-y-4">
-            <h3 class="text-xl font-bold text-center">Đăng Nhập Quản Trị</h3>
-            <input type="password" id="adminPass" placeholder="Nhập mật khẩu (admin123)..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500">
-            <div class="flex space-x-3">
-                <button onclick="closeAdminLogin()" class="w-1/2 bg-gray-800 hover:bg-gray-700 py-2 rounded-lg text-sm font-medium transition">Hủy</button>
-                <button onclick="loginAdmin()" class="w-1/2 bg-pink-600 hover:bg-pink-500 py-2 rounded-lg text-sm font-semibold transition">Đăng nhập</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Sửa/Thêm Phòng -->
-    <div id="roomModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 max-w-md w-full space-y-4">
-            <h3 id="roomModalTitle" class="text-xl font-bold">Thêm / Sửa Phòng</h3>
-            <input type="hidden" id="editRoomId">
-            <div>
-                <label class="text-xs text-gray-400">Tên phòng</label>
-                <input type="text" id="modalRoomName" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white mt-1">
-            </div>
-            <div>
-                <label class="text-xs text-gray-400">Giá phòng (VNĐ/giờ)</label>
-                <input type="text" id="modalRoomPrice" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white mt-1">
-            </div>
-            <div>
-                <label class="text-xs text-gray-400">Sức chứa</label>
-                <input type="text" id="modalRoomCap" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white mt-1">
-            </div>
-            <div>
-                <label class="text-xs text-gray-400">Ảnh phòng (Chọn từ máy tính/điện thoại)</label>
-                <input type="file" id="modalRoomFile" accept="image/*" class="w-full text-xs text-gray-400 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-800 file:text-pink-400 hover:file:bg-gray-700 mt-1">
-            </div>
-            <div class="flex space-x-3 pt-2">
-                <button onclick="closeRoomModal()" class="w-1/2 bg-gray-800 hover:bg-gray-700 py-2 rounded-lg text-sm font-medium transition">Hủy</button>
-                <button onclick="saveRoom()" class="w-1/2 bg-pink-600 hover:bg-pink-500 py-2 rounded-lg text-sm font-semibold transition">Lưu lại</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Script xử lý toàn bộ logic -->
-    <script>
-        const hotline = "0386342147";
-
-        // Dữ liệu mẫu mặc định ban đầu
-        const defaultRooms = [
-            { id: 1, name: "Phòng VIP 1 - Hoàng Gia", price: "350.000đ/h", capacity: "10-15 người", image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" },
-            { id: 2, name: "Phòng VIP 2 - Diamond", price: "250.000đ/h", capacity: "6-10 người", image: "https://images.unsplash.com/photo-1545128485-c400e7702796?auto=format&fit=crop&w=600&q=80" }
-        ];
-
-        const defaultPosts = [
-            { author: "Admin PARIS KTV", content: "Chào mừng quý khách đến với hệ thống âm thanh đỉnh cao tại 69 Trần Thái Tông!", image: "", time: "Hôm nay" }
-        ];
-
-        let isAdmin = false;
-
-        // Tải dữ liệu từ localStorage hoặc dùng mặc định
-        let rooms = JSON.parse(localStorage.getItem('paris_rooms')) || defaultRooms;
-        let posts = JSON.parse(localStorage.getItem('paris_posts')) || defaultPosts;
-
-        function renderRooms() {
-            let html = "";
-            rooms.forEach((r) => {
-                html += `
-                    <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden shadow-lg hover:border-pink-500/50 transition">
-                        <img src="${r.image}" class="w-full h-48 object-cover">
-                        <div class="p-5 space-y-3">
-                            <h3 class="text-xl font-bold text-white">${r.name}</h3>
-                            <div class="flex justify-between text-sm text-gray-400">
-                                <span><i class="fa-solid fa-tag text-pink-500 mr-1"></i>${r.price}</span>
-                                <span><i class="fa-solid fa-users text-purple-500 mr-1"></i>${r.capacity}</span>
-                            </div>
-                            <div class="flex space-x-2 pt-2">
-                                <a href="tel:${hotline}" class="flex-1 bg-green-600 hover:bg-green-500 text-white text-center py-2 rounded-xl text-sm font-semibold transition">
-                                    <i class="fa-solid fa-phone mr-1"></i> Gọi điện
-                                </a>
-                                <a href="https://zalo.me/${hotline}" target="_blank" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white text-center py-2 rounded-xl text-sm font-semibold transition">
-                                    <i class="fa-solid fa-comment mr-1"></i> Zalo
-                                </a>
-                            </div>
-                            ${isAdmin ? `
-                            <div class="flex space-x-2 pt-2 border-t border-gray-800">
-                                <button onclick="editRoom(${r.id})" class="w-1/2 bg-yellow-600 hover:bg-yellow-500 text-white py-1.5 rounded-lg text-xs font-semibold">Sửa</button>
-                                <button onclick="deleteRoom(${r.id})" class="w-1/2 bg-red-600 hover:bg-red-500 text-white py-1.5 rounded-lg text-xs font-semibold">Xóa</button>
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById("roomList").innerHTML = html;
-        }
-
-        function renderFeed() {
-            let html = "";
-            posts.forEach((p) => {
-                html += `
-                    <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 space-y-2">
-                        <div class="flex justify-between items-center text-xs text-gray-400">
-                            <span class="font-bold text-pink-400">${p.author}</span>
-                            <span>${p.time}</span>
-                        </div>
-                        <p class="text-sm text-gray-200">${p.content}</p>
-                        ${p.image ? `<img src="${p.image}" class="w-full h-40 object-cover rounded-lg mt-2">` : ''}
-                    </div>
-                `;
-            });
-            document.getElementById("feedList").innerHTML = html;
-        }
-
-        // Đăng nhập Admin
-        window.openAdminLogin = () => document.getElementById("adminModal").classList.remove("hidden");
-        window.closeAdminLogin = () => document.getElementById("adminModal").classList.add("hidden");
-        window.loginAdmin = () => {
-            let pass = document.getElementById("adminPass").value;
-            if (pass === "admin123") {
-                isAdmin = true;
-                document.getElementById("adminModal").classList.add("hidden");
-                document.getElementById("addRoomBtn").classList.remove("hidden");
-                document.getElementById("exportCodeBtn").classList.remove("hidden");
-                renderRooms();
-                alert("Đăng nhập Admin thành công!");
-            } else {
-                alert("Sai mật khẩu quản trị!");
-            }
-        }
-
-        // Thêm / Sửa phòng
-        window.openAddRoomModal = () => {
-            document.getElementById("roomModalTitle").innerText = "Thêm Phòng Mới";
-            document.getElementById("editRoomId").value = "";
-            document.getElementById("modalRoomName").value = "";
-            document.getElementById("modalRoomPrice").value = "";
-            document.getElementById("modalRoomCap").value = "";
-            document.getElementById("roomModal").classList.remove("hidden");
-        }
-
-        window.editRoom = (id) => {
-            let r = rooms.find(x => x.id === id);
-            if (!r) return;
-            document.getElementById("roomModalTitle").innerText = "Chỉnh Sửa Phòng";
-            document.getElementById("editRoomId").value = r.id;
-            document.getElementById("modalRoomName").value = r.name;
-            document.getElementById("modalRoomPrice").value = r.price;
-            document.getElementById("modalRoomCap").value = r.capacity;
-            document.getElementById("roomModal").classList.remove("hidden");
-        }
-
-        window.closeRoomModal = () => document.getElementById("roomModal").classList.add("hidden");
-
-        window.saveRoom = async () => {
-            let id = document.getElementById("editRoomId").value;
-            let name = document.getElementById("modalRoomName").value;
-            let price = document.getElementById("modalRoomPrice").value;
-            let cap = document.getElementById("modalRoomCap").value;
-            let fileInput = document.getElementById("modalRoomFile");
-
-            let imageUrl = "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80";
-            if (fileInput.files && fileInput.files[0]) {
-                imageUrl = await toBase64(fileInput.files[0]);
-            }
-
-            if (id) {
-                let r = rooms.find(x => x.id == id);
-                r.name = name;
-                r.price = price;
-                r.capacity = cap;
-                if (fileInput.files[0]) r.image = imageUrl;
-            } else {
-                let newId = rooms.length > 0 ? Math.max(...rooms.map(x => x.id)) + 1 : 1;
-                rooms.push({ id: newId, name, price, capacity: cap, image: imageUrl });
-            }
-
-            localStorage.setItem('paris_rooms', JSON.stringify(rooms));
-            document.getElementById("roomModal").classList.add("hidden");
-            renderRooms();
-            alert("Đã lưu phòng thành công!");
-        }
-
-        window.deleteRoom = (id) => {
-            if (confirm("Bạn có chắc chắn muốn xóa phòng này?")) {
-                rooms = rooms.filter(x => x.id !== id);
-                localStorage.setItem('paris_rooms', JSON.stringify(rooms));
-                renderRooms();
-            }
-        }
-
-        // Đăng bài Feed
-        window.createPost = async () => {
-            let author = document.getElementById("postAuthor").value.trim() || "Khách hàng";
-            let content = document.getElementById("postContent").value.trim();
-            let fileInput = document.getElementById("postImageFile");
-
-            if (!content) {
-                alert("Vui lòng nhập nội dung bài viết!");
-                return;
-            }
-
-            let imageUrl = "";
-            if (fileInput.files && fileInput.files[0]) {
-                imageUrl = await toBase64(fileInput.files[0]);
-            }
-
-            posts.unshift({
-                author,
-                content,
-                image: imageUrl,
-                time: new Date().toLocaleDateString('vi-VN')
-            });
-
-            localStorage.setItem('paris_posts', JSON.stringify(posts));
-            document.getElementById("postContent").value = "";
-            document.getElementById("postAuthor").value = "";
-            fileInput.value = "";
-            renderFeed();
-        }
-
-        // TÍNH NĂNG TỰ ĐỘNG ĐÓNG GÓI CODE ĐỂ ĐƯA LÊN GITHUB
-        window.exportGitHubCode = () => {
-            let fullCode = `<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PARIS KTV - Đặt Phòng Karaoke Sang Trọng</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090a0f; color: #f3f4f6; }
-        .neon-glow { text-shadow: 0 0 10px rgba(236, 72, 153, 0.7), 0 0 20px rgba(236, 72, 153, 0.5); }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col">
-    <header class="bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-microphone-lines text-pink-500 text-2xl animate-pulse"></i>
-                <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">PARIS KTV</span>
-            </div>
-        </div>
-    </header>
-
-    <section class="relative py-16 px-4 text-center bg-gradient-to-b from-purple-950/40 to-transparent border-b border-gray-900">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-4 neon-glow">PARIS KTV - ĐẲNG CẤP ÂM THANH</h1>
-        <p class="text-gray-400 max-w-xl mx-auto mb-2 text-sm md:text-base"><i class="fa-solid fa-location-dot text-pink-500 mr-2"></i>69 Trần Thái Tông, Cầu Giấy, Hà Nội</p>
-        <p class="text-gray-400 max-w-xl mx-auto mb-6 text-sm md:text-base"><i class="fa-solid fa-phone text-green-500 mr-2"></i>Hotline: 0386342147</p>
+      </div>
     </section>
 
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-6">
-            <h2 class="text-2xl font-bold border-l-4 border-pink-500 pl-3">Danh Sách Phòng Hát</h2>
-            <div id="roomList" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Gallery</div>
+          <h2>Khám phá <span class="gold">không gian</span></h2>
+          <p>
+            Hình ảnh bên dưới hiện là ảnh minh họa. Hãy thay bằng ảnh phòng hát
+            thực tế của PARIS KTV trước khi quảng bá chính thức.
+          </p>
         </div>
-        <div class="space-y-6">
-            <h2 class="text-2xl font-bold border-l-4 border-purple-500 pl-3">Bảng Tin Check-in</h2>
-            <div id="feedList" class="space-y-4"></div>
+
+        <div class="gallery-grid">
+          <!-- THAY URL ẢNH MINH HỌA BẰNG ẢNH THẬT CỦA QUÁN -->
+          <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80"
+                 alt="Không gian giải trí - ảnh minh họa" loading="lazy">
+            <div class="gallery-caption">Không gian giải trí</div>
+          </div>
+
+          <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+                 alt="Không gian nội thất - ảnh minh họa" loading="lazy">
+            <div class="gallery-caption">Không gian nội thất</div>
+          </div>
+
+          <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80"
+                 alt="Âm nhạc và giải trí - ảnh minh họa" loading="lazy">
+            <div class="gallery-caption">Âm nhạc và giải trí</div>
+          </div>
         </div>
-    </main>
+      </div>
+    </section>
 
-    <script>
-        const hotline = "0386342147";
-        let rooms = ${JSON.stringify(rooms)};
-        let posts = ${JSON.stringify(posts)};
+    <section id="booking">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Reservation</div>
+          <h2>Đặt phòng <span class="gold">PARIS KTV</span></h2>
+          <p>Điền thông tin cơ bản, website sẽ chuẩn bị nội dung để bạn gửi qua Zalo.</p>
+        </div>
 
-        function renderRooms() {
-            let html = "";
-            rooms.forEach((r) => {
-                html += \`
-                    <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden shadow-lg">
-                        <img src="\${r.image}" class="w-full h-48 object-cover">
-                        <div class="p-5 space-y-3">
-                            <h3 class="text-xl font-bold text-white">\${r.name}</h3>
-                            <div class="flex justify-between text-sm text-gray-400">
-                                <span><i class="fa-solid fa-tag text-pink-500 mr-1"></i>\${r.price}</span>
-                                <span><i class="fa-solid fa-users text-purple-500 mr-1"></i>\${r.capacity}</span>
-                            </div>
-                            <div class="flex space-x-2 pt-2">
-                                <a href="tel:\${hotline}" class="flex-1 bg-green-600 text-white text-center py-2 rounded-xl text-sm font-semibold">Gọi điện</a>
-                                <a href="https://zalo.me/\${hotline}" target="_blank" class="flex-1 bg-blue-600 text-white text-center py-2 rounded-xl text-sm font-semibold">Zalo</a>
-                            </div>
-                        </div>
-                    </div>\`;
-            });
-            document.getElementById("roomList").innerHTML = html;
-        }
+        <div class="booking-grid">
+          <div class="booking-info">
+            <div class="eyebrow">Contact Anh Tú</div>
+            <h3>Hỗ trợ booking</h3>
+            <p>
+              Để được hỗ trợ nhanh hơn, bạn có thể gọi trực tiếp hoặc gửi
+              thông tin dự kiến qua Zalo trước khi đến.
+            </p>
 
-        function renderFeed() {
-            let html = "";
-            posts.forEach((p) => {
-                html += \`
-                    <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 space-y-2">
-                        <div class="flex justify-between text-xs text-gray-400">
-                            <span class="font-bold text-pink-400">\${p.author}</span>
-                            <span>\${p.time}</span>
-                        </div>
-                        <p class="text-sm text-gray-200">\${p.content}</p>
-                        \${p.image ? \`<img src="\${p.image}" class="w-full h-40 object-cover rounded-lg mt-2">\` : ''}
-                    </div>\`;
-            });
-            document.getElementById("feedList").innerHTML = html;
-        }
-        renderRooms();
-        renderFeed();
-    </script>
-</body>
-</html>`;
+            <div class="contact-line">
+              <small>NGƯỜI HỖ TRỢ BOOKING</small>
+              <strong>ANH TÚ KTV</strong>
+            </div>
 
-            navigator.clipboard.writeText(fullCode).then(() => {
-                alert("Đã sao chép toàn bộ mã nguồn! Hãy dán đè vào file index.html trên GitHub.");
-            });
-        }
+            <div class="contact-line">
+              <small>ĐIỆN THOẠI</small>
+              <strong><a href="tel:0386342147">0386 342 147</a></strong>
+            </div>
 
-        function toBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
+            <div class="contact-line">
+              <small>ĐỊA CHỈ</small>
+              <strong>69 Trần Thái Tông, Cầu Giấy, Hà Nội</strong>
+            </div>
 
-        renderRooms();
-        renderFeed();
-    </script>
+            <a class="btn btn-outline" href="https://zalo.me/0386342147"
+               target="_blank" rel="noopener" style="width:100%;margin-top:22px">
+              Nhắn tin Zalo
+            </a>
+          </div>
+
+          <form class="booking-form" id="bookingForm">
+            <h3>Thông tin đặt phòng</h3>
+            <p class="form-note">
+              Thông tin sẽ được đưa vào tin nhắn để bạn kiểm tra trước khi gửi.
+            </p>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="customerName">Tên của bạn *</label>
+                <input id="customerName" name="customerName" required
+                       maxlength="80" placeholder="Nhập tên">
+              </div>
+
+              <div class="field">
+                <label for="customerPhone">Số điện thoại *</label>
+                <input id="customerPhone" name="customerPhone" required
+                       type="tel" maxlength="20" placeholder="Số liên hệ">
+              </div>
+
+              <div class="field">
+                <label for="guestCount">Số lượng khách</label>
+                <select id="guestCount" name="guestCount">
+                  <option value="2–4 người">2–4 người</option>
+                  <option value="5–8 người">5–8 người</option>
+                  <option value="9–15 người">9–15 người</option>
+                  <option value="Trên 15 người">Trên 15 người</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="bookingDate">Ngày dự kiến</label>
+                <input id="bookingDate" name="bookingDate" type="date">
+              </div>
+
+              <div class="field">
+                <label for="bookingTime">Giờ dự kiến</label>
+                <input id="bookingTime" name="bookingTime" type="time">
+              </div>
+
+              <div class="field">
+                <label for="roomType">Nhu cầu phòng</label>
+                <select id="roomType" name="roomType">
+                  <option value="Cần tư vấn phòng">Cần tư vấn phòng</option>
+                  <option value="Phòng nhóm nhỏ">Phòng nhóm nhỏ</option>
+                  <option value="Phòng nhóm đông">Phòng nhóm đông</option>
+                  <option value="Tổ chức liên hoan">Tổ chức liên hoan</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="extraNote">Yêu cầu thêm</label>
+                <textarea id="extraNote" name="extraNote" maxlength="500"
+                  placeholder="Ví dụ: cần tư vấn chi phí, số lượng khách..."></textarea>
+              </div>
+            </div>
+
+            <button class="btn btn-gold" type="submit">
+              CHUẨN BỊ TIN NHẮN ZALO
+            </button>
+
+            <p class="form-status" id="formStatus" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="location" id="location">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Find Us</div>
+          <h2>Tìm đường đến <span class="gold">PARIS KTV</span></h2>
+          <p>69 Trần Thái Tông, Cầu Giấy, Hà Nội.</p>
+        </div>
+
+        <div class="location-card">
+          <div class="location-copy">
+            <h3>PARIS KTV</h3>
+            <p>
+              <strong class="gold">Địa chỉ:</strong><br>
+              69 Trần Thái Tông, Cầu Giấy, Hà Nội
+            </p>
+            <p>
+              <strong class="gold">Booking:</strong><br>
+              Anh Tú — 0386 342 147
+            </p>
+            <a class="btn btn-gold"
+               href="https://www.google.com/maps/search/?api=1&query=69+Tran+Thai+Tong+Cau+Giay+Ha+Noi"
+               target="_blank" rel="noopener">
+              MỞ GOOGLE MAPS
+            </a>
+          </div>
+
+          <div class="map-frame">
+            <iframe
+              title="Bản đồ đến PARIS KTV"
+              src="https://maps.google.com/maps?q=69%20Tran%20Thai%20Tong%2C%20Cau%20Giay%2C%20Ha%20Noi&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="eyebrow">Let's Make It Memorable</div>
+        <h2>Sẵn sàng cho cuộc vui?</h2>
+        <p>Liên hệ Anh Tú để trao đổi về nhu cầu đặt phòng của bạn.</p>
+        <div class="hero-actions" style="justify-content:center">
+          <a class="btn btn-gold" href="tel:0386342147">☎ GỌI 0386 342 147</a>
+          <a class="btn btn-outline" href="https://zalo.me/0386342147"
+             target="_blank" rel="noopener">NHẮN TIN ZALO</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="brand" style="margin-bottom:14px">
+        PARIS KTV
+        <small>KARAOKE & ENTERTAINMENT</small>
+      </div>
+      <p>69 Trần Thái Tông, Cầu Giấy, Hà Nội</p>
+      <p>Booking: <strong>ANH TÚ KTV · 0386 342 147</strong></p>
+      <p style="margin-top:15px">© <span id="currentYear"></span> PARIS KTV. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="floating-contact">
+    <a class="float-btn float-zalo" href="https://zalo.me/0386342147"
+       target="_blank" rel="noopener">ZALO</a>
+    <a class="float-btn float-call" href="tel:0386342147">GỌI NGAY</a>
+  </div>
+
+  <script>
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    // Không đặt ngày trong quá khứ.
+    const dateInput = document.getElementById("bookingDate");
+    const today = new Date();
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0")
+    ].join("-");
+    dateInput.min = localToday;
+
+    document.getElementById("bookingForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const guests = document.getElementById("guestCount").value;
+      const date = document.getElementById("bookingDate").value || "Chưa xác định";
+      const time = document.getElementById("bookingTime").value || "Chưa xác định";
+      const room = document.getElementById("roomType").value;
+      const note = document.getElementById("extraNote").value.trim() || "Không có";
+
+      if (!name || !phone) {
+        document.getElementById("formStatus").textContent =
+          "Vui lòng nhập tên và số điện thoại.";
+        return;
+      }
+
+      const message =
+`Xin chào Anh Tú, tôi muốn hỏi đặt phòng PARIS KTV.
+
+Tên khách: ${name}
+Số điện thoại: ${phone}
+Số lượng khách: ${guests}
+Ngày dự kiến: ${date}
+Giờ dự kiến: ${time}
+Nhu cầu: ${room}
+Yêu cầu thêm: ${note}
+
+Địa điểm: 69 Trần Thái Tông, Cầu Giấy, Hà Nội.`;
+
+      // Sao chép nội dung để khách có thể dán vào cuộc trò chuyện Zalo.
+      const status = document.getElementById("formStatus");
+      status.textContent =
+        "Đang mở Zalo. Nếu nội dung chưa được sao chép, hãy quay lại và thử lại.";
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(message).catch(function () {});
+      }
+
+      // Zalo không hỗ trợ điền sẵn nội dung vào mọi trang cá nhân.
+      // Khách cần dán tin nhắn và chủ động nhấn gửi.
+      window.open("https://zalo.me/0386342147", "_blank", "noopener");
+
+      status.textContent =
+        "Đã mở Zalo. Hãy dán nội dung tin nhắn nếu đã được sao chép, kiểm tra rồi nhấn gửi.";
+    });
+  </script>
 </body>
 </html>
