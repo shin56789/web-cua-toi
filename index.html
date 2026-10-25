@@ -43,7 +43,6 @@
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
                 <a href="#venues" class="hover:text-brand-400 transition">Phòng & Địa Điểm Hot</a>
                 <a href="#booking" class="hover:text-brand-400 transition">Đặt Bàn / Đặt Phòng</a>
-                <a href="#about" class="hover:text-brand-400 transition">Giới Thiệu</a>
                 <a href="#contact" class="hover:text-brand-400 transition">Liên Hệ</a>
             </nav>
 
@@ -92,7 +91,7 @@
     <!-- QUICK CATEGORIES FILTER -->
     <section class="py-10 bg-[#0b0f19]/60 border-b border-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between overflow-x-auto space-x-4 pb-2 scrollbar-none">
+            <div class="flex items-center justify-between overflow-x-auto space-x-4 pb-2">
                 <button onclick="filterVenues('all')" class="category-btn active px-5 py-2.5 rounded-xl bg-brand-600 text-white text-xs font-bold whitespace-nowrap transition shadow-md shadow-brand-600/30">🔥 Tất Cả Địa Điểm</button>
                 <button onclick="filterVenues('Phòng VIP')" class="category-btn px-5 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 text-xs font-bold whitespace-nowrap transition border border-gray-800">🎤 Phòng Karaoke VIP</button>
                 <button onclick="filterVenues('Lounge')" class="category-btn px-5 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 text-xs font-bold whitespace-nowrap transition border border-gray-800">🍸 Lounge & Bar</button>
@@ -101,7 +100,7 @@
         </div>
     </section>
 
-    <!-- VENUES & PRICING LIST (GRID) -->
+    <!-- VENUES & PRICING LIST -->
     <section id="venues" class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-12">
@@ -109,16 +108,15 @@
                     <span class="text-brand-400 text-xs font-bold uppercase tracking-widest block mb-2">Danh mục nổi bật</span>
                     <h2 class="text-3xl font-extrabold text-white">Không Gian & Bảng Giá</h2>
                 </div>
-                <a href="#booking" class="text-xs font-bold text-gray-400 hover:text-brand-400 transition hidden sm:inline-block">Xem tất cả lịch trống <i class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
             
             <div id="venuesContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Render dynamically via JavaScript -->
+                <!-- JS Render -->
             </div>
         </div>
     </section>
 
-    <!-- BOOKING FORM SECTION (VBOOKING STYLE) -->
+    <!-- BOOKING FORM SECTION -->
     <section id="booking" class="py-20 bg-[#0b0f19] relative border-y border-gray-900">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-gray-900/90 backdrop-blur-md border border-gray-800 rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
@@ -171,7 +169,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Yêu cầu đặc biệt (Bánh sinh nhật, trang trí, view đẹp...)</label>
+                        <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Yêu cầu đặc biệt</label>
                         <textarea id="cusNote" rows="3" placeholder="Nhập yêu cầu của bạn..." class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-brand-500 transition"></textarea>
                     </div>
 
@@ -180,7 +178,6 @@
                     </button>
                 </form>
 
-                <!-- Success Box -->
                 <div id="bookingSuccessBox" class="hidden mt-6 p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-center text-sm">
                     <i class="fa-solid fa-circle-check text-xl mb-1"></i>
                     <p class="font-bold">Gửi yêu cầu đặt bàn thành công!</p>
@@ -213,14 +210,14 @@
             </div>
             <div>
                 <h3 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Khu Vực Hoạt Động</h3>
-                <p class="text-xs text-gray-400 leading-relaxed mb-4">Chuyên cung cấp dịch vụ đặt bàn, giữ chỗ tại các địa điểm nightlife nổi bật ở Quận 1, Quận 3, Quận 5 và các khu vực trung tâm.</p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">Chuyên cung cấp dịch vụ đặt bàn, giữ chỗ tại các địa điểm nightlife nổi bật.</p>
                 <button onclick="openAdminModal()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white text-xs font-bold px-4 py-2.5 rounded-xl transition border border-gray-700">
                     <i class="fa-solid fa-gauge-high mr-1.5 text-brand-400"></i> Quản Trị Hệ Thống (Admin)
                 </button>
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-gray-900 text-center text-xs text-gray-600">
-            &copy; 2026 Paris KTV Nightlife Booking. Powered by GitHub Pages & Paris KTV System.
+            &copy; 2026 Paris KTV Nightlife Booking. Powered by GitHub Pages.
         </div>
     </footer>
 
@@ -246,7 +243,6 @@
     <!-- ADMIN DASHBOARD MODAL -->
     <div id="adminDashboardModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col overflow-y-auto p-4 sm:p-6">
         <div class="max-w-6xl mx-auto w-full bg-gray-900 border border-gray-800 rounded-3xl shadow-2xl flex flex-col flex-grow my-auto overflow-hidden">
-            <!-- Header -->
             <div class="p-6 border-b border-gray-800 flex items-center justify-between bg-[#07090e]">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center">
@@ -254,22 +250,19 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-white">Hệ Thống Quản Trị Booking</h2>
-                        <span class="text-xs text-green-400 flex items-center mt-0.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Đang hoạt động ổn định</span>
+                        <span class="text-xs text-green-400 flex items-center mt-0.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Đang hoạt động</span>
                     </div>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="text-gray-400 hover:text-white bg-gray-800 p-2.5 rounded-xl"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <!-- Tabs -->
             <div class="flex border-b border-gray-800 bg-[#07090e]/60 px-6 space-x-4 overflow-x-auto">
                 <button onclick="switchAdminTab('bookings')" id="tabBtnBookings" class="py-3 px-4 text-xs font-bold text-brand-400 border-b-2 border-brand-500 transition whitespace-nowrap uppercase tracking-wider"><i class="fa-solid fa-calendar-days mr-2"></i>Quản Lý Đơn Đặt Bàn</button>
                 <button onclick="switchAdminTab('services')" id="tabBtnServices" class="py-3 px-4 text-xs font-bold text-gray-400 hover:text-white border-b-2 border-transparent transition whitespace-nowrap uppercase tracking-wider"><i class="fa-solid fa-list-check mr-2"></i>Quản Lý Phòng & Giá</button>
                 <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="py-3 px-4 text-xs font-bold text-gray-400 hover:text-white border-b-2 border-transparent transition whitespace-nowrap uppercase tracking-wider"><i class="fa-solid fa-gear mr-2"></i>Cài Đặt Thương Hiệu</button>
             </div>
 
-            <!-- Content Area -->
             <div class="p-6 overflow-y-auto flex-grow space-y-6">
-                
                 <!-- TAB 1: BOOKINGS -->
                 <div id="adminTabBookings" class="space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
@@ -288,29 +281,25 @@
                                         <th class="p-4">Khách hàng</th>
                                         <th class="p-4">SĐT</th>
                                         <th class="p-4">Khu Vực</th>
-                                        <th class="p-4">Loại Phòng / Dịch Vụ</th>
+                                        <th class="p-4">Loại Phòng</th>
                                         <th class="p-4">Thời Gian</th>
                                         <th class="p-4">Trạng Thái</th>
                                         <th class="p-4 text-right">Thao Tác</th>
                                     </tr>
                                 </thead>
-                                <tbody id="bookingsTableBody" class="divide-y divide-gray-800">
-                                    <!-- JS Render -->
-                                </tbody>
+                                <tbody id="bookingsTableBody" class="divide-y divide-gray-800"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- TAB 2: SERVICES & VENUES -->
+                <!-- TAB 2: SERVICES -->
                 <div id="adminTabServices" class="hidden space-y-6">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-white">Danh sách phòng & dịch vụ</h3>
                         <button onclick="openServiceModal()" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus mr-1"></i>Thêm Mới</button>
                     </div>
-                    <div id="adminServicesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- JS Render -->
-                    </div>
+                    <div id="adminServicesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
 
                 <!-- TAB 3: SETTINGS -->
@@ -339,24 +328,24 @@
                         <button onclick="saveSettings(event)" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 py-3 rounded-xl text-sm transition">Lưu Cấu Hình</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- ADD/EDIT SERVICE MODAL (CÓ THÊM Ô NHẬP ẢNH) -->
+    <!-- ADD/EDIT SERVICE MODAL (CÓ CHỨC NĂNG TẢI ẢNH TỪ MÁY) -->
     <div id="serviceModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-gray-800 w-full max-w-md rounded-3xl p-6 relative">
+        <div class="bg-gray-900 border border-gray-800 w-full max-w-md rounded-3xl p-6 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('serviceModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 id="serviceModalTitle" class="text-lg font-bold text-white mb-4">Thêm Phòng / Dịch Vụ</h3>
+            <h3 id="serviceModalTitle" class="text-lg font-bold text-white mb-4">Thêm Phòng / Địa Điểm</h3>
             <form onsubmit="handleServiceSubmit(event)" class="space-y-4">
                 <input type="hidden" id="serviceId">
+                <input type="hidden" id="servImageBase64">
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Tên phòng / Loại hình</label>
                     <input type="text" id="servName" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Danh mục (Phòng VIP, Lounge, Party)</label>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Danh mục</label>
                     <select id="servCategory" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
                         <option value="Phòng VIP">Phòng VIP</option>
                         <option value="Lounge">Lounge</option>
@@ -368,8 +357,12 @@
                     <input type="text" id="servPrice" required placeholder="Ví dụ: 300.000đ / giờ" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Đường dẫn hình ảnh (URL)</label>
-                    <input type="text" id="servImage" required placeholder="https://images.unsplash.com/..." class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Tải ảnh trực tiếp từ máy tính</label>
+                    <input type="file" id="servImageFile" accept="image/*" onchange="encodeImageFileAsURL(this)" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-4 py-2 text-white text-xs file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-600 file:text-white hover:file:bg-brand-500 cursor-pointer">
+                </div>
+                <div id="imagePreviewContainer" class="hidden mt-2">
+                    <span class="text-[10px] text-gray-400 block mb-1">Xem trước ảnh tải lên:</span>
+                    <img id="imagePreview" src="" class="w-full h-32 object-cover rounded-xl border border-gray-800">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Mô tả chi tiết</label>
@@ -389,7 +382,7 @@
                 category: 'Phòng VIP',
                 price: '250.000đ / giờ', 
                 image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop',
-                desc: 'Không gian ấm cúng, hệ thống âm thanh tiêu chuẩn, sức chứa 4-6 khách.' 
+                desc: 'Không gian ấm cúng, âm thanh tiêu chuẩn, sức chứa 4-6 khách.' 
             },
             { 
                 id: 2, 
@@ -406,14 +399,6 @@
                 price: '600.000đ / giờ', 
                 image: 'https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=800&auto=format&fit=crop',
                 desc: 'Không gian mở thời thượng, quầy bar riêng, phù hợp tụ họp và thư giãn về đêm.' 
-            },
-            { 
-                id: 4, 
-                name: 'Phòng Super VIP Party lớn', 
-                category: 'Party',
-                price: '900.000đ / giờ', 
-                image: 'https://images.unsplash.com/photo-1574391884720-bbc3640c0286?q=80&w=800&auto=format&fit=crop',
-                desc: 'Phòng tiệc cực rộng, màn hình LED lớn tổ chức sinh nhật, liên hoan công ty.' 
             }
         ];
 
@@ -430,9 +415,9 @@
             return data ? JSON.parse(data) : fallback;
         }
 
-        let services = getStoredData('ktv_services_v2', defaultServices);
-        let settings = getStoredData('ktv_settings_v2', defaultSettings);
-        let bookings = getStoredData('ktv_bookings_v2', []);
+        let services = getStoredData('ktv_services_v3', defaultServices);
+        let settings = getStoredData('ktv_settings_v3', defaultSettings);
+        let bookings = getStoredData('ktv_bookings_v3', []);
         let currentFilter = 'all';
 
         function initUI() {
@@ -452,14 +437,11 @@
 
         function filterVenues(category) {
             currentFilter = category;
-            
-            // Highlight active button
             const buttons = document.querySelectorAll('.category-btn');
             buttons.forEach(btn => {
                 btn.className = "category-btn px-5 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 text-xs font-bold whitespace-nowrap transition border border-gray-800";
             });
             event.target.className = "category-btn px-5 py-2.5 rounded-xl bg-brand-600 text-white text-xs font-bold whitespace-nowrap transition shadow-md shadow-brand-600/30";
-
             renderVenues(category);
         }
 
@@ -477,10 +459,10 @@
                     <div class="bg-gray-900/90 border border-gray-800 rounded-3xl overflow-hidden flex flex-col justify-between hover:border-brand-500/50 transition shadow-xl group">
                         <div class="h-56 overflow-hidden relative">
                             <img src="${s.image}" alt="${s.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
-                            <div class="absolute top-4 right-4 bg-[#07090e]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full text-brand-400 font-extrabold text-xs border border-gray-800">
+                            <div class="absolute top-4 right-4 bg-[#07090e]/95 backdrop-blur-md px-3.5 py-1.5 rounded-full text-brand-400 font-extrabold text-xs border border-gray-800">
                                 ${s.price}
                             </div>
-                            <div class="absolute bottom-4 left-4 bg-brand-600/90 text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                            <div class="absolute bottom-4 left-4 bg-brand-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">
                                 ${s.category}
                             </div>
                         </div>
@@ -531,12 +513,26 @@
             };
 
             bookings.unshift(newBooking);
-            localStorage.setItem('ktv_bookings_v2', JSON.stringify(bookings));
+            localStorage.setItem('ktv_bookings_v3', JSON.stringify(bookings));
 
             document.getElementById('bookingForm').reset();
             const successBox = document.getElementById('bookingSuccessBox');
             successBox.classList.remove('hidden');
             setTimeout(() => successBox.classList.add('hidden'), 6000);
+        }
+
+        // Image Uploader Function for Admin
+        function encodeImageFileAsURL(element) {
+            const file = element.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    document.getElementById('servImageBase64').value = reader.result;
+                    document.getElementById('imagePreview').src = reader.result;
+                    document.getElementById('imagePreviewContainer').classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
         }
 
         // Admin Modals
@@ -635,14 +631,14 @@
 
         function updateBookingStatus(id, status) {
             bookings = bookings.map(b => b.id === id ? {...b, status} : b);
-            localStorage.setItem('ktv_bookings_v2', JSON.stringify(bookings));
+            localStorage.setItem('ktv_bookings_v3', JSON.stringify(bookings));
             loadBookingsTable();
         }
 
         function deleteBooking(id) {
             if(confirm('Bạn có chắc chắn muốn xóa đơn đặt bàn này?')) {
                 bookings = bookings.filter(b => b.id !== id);
-                localStorage.setItem('ktv_bookings_v2', JSON.stringify(bookings));
+                localStorage.setItem('ktv_bookings_v3', JSON.stringify(bookings));
                 loadBookingsTable();
             }
         }
@@ -671,6 +667,9 @@
 
         function openServiceModal(id = null) {
             document.getElementById('serviceModal').classList.remove('hidden');
+            document.getElementById('servImageFile').value = '';
+            document.getElementById('imagePreviewContainer').classList.add('hidden');
+
             if(id) {
                 document.getElementById('serviceModalTitle').innerText = 'Chỉnh Sửa Phòng / Địa Điểm';
                 const s = services.find(x => x.id === id);
@@ -678,15 +677,19 @@
                 document.getElementById('servName').value = s.name;
                 document.getElementById('servCategory').value = s.category;
                 document.getElementById('servPrice').value = s.price;
-                document.getElementById('servImage').value = s.image;
+                document.getElementById('servImageBase64').value = s.image;
                 document.getElementById('servDesc').value = s.desc;
+                
+                // Show existing image preview
+                document.getElementById('imagePreview').src = s.image;
+                document.getElementById('imagePreviewContainer').classList.remove('hidden');
             } else {
                 document.getElementById('serviceModalTitle').innerText = 'Thêm Mới Phòng / Địa Điểm';
                 document.getElementById('serviceId').value = '';
                 document.getElementById('servName').value = '';
                 document.getElementById('servCategory').value = 'Phòng VIP';
                 document.getElementById('servPrice').value = '';
-                document.getElementById('servImage').value = '';
+                document.getElementById('servImageBase64').value = 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop';
                 document.getElementById('servDesc').value = '';
             }
         }
@@ -697,7 +700,7 @@
             const name = document.getElementById('servName').value;
             const category = document.getElementById('servCategory').value;
             const price = document.getElementById('servPrice').value;
-            const image = document.getElementById('servImage').value;
+            const image = document.getElementById('servImageBase64').value;
             const desc = document.getElementById('servDesc').value;
 
             if(id) {
@@ -706,7 +709,7 @@
                 services.push({ id: Date.now(), name, category, price, image, desc });
             }
 
-            localStorage.setItem('ktv_services_v2', JSON.stringify(services));
+            localStorage.setItem('ktv_services_v3', JSON.stringify(services));
             closeModal('serviceModal');
             loadAdminServices();
             renderVenues(currentFilter);
@@ -716,7 +719,7 @@
         function deleteService(id) {
             if(confirm('Bạn có chắc chắn muốn xóa mục này?')) {
                 services = services.filter(s => s.id !== id);
-                localStorage.setItem('ktv_services_v2', JSON.stringify(services));
+                localStorage.setItem('ktv_services_v3', JSON.stringify(services));
                 loadAdminServices();
                 renderVenues(currentFilter);
                 renderBookingSelect();
@@ -741,7 +744,7 @@
                 hotline: document.getElementById('settingHotline').value,
                 address: document.getElementById('settingAddress').value
             };
-            localStorage.setItem('ktv_settings_v2', JSON.stringify(settings));
+            localStorage.setItem('ktv_settings_v3', JSON.stringify(settings));
             initUI();
             alert('Lưu cấu hình thành công!');
         }
