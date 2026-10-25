@@ -41,7 +41,7 @@
         
         <!-- Danh sách phòng (2 cột) -->
         <div class="lg:col-span-2 space-y-6">
-            <div class="flex justify-between items-center">
+            <div class="flex flex-wrap justify-between items-center gap-2">
                 <h2 class="text-2xl font-bold border-l-4 border-pink-500 pl-3">Danh Sách Phòng Hát</h2>
                 <div class="flex space-x-2">
                     <button id="addRoomBtn" onclick="openAddRoomModal()" class="hidden bg-pink-600 hover:bg-pink-500 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition">
@@ -118,25 +118,23 @@
         </div>
     </div>
 
-    <!-- Script quản lý dữ liệu mặc định trực tiếp trong Code -->
+    <!-- Script xử lý toàn bộ logic -->
     <script>
         const hotline = "0386342147";
 
-        // ==========================================
-        // DỮ LIỆU MẶC ĐỊNH (CÓ THỂ SỬA TRỰC TIẾP HOẶC QUA ADMIN)
-        // ==========================================
-        let defaultRooms = [
+        // Dữ liệu mẫu mặc định ban đầu
+        const defaultRooms = [
             { id: 1, name: "Phòng VIP 1 - Hoàng Gia", price: "350.000đ/h", capacity: "10-15 người", image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80" },
             { id: 2, name: "Phòng VIP 2 - Diamond", price: "250.000đ/h", capacity: "6-10 người", image: "https://images.unsplash.com/photo-1545128485-c400e7702796?auto=format&fit=crop&w=600&q=80" }
         ];
 
-        let defaultPosts = [
+        const defaultPosts = [
             { author: "Admin PARIS KTV", content: "Chào mừng quý khách đến với hệ thống âm thanh đỉnh cao tại 69 Trần Thái Tông!", image: "", time: "Hôm nay" }
         ];
 
         let isAdmin = false;
 
-        // Load dữ liệu từ localStorage hoặc dùng mặc định
+        // Tải dữ liệu từ localStorage hoặc dùng mặc định
         let rooms = JSON.parse(localStorage.getItem('paris_rooms')) || defaultRooms;
         let posts = JSON.parse(localStorage.getItem('paris_posts')) || defaultPosts;
 
@@ -189,7 +187,7 @@
             document.getElementById("feedList").innerHTML = html;
         }
 
-        // Admin Login
+        // Đăng nhập Admin
         window.openAdminLogin = () => document.getElementById("adminModal").classList.remove("hidden");
         window.closeAdminLogin = () => document.getElementById("adminModal").classList.add("hidden");
         window.loginAdmin = () => {
@@ -202,7 +200,7 @@
                 renderRooms();
                 alert("Đăng nhập Admin thành công!");
             } else {
-                alert("Sai mật khẩu!");
+                alert("Sai mật khẩu quản trị!");
             }
         }
 
@@ -255,7 +253,7 @@
             localStorage.setItem('paris_rooms', JSON.stringify(rooms));
             document.getElementById("roomModal").classList.add("hidden");
             renderRooms();
-            alert("Đã lưu thay đổi vào bộ nhớ cục bộ!");
+            alert("Đã lưu phòng thành công!");
         }
 
         window.deleteRoom = (id) => {
@@ -318,11 +316,6 @@
             <div class="flex items-center space-x-2">
                 <i class="fa-solid fa-microphone-lines text-pink-500 text-2xl animate-pulse"></i>
                 <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">PARIS KTV</span>
-            </div>
-            <div class="flex items-center space-x-3">
-                <button onclick="openAdminLogin()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium border border-gray-700 transition">
-                    <i class="fa-solid fa-lock mr-1"></i> Admin
-                </button>
             </div>
         </div>
     </header>
@@ -393,7 +386,7 @@
 </html>`;
 
             navigator.clipboard.writeText(fullCode).then(() => {
-                alert("Đã sao chép toàn bộ mã nguồn mới nhất vào bộ nhớ tạm! Bạn chỉ cần vào GitHub dán đè vào file index.html là xong.");
+                alert("Đã sao chép toàn bộ mã nguồn! Hãy dán đè vào file index.html trên GitHub.");
             });
         }
 
