@@ -190,7 +190,7 @@
             <div>
                 <h3 class="text-yellow-400 font-extrabold text-sm uppercase tracking-wider mb-4">Quản Trị Viên</h3>
                 <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    Dành cho chủ cơ sở để thay đổi hình ảnh trang chủ, thêm loại phòng mới, cập nhật ảnh phòng và số Hotline/Zalo.
+                    Dành cho chủ cơ sở để thay đổi hình ảnh trang chủ, thêm loại phòng mới, cập nhật ảnh phòng và đồng bộ lên mọi thiết bị.
                 </p>
                 <button onclick="openAdminModal()" class="bg-[#1a150c] hover:bg-yellow-500 hover:text-black text-yellow-400 text-xs font-extrabold px-5 py-3 rounded-xl transition border border-yellow-500/40">
                     <i class="fa-solid fa-user-shield mr-1.5"></i> Mở Bảng Quản Trị (Admin)
@@ -225,17 +225,28 @@
     <div id="adminDashboardModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col overflow-y-auto p-3 sm:p-6">
         <div class="max-w-6xl mx-auto w-full bg-[#120f0a] border border-yellow-500/40 rounded-3xl shadow-2xl flex flex-col flex-grow my-auto overflow-hidden">
             <!-- Header Admin -->
-            <div class="p-5 sm:p-6 border-b border-gray-800 flex items-center justify-between bg-black">
+            <div class="p-5 sm:p-6 border-b border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-black">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 rounded-xl bg-yellow-500 text-black flex items-center justify-center font-bold">
                         <i class="fa-solid fa-sliders"></i>
                     </div>
                     <div>
                         <h2 class="text-base sm:text-lg font-black text-white uppercase">Quản Trị Hệ Thống Royal & Paris KTV</h2>
-                        <span class="text-xs text-green-400 flex items-center mt-0.5"><span class="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Tự động nén ảnh HD • Không giới hạn dung lượng</span>
+                        <span class="text-xs text-green-400 flex items-center mt-0.5"><span class="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Tự động nén ảnh HD • Đồng bộ mọi thiết bị</span>
                     </div>
                 </div>
-                <button type="button" onclick="closeModal('adminDashboardModal')" class="text-gray-300 hover:text-white bg-gray-900 px-4 py-2 rounded-xl text-xs font-extrabold border border-gray-700">Đóng <i class="fa-solid fa-xmark ml-1"></i></button>
+                <div class="flex items-center space-x-2">
+                    <button type="button" onclick="exportSyncedHTML()" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2.5 rounded-xl text-xs font-extrabold transition shadow-lg flex items-center space-x-1.5">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Đồng Bộ Lên Mọi Điện Thoại (Copy Code)</span>
+                    </button>
+                    <button type="button" onclick="closeModal('adminDashboardModal')" class="text-gray-300 hover:text-white bg-gray-900 px-4 py-2.5 rounded-xl text-xs font-extrabold border border-gray-700">Đóng <i class="fa-solid fa-xmark ml-1"></i></button>
+                </div>
+            </div>
+
+            <!-- Hướng dẫn đồng bộ nhanh -->
+            <div class="bg-green-950/40 border-b border-green-500/30 px-6 py-2.5 text-xs text-green-300 flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-info mr-1.5"></i><strong>Mẹo quan trọng:</strong> Sau khi thêm ảnh/phòng trên máy tính, hãy bấm nút màu xanh lá <strong>"Đồng Bộ Lên Mọi Điện Thoại"</strong> ở góc trên rồi dán vào file <code>index.html</code> trên GitHub để mọi điện thoại đều thấy ảnh.</span>
             </div>
 
             <!-- Tabs Admin -->
@@ -290,7 +301,7 @@
                 <div id="adminTabSettings" class="hidden max-w-2xl space-y-6">
                     <div class="bg-black/80 border border-yellow-500/30 rounded-2xl p-5 space-y-4">
                         <h3 class="text-sm font-extrabold text-yellow-400 uppercase">1. Ảnh Banner Lớn Đầu Trang Chủ</h3>
-                        <p class="text-xs text-gray-400">Chọn trực tiếp ảnh quán từ máy tính của bạn (hệ thống sẽ tự động nén chuẩn HD và lưu ngay lập tức):</p>
+                        <p class="text-xs text-gray-400">Chọn trực tiếp ảnh quán từ máy tính của bạn:</p>
                         
                         <input type="file" accept="image/*" onchange="uploadHeroBanner(this)" class="w-full bg-[#120f0a] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-xs file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-extrabold file:bg-yellow-500 file:text-black cursor-pointer">
                         <p id="bannerUploadStatus" class="text-xs text-green-400 font-bold hidden"></p>
@@ -398,32 +409,71 @@
 
     <!-- JAVASCRIPT HỆ THỐNG -->
     <script>
-        // Xóa dữ liệu rác của các phiên bản cũ để giải phóng 100% bộ nhớ trình duyệt
-        function cleanOldStorage() {
-            const oldKeys = [
-                'ktv_services', 'ktv_settings', 'ktv_bookings',
-                'ktv_services_v2', 'ktv_settings_v2', 'ktv_bookings_v2',
-                'ktv_services_v3', 'ktv_settings_v3', 'ktv_bookings_v3',
-                'ktv_services_v4', 'ktv_settings_v4', 'ktv_bookings_v4',
-                'ktv_services_v5', 'ktv_settings_v5', 'ktv_bookings_v5',
-                'ktv_room_types_v6', 'ktv_rooms_v6', 'ktv_settings_v6'
-            ];
-            oldKeys.forEach(k => localStorage.removeItem(k));
-        }
-        if (!localStorage.getItem('ktv_cleaned_v7')) {
-            cleanOldStorage();
-            localStorage.setItem('ktv_cleaned_v7', 'true');
+        /*__START_SYNC_DATA__*/
+        const dataVersion = "v8_default";
+        const defaultRoomTypes = ["Phòng Nhỏ", "Phòng To"];
+        const defaultRooms = [
+            {
+                id: 101,
+                branch: "royal",
+                type: "Phòng Nhỏ",
+                name: "Phòng Nhỏ Royal (5 – 10 Khách)",
+                price: "Sức chứa: 5 - 10 người",
+                image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop",
+                desc: "Không gian ấm cúng, riêng tư chuẩn phong cách Hoàng Gia tại 97 Cầu Giấy. Hệ thống âm thanh đời mới cực ấm."
+            },
+            {
+                id: 102,
+                branch: "royal",
+                type: "Phòng To",
+                name: "Phòng To VIP Royal (15 – 30 Khách)",
+                price: "Sức chứa: 15 - 30 người",
+                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
+                desc: "Không gian đại sảnh rộng lớn tại Royal 97 Cầu Giấy, sân khấu ánh sáng LED hiện đại, thích hợp tổ chức sinh nhật, liên hoan, tiếp khách."
+            },
+            {
+                id: 201,
+                branch: "paris",
+                type: "Phòng Nhỏ",
+                name: "Phòng Nhỏ Paris (5 – 10 Khách)",
+                price: "Sức chứa: 5 - 10 người",
+                image: "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=800&auto=format&fit=crop",
+                desc: "Thiết kế kiến trúc Pháp sang trọng tại 69 Trần Thái Tông, không gian tinh tế phù hợp nhóm bạn bè và gia đình."
+            },
+            {
+                id: 202,
+                branch: "paris",
+                type: "Phòng To",
+                name: "Phòng To Super VIP Paris (15 – 35 Khách)",
+                price: "Sức chứa: 15 - 35 người",
+                image: "https://images.unsplash.com/photo-1574391884720-bbc3640c0286?q=80&w=800&auto=format&fit=crop",
+                desc: "Phòng đại tiệc đẳng cấp bậc nhất tại Karaoke Paris 69 Trần Thái Tông, màn hình lớn, âm thanh vòm cực đỉnh cho các bữa tiệc lớn."
+            }
+        ];
+        const defaultSettings = {
+            bannerUrl: "banner.jpg",
+            hotline: "0869.806.906",
+            zaloLink: "https://zalo.me/0869806906",
+            addr1: "97 Cầu Giấy, Hà Nội",
+            addr2: "69 Trần Thái Tông, Hà Nội"
+        };
+        /*__END_SYNC_DATA__*/
+
+        // Tự động đồng bộ phiên bản mới nhất trên điện thoại khách hàng
+        if (localStorage.getItem('ktv_data_version') !== dataVersion) {
+            localStorage.setItem('ktv_room_types_v8', JSON.stringify(defaultRoomTypes));
+            localStorage.setItem('ktv_rooms_v8', JSON.stringify(defaultRooms));
+            localStorage.setItem('ktv_settings_v8', JSON.stringify(defaultSettings));
+            localStorage.setItem('ktv_data_version', dataVersion);
         }
 
-        // Hiển thị thông báo góc trên màn hình
         function showToast(msg) {
             const toast = document.getElementById('toastNotification');
             document.getElementById('toastMessage').innerText = msg;
             toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3500);
+            setTimeout(() => toast.classList.add('hidden'), 4000);
         }
 
-        // Hàm nén ảnh tự động bằng HTML5 Canvas (Giúp ảnh 5MB-10MB giảm còn ~80KB sắc nét)
         function compressImageFile(file, maxWidth, quality, callback) {
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -440,62 +490,12 @@
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-                    callback(compressedDataUrl);
+                    callback(canvas.toDataURL('image/jpeg', quality));
                 };
                 img.src = event.target.result;
             };
             reader.readAsDataURL(file);
         }
-
-        const defaultRoomTypes = ['Phòng Nhỏ', 'Phòng To'];
-
-        const defaultRooms = [
-            {
-                id: 101,
-                branch: 'royal',
-                type: 'Phòng Nhỏ',
-                name: 'Phòng Nhỏ Royal (5 – 10 Khách)',
-                price: 'Sức chứa: 5 - 10 người',
-                image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop',
-                desc: 'Không gian ấm cúng, riêng tư chuẩn phong cách Hoàng Gia tại 97 Cầu Giấy. Hệ thống âm thanh đời mới cực ấm.'
-            },
-            {
-                id: 102,
-                branch: 'royal',
-                type: 'Phòng To',
-                name: 'Phòng To VIP Royal (15 – 30 Khách)',
-                price: 'Sức chứa: 15 - 30 người',
-                image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop',
-                desc: 'Không gian đại sảnh rộng lớn tại Royal 97 Cầu Giấy, sân khấu ánh sáng LED hiện đại, thích hợp tổ chức sinh nhật, liên hoan, tiếp khách.'
-            },
-            {
-                id: 201,
-                branch: 'paris',
-                type: 'Phòng Nhỏ',
-                name: 'Phòng Nhỏ Paris (5 – 10 Khách)',
-                price: 'Sức chứa: 5 - 10 người',
-                image: 'https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=800&auto=format&fit=crop',
-                desc: 'Thiết kế kiến trúc Pháp sang trọng tại 69 Trần Thái Tông, không gian tinh tế phù hợp nhóm bạn bè và gia đình.'
-            },
-            {
-                id: 202,
-                branch: 'paris',
-                type: 'Phòng To',
-                name: 'Phòng To Super VIP Paris (15 – 35 Khách)',
-                price: 'Sức chứa: 15 - 35 người',
-                image: 'https://images.unsplash.com/photo-1574391884720-bbc3640c0286?q=80&w=800&auto=format&fit=crop',
-                desc: 'Phòng đại tiệc đẳng cấp bậc nhất tại Karaoke Paris 69 Trần Thái Tông, màn hình lớn, âm thanh vòm cực đỉnh cho các bữa tiệc lớn.'
-            }
-        ];
-
-        const defaultSettings = {
-            bannerUrl: 'banner.jpg',
-            hotline: '0869.806.906',
-            zaloLink: 'https://zalo.me/0869806906',
-            addr1: '97 Cầu Giấy, Hà Nội',
-            addr2: '69 Trần Thái Tông, Hà Nội'
-        };
 
         function getStored(key, fallback) {
             try {
@@ -511,14 +511,14 @@
                 localStorage.setItem(key, JSON.stringify(data));
                 return true;
             } catch (e) {
-                alert('Bộ nhớ trình duyệt đã đầy! Vui lòng xóa bớt phòng cũ hoặc dùng ảnh dung lượng nhẹ hơn.');
+                alert('Bộ nhớ trình duyệt đã đầy! Vui lòng xóa bớt phòng cũ.');
                 return false;
             }
         }
 
-        let roomTypes = getStored('ktv_room_types_v7', defaultRoomTypes);
-        let rooms = getStored('ktv_rooms_v7', defaultRooms);
-        let settings = getStored('ktv_settings_v7', defaultSettings);
+        let roomTypes = getStored('ktv_room_types_v8', defaultRoomTypes);
+        let rooms = getStored('ktv_rooms_v8', defaultRooms);
+        let settings = getStored('ktv_settings_v8', defaultSettings);
 
         let filterRoyal = 'all';
         let filterParis = 'all';
@@ -705,7 +705,7 @@
             if (!val) return alert('Vui lòng nhập tên loại phòng!');
             if (!roomTypes.includes(val)) {
                 roomTypes.push(val);
-                saveStored('ktv_room_types_v7', roomTypes);
+                saveStored('ktv_room_types_v8', roomTypes);
                 input.value = '';
                 renderAdminRoomTypes();
                 initUI();
@@ -719,7 +719,7 @@
             if (roomTypes.length <= 1) return alert('Cần giữ lại ít nhất 1 loại phòng!');
             if (confirm('Xóa loại phòng "' + roomTypes[idx] + '"?')) {
                 roomTypes.splice(idx, 1);
-                saveStored('ktv_room_types_v7', roomTypes);
+                saveStored('ktv_room_types_v8', roomTypes);
                 renderAdminRoomTypes();
                 initUI();
                 showToast('Đã xóa loại phòng!');
@@ -786,7 +786,6 @@
             }
         }
 
-        // Nén ảnh phòng tự động khi chọn file từ máy
         function encodeRoomImage(input) {
             const file = input.files[0];
             if (!file) return;
@@ -822,11 +821,10 @@
                 rooms.unshift({ id: Date.now(), branch, type, name, price, image, desc });
             }
 
-            // Đưa bộ lọc về 'all' để phòng mới hiện ra ngay lập tức
             filterRoyal = 'all';
             filterParis = 'all';
 
-            if (saveStored('ktv_rooms_v7', rooms)) {
+            if (saveStored('ktv_rooms_v8', rooms)) {
                 closeModal('roomModal');
                 renderAdminRoomsList();
                 initUI();
@@ -837,14 +835,13 @@
         function deleteRoom(id) {
             if (confirm('Bạn có chắc chắn muốn xóa phòng này?')) {
                 rooms = rooms.filter(r => r.id != id);
-                saveStored('ktv_rooms_v7', rooms);
+                saveStored('ktv_rooms_v8', rooms);
                 renderAdminRoomsList();
                 initUI();
                 showToast('Đã xóa phòng!');
             }
         }
 
-        // Nén và lưu tự động ảnh Banner trang chủ khi chọn từ máy tính
         function uploadHeroBanner(input) {
             const file = input.files[0];
             if (!file) return;
@@ -858,7 +855,7 @@
                 document.getElementById('settingBannerUrl').value = '(Đang dùng ảnh tải trực tiếp từ máy)';
                 document.getElementById('adminBannerPreview').src = compressedBase64;
                 
-                if (saveStored('ktv_settings_v7', settings)) {
+                if (saveStored('ktv_settings_v8', settings)) {
                     initUI();
                     statusEl.innerText = '✓ Đã cập nhật ảnh trang chủ thành công!';
                     showToast('Đã đổi ảnh Banner trang chủ!');
@@ -876,9 +873,37 @@
             settings.addr1 = document.getElementById('settingAddr1').value.trim() || '97 Cầu Giấy, Hà Nội';
             settings.addr2 = document.getElementById('settingAddr2').value.trim() || '69 Trần Thái Tông, Hà Nội';
 
-            if (saveStored('ktv_settings_v7', settings)) {
+            if (saveStored('ktv_settings_v8', settings)) {
                 initUI();
                 showToast('Đã lưu toàn bộ cài đặt!');
+            }
+        }
+
+        // HÀM XUẤT TOÀN BỘ MÃ NGUỒN ĐÃ GẮN SẴN ẢNH ĐỂ ĐỒNG BỘ LÊN MỌI ĐIỆN THOẠI
+        async function exportSyncedHTML() {
+            try {
+                const res = await fetch(window.location.href, { cache: 'no-store' });
+                let htmlText = await res.text();
+
+                const newSyncBlock = `/*__START_SYNC_DATA__*/
+        const dataVersion = "v8_${Date.now()}";
+        const defaultRoomTypes = ${JSON.stringify(roomTypes, null, 8)};
+        const defaultRooms = ${JSON.stringify(rooms, null, 8)};
+        const defaultSettings = ${JSON.stringify(settings, null, 8)};
+        /*__END_SYNC_DATA__*/`;
+
+                const regex = /\/\*__START_SYNC_DATA__\*\/[\s\S]*?\/\*__END_SYNC_DATA__\*\//;
+                if (!regex.test(htmlText)) {
+                    alert('Vui lòng cập nhật mã nguồn mới nhất lên GitHub trước khi dùng nút này!');
+                    return;
+                }
+
+                const updatedHTML = htmlText.replace(regex, newSyncBlock);
+                await navigator.clipboard.writeText(updatedHTML);
+                showToast('Đã Copy toàn bộ code kèm ảnh!');
+                alert('ĐÃ COPY TOÀN BỘ CODE KÈM ẢNH VÀO BỘ NHỚ TẠM!\n\nBây giờ bạn chỉ cần:\n1. Mở file index.html trên GitHub\n2. Bấm hình cây bút (Edit) -> Xóa hết code cũ -> Dán (Ctrl+V) code vừa copy vào\n3. Bấm Commit changes.\n\nSau 30 giây, TẤT CẢ ĐIỆN THOẠI truy cập parisktv.top sẽ thấy đầy đủ 100% ảnh và phòng bạn vừa thêm!');
+            } catch (err) {
+                alert('Không thể tự động copy. Lỗi: ' + err.message);
             }
         }
 
