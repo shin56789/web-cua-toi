@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royal KTV & Karaoke Paris – Hai Điểm Đến Một Đẳng Cấp Giải Trí</title>
+    <title>Karaoke Paris 69 Trần Thái Tông – Đặt Phòng VIP & Giữ Chỗ Nhanh Chóng</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Hệ thống Karaoke Paris 69 Trần Thái Tông, Cầu Giấy, Hà Nội. Đặt phòng VIP, phòng nhỏ, phòng to sang trọng, âm thanh đẳng cấp, phục vụ sự kiện, sinh nhật 24/7.">
+    <meta name="keywords" content="karaoke tran thai tong, karaoke cau giay, karaoke paris 69 tran thai tong, dat phong karaoke ha noi">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -11,7 +14,7 @@
 </head>
 <body class="bg-[#080705] text-gray-100 font-sans antialiased selection:bg-yellow-500 selection:text-black">
 
-    <!-- THÔNG BÁO NỔI (TOAST NOTIFICATION) -->
+    <!-- THÔNG BÁO NỔI (TOAST) -->
     <div id="toastNotification" class="fixed top-5 right-5 z-[100] hidden bg-green-600 text-white px-5 py-3 rounded-2xl shadow-2xl border border-green-400 flex items-center space-x-2 text-xs font-extrabold uppercase tracking-wider transition-all">
         <i class="fa-solid fa-circle-check text-base"></i>
         <span id="toastMessage">Đã lưu thành công!</span>
@@ -19,28 +22,27 @@
 
     <!-- TOP BAR -->
     <div class="bg-gradient-to-r from-amber-900/80 via-yellow-600 to-amber-900/80 text-black text-xs font-extrabold py-2 px-4 text-center tracking-wide">
-        <i class="fa-solid fa-crown mr-1.5"></i> HỆ THỐNG KARAOKE ĐẲNG CẤP HÀ NỘI • ĐẶT PHÒNG NHANH 24/7: 
+        <i class="fa-solid fa-crown mr-1.5"></i> HỆ THỐNG KARAOKE ĐẲNG CẤP CẦU GIẤY • ĐẶT PHÒNG NHANH 24/7: 
         <a id="topBarHotline" href="tel:0869806906" class="underline ml-1">0869.806.906</a>
     </div>
 
     <!-- HEADER NAVIGATION -->
     <header class="sticky top-0 z-40 bg-[#0d0b08]/95 backdrop-blur-md border-b border-yellow-600/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- LOGO TRANG CHỦ -->
             <a href="https://parisktv.top" class="flex items-center space-x-3 group cursor-pointer">
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-yellow-600 to-amber-300 flex items-center justify-center shadow-lg shadow-yellow-500/20 group-hover:scale-105 transition">
                     <i class="fa-solid fa-crown text-black text-xl"></i>
                 </div>
                 <div>
-                    <span id="brandName" class="text-lg sm:text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500 uppercase">ROYAL & PARIS KTV</span>
-                    <span class="block text-[10px] uppercase tracking-widest text-yellow-500/90 font-bold">Sang Trọng • Đẳng Cấp • Chuyên Nghiệp</span>
+                    <span id="brandName" class="text-lg sm:text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500 uppercase">KARAOKE PARIS</span>
+                    <span class="block text-[10px] uppercase tracking-widest text-yellow-500/90 font-bold">69 Trần Thái Tông, Cầu Giấy, Hà Nội</span>
                 </div>
             </a>
             
             <nav class="hidden lg:flex items-center space-x-8 text-sm font-bold">
                 <a href="https://parisktv.top" class="text-yellow-400 hover:text-yellow-300 transition">Trang Chủ</a>
-                <a href="#branch-royal" class="text-gray-300 hover:text-yellow-400 transition"><i class="fa-solid fa-location-dot text-yellow-500 mr-1"></i>Royal KTV (97 Cầu Giấy)</a>
-                <a href="#branch-paris" class="text-gray-300 hover:text-yellow-400 transition"><i class="fa-solid fa-location-dot text-yellow-500 mr-1"></i>Karaoke Paris (69 Trần Thái Tông)</a>
+                <a href="#rooms-section" class="text-gray-300 hover:text-yellow-400 transition">Danh Sách Phòng</a>
+                <a href="#about-section" class="text-gray-300 hover:text-yellow-400 transition">Giới Thiệu</a>
                 <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition">Liên Hệ</a>
             </nav>
 
@@ -61,87 +63,70 @@
         </div>
     </header>
 
-    <!-- HERO IMAGE SECTION (ẢNH QUÁN ĐẦU TRANG CHỦ) -->
-    <section class="relative bg-[#080705] border-b border-yellow-600/30 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-4 pb-10">
-            <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-yellow-500/50 shadow-[0_0_50px_rgba(234,179,8,0.18)] bg-[#110e0a]">
-                <img id="heroMainImage" src="banner.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1600&auto=format&fit=crop';" alt="Royal KTV 97 Cầu Giấy & Karaoke Paris 69 Trần Thái Tông" class="w-full max-h-[680px] object-cover mx-auto block">
-            </div>
-
-            <!-- Nút Chọn Nhanh 2 Cơ Sở -->
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto px-2">
-                <a href="#branch-royal" class="group bg-gradient-to-r from-[#1a150c] to-[#120e07] hover:from-yellow-950/60 hover:to-amber-900/40 border border-yellow-500/40 rounded-2xl p-5 flex items-center justify-between transition shadow-lg">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-xl font-black">
-                            <i class="fa-solid fa-crown"></i>
-                        </div>
-                        <div>
-                            <span class="text-[11px] uppercase tracking-widest text-yellow-500 font-bold block">Cơ Sở 1</span>
-                            <h2 class="text-lg sm:text-xl font-black text-white group-hover:text-yellow-400 transition">ROYAL KTV</h2>
-                            <p class="text-xs text-gray-400 mt-0.5"><i class="fa-solid fa-location-dot text-yellow-500 mr-1"></i><span id="quickAddr1">97 Cầu Giấy, Hà Nội</span></p>
-                        </div>
+    <main>
+        <!-- HERO BANNER SECTION (ẢNH QUÁN ĐẦU TRANG CHỦ) -->
+        <section class="relative bg-[#080705] border-b border-yellow-600/30 overflow-hidden py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="relative rounded-3xl overflow-hidden border-2 border-yellow-500/50 shadow-[0_0_50px_rgba(234,179,8,0.2)] bg-[#110e0a]">
+                    <img id="heroMainImage" src="banner.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1600&auto=format&fit=crop';" alt="Karaoke Paris 69 Trần Thái Tông Cầu Giấy Hà Nội" class="w-full max-h-[650px] object-cover mx-auto block">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 sm:p-10">
+                        <span class="text-yellow-400 font-black text-xs uppercase tracking-widest mb-2"><i class="fa-solid fa-crown mr-1"></i> Đẳng Cấp Giải Trí Hàng Đầu Cầu Giấy</span>
+                        <h1 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">KARAOKE PARIS – 69 TRẦN THÁI TÔNG</h1>
+                        <p class="text-gray-300 text-xs sm:text-sm mt-2 max-w-2xl">Không gian phòng hát thiết kế phong cách Châu Âu hoa lệ, hệ thống âm thanh ánh sáng tối tân phục vụ mọi buổi tiệc, sinh nhật và hội ngộ.</p>
                     </div>
-                    <span class="bg-yellow-500 text-black text-xs font-extrabold px-4 py-2.5 rounded-xl group-hover:scale-105 transition whitespace-nowrap">
-                        Xem Phòng <i class="fa-solid fa-arrow-down ml-1"></i>
-                    </span>
-                </a>
+                </div>
+            </div>
+        </section>
 
-                <a href="#branch-paris" class="group bg-gradient-to-r from-[#1a150c] to-[#120e07] hover:from-yellow-950/60 hover:to-amber-900/40 border border-yellow-500/40 rounded-2xl p-5 flex items-center justify-between transition shadow-lg">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-xl font-black">
-                            <i class="fa-solid fa-tower-observation"></i>
-                        </div>
-                        <div>
-                            <span class="text-[11px] uppercase tracking-widest text-yellow-500 font-bold block">Cơ Sở 2</span>
-                            <h2 class="text-lg sm:text-xl font-black text-white group-hover:text-yellow-400 transition">KARAOKE PARIS</h2>
-                            <p class="text-xs text-gray-400 mt-0.5"><i class="fa-solid fa-location-dot text-yellow-500 mr-1"></i><span id="quickAddr2">69 Trần Thái Tông, Hà Nội</span></p>
-                        </div>
+        <!-- DANH SÁCH PHÒNG & BỘ LỌC (CHỈ GIỮ LẠI 69 TRẦN THÁI TÔNG) -->
+        <section id="rooms-section" class="py-16 bg-gradient-to-b from-[#0d0a06] to-[#080705]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-yellow-500/20">
+                    <div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-extrabold uppercase tracking-widest mb-3">
+                            <i class="fa-solid fa-door-open mr-1.5"></i> Hệ Thống Phòng Hát
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
+                            Lựa Chọn <span class="text-yellow-400">Hạng Phòng</span>
+                        </h2>
+                        <p class="text-sm text-gray-400 mt-2">Chọn nhanh phòng Nhỏ, phòng To hoặc các hạng phòng VIP khác do cơ sở cung cấp.</p>
                     </div>
-                    <span class="bg-yellow-500 text-black text-xs font-extrabold px-4 py-2.5 rounded-xl group-hover:scale-105 transition whitespace-nowrap">
-                        Xem Phòng <i class="fa-solid fa-arrow-down ml-1"></i>
-                    </span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- KHU VỰC CƠ SỞ 1: ROYAL KTV - 97 CẦU GIẤY -->
-    <section id="branch-royal" class="py-16 border-b border-yellow-600/20 bg-gradient-to-b from-[#0d0a06] to-[#080705]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-yellow-500/20">
-                <div>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-extrabold uppercase tracking-widest mb-3">
-                        <i class="fa-solid fa-star mr-1.5"></i> Điểm Đến Số 1
-                    </span>
-                    <h2 class="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
-                        ROYAL KTV <span class="text-yellow-400">– <span id="titleAddr1">97 CẦU GIẤY</span></span>
-                    </h2>
-                    <p class="text-sm text-gray-400 mt-2">Không gian Hoàng Gia tráng lệ, âm thanh sân khấu tiêu chuẩn quốc tế.</p>
+                    <!-- Bộ lọc loại phòng -->
+                    <div id="filterRoomsContainer" class="flex items-center space-x-2 overflow-x-auto mt-6 md:mt-0 pb-2"></div>
                 </div>
-                <div id="filterRoyalContainer" class="flex items-center space-x-2 overflow-x-auto mt-6 md:mt-0 pb-2"></div>
-            </div>
-            <div id="royalRoomsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-        </div>
-    </section>
 
-    <!-- KHU VỰC CƠ SỞ 2: KARAOKE PARIS - 69 TRẦN THÁI TÔNG -->
-    <section id="branch-paris" class="py-16 border-b border-yellow-600/20 bg-gradient-to-b from-[#080705] to-[#0d0a06]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-yellow-500/20">
-                <div>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-extrabold uppercase tracking-widest mb-3">
-                        <i class="fa-solid fa-crown mr-1.5"></i> Điểm Đến Số 2
-                    </span>
-                    <h2 class="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
-                        KARAOKE PARIS <span class="text-yellow-400">– <span id="titleAddr2">69 TRẦN THÁI TÔNG</span></span>
-                    </h2>
-                    <p class="text-sm text-gray-400 mt-2">Kiến trúc Paris hoa lệ, phòng hát sang trọng bậc nhất khu vực Cầu Giấy.</p>
-                </div>
-                <div id="filterParisContainer" class="flex items-center space-x-2 overflow-x-auto mt-6 md:mt-0 pb-2"></div>
+                <!-- Grid hiển thị danh sách phòng -->
+                <div id="parisRoomsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"></div>
             </div>
-            <div id="parisRoomsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-        </div>
-    </section>
+        </section>
+
+        <!-- SEO INTRO CONTENT SECTION -->
+        <section id="about-section" class="py-16 bg-[#0a0806] border-t border-yellow-600/20">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+                <h2 class="text-2xl sm:text-3xl font-black text-yellow-400 uppercase">Trải Nghiệm Đỉnh Cao Tại Karaoke Paris 69 Trần Thái Tông</h2>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    Tọa lạc tại vị trí đắc địa số <strong>69 Trần Thái Tông, quận Cầu Giấy, Hà Nội</strong>, <strong>Karaoke Paris</strong> là điểm hẹn lý tưởng cho những ai đang tìm kiếm không gian giải trí sang trọng, âm thanh sống động và dịch vụ chuyên nghiệp. Chúng tôi cung cấp hệ thống phòng hát đa dạng từ <em>phòng nhỏ</em> ấm cúng cho nhóm bạn đến các <em>phòng to</em>, phòng VIP hoành tráng phục vụ liên hoan, hội nghị và sinh nhật.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
+                    <div class="bg-black/60 p-6 rounded-2xl border border-yellow-500/20">
+                        <i class="fa-solid fa-volume-high text-yellow-400 text-2xl mb-3"></i>
+                        <h3 class="font-bold text-white text-sm mb-1">Âm Thanh Chuẩn Quốc Tế</h3>
+                        <p class="text-xs text-gray-400">Loa, Amply và hệ thống xử lý âm thanh thế hệ mới mang lại trải nghiệm ca hát hoàn hảo.</p>
+                    </div>
+                    <div class="bg-black/60 p-6 rounded-2xl border border-yellow-500/20">
+                        <i class="fa-solid fa-wand-magic-sparkles text-yellow-400 text-2xl mb-3"></i>
+                        <h3 class="font-bold text-white text-sm mb-1">Không Gian Hoa Lệ</h3>
+                        <p class="text-xs text-gray-400">Thiết kế nội thất hoàng gia kết hợp đèn LED chuyển động tạo chiều sâu và sự đẳng cấp.</p>
+                    </div>
+                    <div class="bg-black/60 p-6 rounded-2xl border border-yellow-500/20">
+                        <i class="fa-solid fa-headset text-yellow-400 text-2xl mb-3"></i>
+                        <h3 class="font-bold text-white text-sm mb-1">Booking Nhanh 24/7</h3>
+                        <p class="text-xs text-gray-400">Hỗ trợ giữ chỗ qua Zalo và Hotline nhanh chóng, không cần chờ đợi khi đến quán.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- FOOTER -->
     <footer id="contact" class="bg-[#050403] border-t border-yellow-600/30 py-14">
@@ -151,14 +136,13 @@
                     <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-yellow-600 to-amber-300 flex items-center justify-center text-black">
                         <i class="fa-solid fa-crown"></i>
                     </div>
-                    <span class="text-lg font-black text-yellow-400 uppercase">ROYAL KTV & KARAOKE PARIS</span>
+                    <span class="text-lg font-black text-yellow-400 uppercase">KARAOKE PARIS</span>
                 </div>
                 <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    Hai điểm đến – Một đẳng cấp giải trí. Hệ thống phòng hát sang trọng, đẳng cấp và chuyên nghiệp hàng đầu tại Hà Nội.
+                    Điểm đến giải trí hàng đầu khu vực Cầu Giấy, Hà Nội. Hệ thống phòng hát sang trọng, đẳng cấp và chuyên nghiệp.
                 </p>
                 <div class="space-y-2 text-xs text-gray-300">
-                    <p><i class="fa-solid fa-location-dot text-yellow-500 mr-2"></i><strong>Cơ sở 1 (Royal KTV):</strong> <span id="footerAddr1">97 Cầu Giấy, Hà Nội</span></p>
-                    <p><i class="fa-solid fa-location-dot text-yellow-500 mr-2"></i><strong>Cơ sở 2 (Karaoke Paris):</strong> <span id="footerAddr2">69 Trần Thái Tông, Hà Nội</span></p>
+                    <p><i class="fa-solid fa-location-dot text-yellow-500 mr-2"></i><strong>Địa chỉ:</strong> <span id="footerAddr">69 Trần Thái Tông, Cầu Giấy, Hà Nội</span></p>
                 </div>
             </div>
 
@@ -190,7 +174,7 @@
             <div>
                 <h3 class="text-yellow-400 font-extrabold text-sm uppercase tracking-wider mb-4">Quản Trị Viên</h3>
                 <p class="text-xs text-gray-400 leading-relaxed mb-4">
-                    Dành cho chủ cơ sở để thay đổi hình ảnh trang chủ, thêm loại phòng mới, cập nhật ảnh phòng và đồng bộ lên mọi thiết bị.
+                    Dành cho chủ cơ sở để thêm loại phòng mới, cập nhật ảnh phòng, đổi ảnh banner và đồng bộ lên mọi thiết bị.
                 </p>
                 <button onclick="openAdminModal()" class="bg-[#1a150c] hover:bg-yellow-500 hover:text-black text-yellow-400 text-xs font-extrabold px-5 py-3 rounded-xl transition border border-yellow-500/40">
                     <i class="fa-solid fa-user-shield mr-1.5"></i> Mở Bảng Quản Trị (Admin)
@@ -198,7 +182,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-gray-900 text-center text-xs text-gray-600">
-            &copy; 2026 Royal KTV (97 Cầu Giấy) & Karaoke Paris (69 Trần Thái Tông). All rights reserved.
+            &copy; 2026 Karaoke Paris (69 Trần Thái Tông, Cầu Giấy, Hà Nội). All rights reserved.
         </div>
     </footer>
 
@@ -231,7 +215,7 @@
                         <i class="fa-solid fa-sliders"></i>
                     </div>
                     <div>
-                        <h2 class="text-base sm:text-lg font-black text-white uppercase">Quản Trị Hệ Thống Royal & Paris KTV</h2>
+                        <h2 class="text-base sm:text-lg font-black text-white uppercase">Quản Trị Karaoke Paris (69 Trần Thái Tông)</h2>
                         <span class="text-xs text-green-400 flex items-center mt-0.5"><span class="w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span> Tự động nén ảnh HD • Đồng bộ mọi thiết bị</span>
                     </div>
                 </div>
@@ -244,9 +228,8 @@
                 </div>
             </div>
 
-            <!-- Hướng dẫn đồng bộ nhanh -->
             <div class="bg-green-950/40 border-b border-green-500/30 px-6 py-2.5 text-xs text-green-300 flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-info mr-1.5"></i><strong>Mẹo quan trọng:</strong> Sau khi thêm ảnh/phòng trên máy tính, hãy bấm nút màu xanh lá <strong>"Đồng Bộ Lên Mọi Điện Thoại"</strong> ở góc trên rồi dán vào file <code>index.html</code> trên GitHub để mọi điện thoại đều thấy ảnh.</span>
+                <span><i class="fa-solid fa-circle-info mr-1.5"></i><strong>Mẹo quan trọng:</strong> Sau khi thêm phòng hoặc đổi ảnh, hãy bấm nút <strong>"Đồng Bộ Lên Mọi Điện Thoại"</strong> rồi dán code vào GitHub để mọi thiết bị đều thấy.</span>
             </div>
 
             <!-- Tabs Admin -->
@@ -255,21 +238,19 @@
                     <i class="fa-solid fa-door-open mr-2"></i>1. Quản Lý Phòng & Loại Phòng
                 </button>
                 <button type="button" onclick="switchAdminTab('settings')" id="tabBtnSettings" class="py-3.5 px-4 text-xs font-extrabold text-gray-400 hover:text-white border-b-2 border-transparent transition whitespace-nowrap uppercase tracking-wider">
-                    <i class="fa-solid fa-image mr-2"></i>2. Đổi Ảnh Trang Chủ & Hotline / Zalo
+                    <i class="fa-solid fa-image mr-2"></i>2. Đổi Ảnh Banner & Liên Hệ
                 </button>
             </div>
 
             <!-- Nội dung Admin -->
             <div class="p-5 sm:p-6 overflow-y-auto flex-grow space-y-8">
-                
-                <!-- TAB 1: QUẢN LÝ LOẠI PHÒNG & DANH SÁCH PHÒNG -->
+                <!-- TAB 1: PHÒNG & LOẠI PHÒNG -->
                 <div id="adminTabRooms" class="space-y-8">
-                    <!-- Quản lý Loại Phòng -->
                     <div class="bg-black/80 border border-yellow-500/30 rounded-2xl p-5">
                         <h3 class="text-sm font-extrabold text-yellow-400 uppercase tracking-wider mb-2">
                             <i class="fa-solid fa-tags mr-1.5"></i> Quản Lý Các Loại Phòng (Hạng Phòng)
                         </h3>
-                        <p class="text-xs text-gray-400 mb-4">Mặc định gồm <strong>Phòng Nhỏ</strong> và <strong>Phòng To</strong>. Bạn có thể thêm loại phòng mới tại đây:</p>
+                        <p class="text-xs text-gray-400 mb-4">Mặc định gồm <strong>Phòng Nhỏ</strong> và <strong>Phòng To</strong>. Bạn có thể thêm loại phòng mới nếu cơ sở có thêm:</p>
                         
                         <div class="flex flex-wrap gap-2 mb-4" id="roomTypesBadgeList"></div>
 
@@ -281,12 +262,11 @@
                         </div>
                     </div>
 
-                    <!-- Danh sách Phòng ở 2 Cơ Sở -->
                     <div>
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                             <div>
-                                <h3 class="font-extrabold text-white text-base">Danh Sách Phòng Hiện Có (<span id="totalRoomsCount">0</span> phòng)</h3>
-                                <p class="text-xs text-gray-400">Bấm "Thêm Phòng Mới" hoặc bấm biểu tượng cây bút để sửa ảnh và thông tin từng phòng.</p>
+                                <h3 class="font-extrabold text-white text-base">Danh Sách Phòng (<span id="totalRoomsCount">0</span> phòng)</h3>
+                                <p class="text-xs text-gray-400">Bấm "Thêm Phòng Mới" hoặc bấm biểu tượng cây bút để sửa thông tin.</p>
                             </div>
                             <button type="button" onclick="openRoomModal()" class="bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 text-black text-xs font-extrabold px-5 py-3 rounded-xl shadow-lg transition">
                                 <i class="fa-solid fa-plus mr-1.5"></i> Thêm Phòng Mới
@@ -297,7 +277,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: CÀI ĐẶT ẢNH TRANG CHỦ & LIÊN HỆ -->
+                <!-- TAB 2: CÀI ĐẶT -->
                 <div id="adminTabSettings" class="hidden max-w-2xl space-y-6">
                     <div class="bg-black/80 border border-yellow-500/30 rounded-2xl p-5 space-y-4">
                         <h3 class="text-sm font-extrabold text-yellow-400 uppercase">1. Ảnh Banner Lớn Đầu Trang Chủ</h3>
@@ -307,7 +287,7 @@
                         <p id="bannerUploadStatus" class="text-xs text-green-400 font-bold hidden"></p>
 
                         <div>
-                            <label class="block text-[11px] text-gray-400 mb-1">Hoặc nhập đường dẫn / tên file ảnh trên GitHub (Mặc định: <code>banner.jpg</code>):</label>
+                            <label class="block text-[11px] text-gray-400 mb-1">Hoặc nhập đường dẫn ảnh (Mặc định: <code>banner.jpg</code>):</label>
                             <input type="text" id="settingBannerUrl" class="w-full bg-[#120f0a] border border-gray-800 rounded-xl px-4 py-2 text-white text-xs">
                         </div>
 
@@ -331,15 +311,9 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-300 mb-1">Địa chỉ Cơ sở 1 (Royal KTV)</label>
-                                <input type="text" id="settingAddr1" class="w-full bg-[#120f0a] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-300 mb-1">Địa chỉ Cơ sở 2 (Karaoke Paris)</label>
-                                <input type="text" id="settingAddr2" class="w-full bg-[#120f0a] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
-                            </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">Địa chỉ cơ sở</label>
+                            <input type="text" id="settingAddr" class="w-full bg-[#120f0a] border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm">
                         </div>
 
                         <button type="button" onclick="saveSettings()" class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold py-3.5 rounded-xl text-sm transition uppercase">
@@ -347,7 +321,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -363,21 +336,13 @@
                 <input type="hidden" id="roomImageBase64">
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Chọn Cơ Sở *</label>
-                    <select id="roomBranch" class="w-full bg-black border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-yellow-500">
-                        <option value="royal">Cơ sở 1: ROYAL KTV (97 Cầu Giấy)</option>
-                        <option value="paris">Cơ sở 2: KARAOKE PARIS (69 Trần Thái Tông)</option>
-                    </select>
-                </div>
-
-                <div>
                     <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Chọn Loại Phòng *</label>
                     <select id="roomTypeSelect" class="w-full bg-black border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-yellow-500"></select>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Tên Phòng Hiển Thị *</label>
-                    <input type="text" id="roomName" required placeholder="VD: Phòng Nhỏ Royal 01 / Phòng To VIP" class="w-full bg-black border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-yellow-500">
+                    <input type="text" id="roomName" required placeholder="VD: Phòng Nhỏ Paris 01 / Phòng VIP" class="w-full bg-black border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-yellow-500">
                 </div>
 
                 <div>
@@ -397,7 +362,7 @@
 
                 <div>
                     <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Mô tả chi tiết tiện ích</label>
-                    <textarea id="roomDesc" rows="2" placeholder="VD: Âm thanh cực hay, màn hình LED, sofa hoàng gia..." class="w-full bg-black border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-yellow-500"></textarea>
+                    <textarea id="roomDesc" rows="2" placeholder="VD: Âm thanh cực hay, màn hình LED..." class="w-full bg-black border border-gray-800 rounded-xl px-4 py-2.5 text-white text-sm focus:border-yellow-500"></textarea>
                 </div>
 
                 <button type="submit" id="saveRoomBtn" class="w-full bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 text-black font-extrabold py-3.5 rounded-xl text-sm transition uppercase shadow-lg">
@@ -410,30 +375,11 @@
     <!-- JAVASCRIPT HỆ THỐNG -->
     <script>
         /*__START_SYNC_DATA__*/
-        const dataVersion = "v8_default";
+        const dataVersion = "v9_default";
         const defaultRoomTypes = ["Phòng Nhỏ", "Phòng To"];
         const defaultRooms = [
             {
-                id: 101,
-                branch: "royal",
-                type: "Phòng Nhỏ",
-                name: "Phòng Nhỏ Royal (5 – 10 Khách)",
-                price: "Sức chứa: 5 - 10 người",
-                image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop",
-                desc: "Không gian ấm cúng, riêng tư chuẩn phong cách Hoàng Gia tại 97 Cầu Giấy. Hệ thống âm thanh đời mới cực ấm."
-            },
-            {
-                id: 102,
-                branch: "royal",
-                type: "Phòng To",
-                name: "Phòng To VIP Royal (15 – 30 Khách)",
-                price: "Sức chứa: 15 - 30 người",
-                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
-                desc: "Không gian đại sảnh rộng lớn tại Royal 97 Cầu Giấy, sân khấu ánh sáng LED hiện đại, thích hợp tổ chức sinh nhật, liên hoan, tiếp khách."
-            },
-            {
                 id: 201,
-                branch: "paris",
                 type: "Phòng Nhỏ",
                 name: "Phòng Nhỏ Paris (5 – 10 Khách)",
                 price: "Sức chứa: 5 - 10 người",
@@ -442,7 +388,6 @@
             },
             {
                 id: 202,
-                branch: "paris",
                 type: "Phòng To",
                 name: "Phòng To Super VIP Paris (15 – 35 Khách)",
                 price: "Sức chứa: 15 - 35 người",
@@ -454,17 +399,15 @@
             bannerUrl: "banner.jpg",
             hotline: "0869.806.906",
             zaloLink: "https://zalo.me/0869806906",
-            addr1: "97 Cầu Giấy, Hà Nội",
-            addr2: "69 Trần Thái Tông, Hà Nội"
+            addr: "69 Trần Thái Tông, Cầu Giấy, Hà Nội"
         };
         /*__END_SYNC_DATA__*/
 
-        // Tự động đồng bộ phiên bản mới nhất trên điện thoại khách hàng
-        if (localStorage.getItem('ktv_data_version') !== dataVersion) {
-            localStorage.setItem('ktv_room_types_v8', JSON.stringify(defaultRoomTypes));
-            localStorage.setItem('ktv_rooms_v8', JSON.stringify(defaultRooms));
-            localStorage.setItem('ktv_settings_v8', JSON.stringify(defaultSettings));
-            localStorage.setItem('ktv_data_version', dataVersion);
+        if (localStorage.getItem('ktv_data_version_v9') !== dataVersion) {
+            localStorage.setItem('ktv_room_types_v9', JSON.stringify(defaultRoomTypes));
+            localStorage.setItem('ktv_rooms_v9', JSON.stringify(defaultRooms));
+            localStorage.setItem('ktv_settings_v9', JSON.stringify(defaultSettings));
+            localStorage.setItem('ktv_data_version_v9', dataVersion);
         }
 
         function showToast(msg) {
@@ -516,12 +459,11 @@
             }
         }
 
-        let roomTypes = getStored('ktv_room_types_v8', defaultRoomTypes);
-        let rooms = getStored('ktv_rooms_v8', defaultRooms);
-        let settings = getStored('ktv_settings_v8', defaultSettings);
+        let roomTypes = getStored('ktv_room_types_v9', defaultRoomTypes);
+        let rooms = getStored('ktv_rooms_v9', defaultRooms);
+        let settings = getStored('ktv_settings_v9', defaultSettings);
 
-        let filterRoyal = 'all';
-        let filterParis = 'all';
+        let currentFilter = 'all';
 
         function initUI() {
             const heroImg = document.getElementById('heroMainImage');
@@ -539,63 +481,43 @@
             document.getElementById('headerZaloBtn').href = settings.zaloLink;
             document.getElementById('footerZaloBtn').href = settings.zaloLink;
 
-            document.getElementById('quickAddr1').innerText = settings.addr1;
-            document.getElementById('titleAddr1').innerText = settings.addr1.toUpperCase();
-            document.getElementById('footerAddr1').innerText = settings.addr1;
-
-            document.getElementById('quickAddr2').innerText = settings.addr2;
-            document.getElementById('titleAddr2').innerText = settings.addr2.toUpperCase();
-            document.getElementById('footerAddr2').innerText = settings.addr2;
+            document.getElementById('footerAddr').innerText = settings.addr;
 
             renderFilters();
-            renderBranchRooms('royal', filterRoyal, 'royalRoomsGrid');
-            renderBranchRooms('paris', filterParis, 'parisRoomsGrid');
+            renderRooms(currentFilter);
         }
 
         function renderFilters() {
-            const royalContainer = document.getElementById('filterRoyalContainer');
-            const parisContainer = document.getElementById('filterParisContainer');
-
-            let royalHTML = `<button type="button" onclick="setBranchFilter('royal', 'all')" class="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition ${filterRoyal === 'all' ? 'bg-yellow-500 text-black shadow-md' : 'bg-[#17130c] text-gray-300 border border-yellow-500/20 hover:text-yellow-400'}">Tất Cả</button>`;
-            let parisHTML = `<button type="button" onclick="setBranchFilter('paris', 'all')" class="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition ${filterParis === 'all' ? 'bg-yellow-500 text-black shadow-md' : 'bg-[#17130c] text-gray-300 border border-yellow-500/20 hover:text-yellow-400'}">Tất Cả</button>`;
+            const container = document.getElementById('filterRoomsContainer');
+            let html = `<button type="button" onclick="setFilter('all')" class="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition ${currentFilter === 'all' ? 'bg-yellow-500 text-black shadow-md' : 'bg-[#17130c] text-gray-300 border border-yellow-500/20 hover:text-yellow-400'}">Tất Cả Phòng</button>`;
 
             roomTypes.forEach(type => {
-                royalHTML += `<button type="button" onclick="setBranchFilter('royal', '${type}')" class="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition ${filterRoyal === type ? 'bg-yellow-500 text-black shadow-md' : 'bg-[#17130c] text-gray-300 border border-yellow-500/20 hover:text-yellow-400'}">${type}</button>`;
-                parisHTML += `<button type="button" onclick="setBranchFilter('paris', '${type}')" class="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition ${filterParis === type ? 'bg-yellow-500 text-black shadow-md' : 'bg-[#17130c] text-gray-300 border border-yellow-500/20 hover:text-yellow-400'}">${type}</button>`;
+                html += `<button type="button" onclick="setFilter('${type}')" class="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition ${currentFilter === type ? 'bg-yellow-500 text-black shadow-md' : 'bg-[#17130c] text-gray-300 border border-yellow-500/20 hover:text-yellow-400'}">${type}</button>`;
             });
 
-            royalContainer.innerHTML = royalHTML;
-            parisContainer.innerHTML = parisHTML;
+            container.innerHTML = html;
         }
 
-        function setBranchFilter(branch, type) {
-            if (branch === 'royal') {
-                filterRoyal = type;
-                renderFilters();
-                renderBranchRooms('royal', filterRoyal, 'royalRoomsGrid');
-            } else {
-                filterParis = type;
-                renderFilters();
-                renderBranchRooms('paris', filterParis, 'parisRoomsGrid');
-            }
+        function setFilter(type) {
+            currentFilter = type;
+            renderFilters();
+            renderRooms(currentFilter);
         }
 
-        function renderBranchRooms(branchKey, filterType, containerId) {
-            const container = document.getElementById(containerId);
+        function renderRooms(filterType) {
+            const container = document.getElementById('parisRoomsGrid');
             container.innerHTML = '';
 
             const cleanPhone = settings.hotline.replace(/[^0-9+]/g, '');
-            let list = rooms.filter(r => r.branch === branchKey);
+            let list = rooms;
             if (filterType !== 'all') {
-                list = list.filter(r => r.type === filterType);
+                list = rooms.filter(r => r.type === filterType);
             }
 
             if (list.length === 0) {
-                container.innerHTML = `<div class="col-span-2 text-center py-12 bg-[#120f0a] rounded-3xl border border-yellow-500/20 text-gray-400 text-sm">Chưa có phòng nào thuộc mục "${filterType}" tại cơ sở này.</div>`;
+                container.innerHTML = `<div class="col-span-2 text-center py-12 bg-[#120f0a] rounded-3xl border border-yellow-500/20 text-gray-400 text-sm">Chưa có phòng nào thuộc mục "${filterType}".</div>`;
                 return;
             }
-
-            const branchTitle = branchKey === 'royal' ? 'ROYAL KTV - ' + settings.addr1 : 'KARAOKE PARIS - ' + settings.addr2;
 
             list.forEach(r => {
                 container.innerHTML += `
@@ -614,7 +536,7 @@
                         <div class="p-6 pt-2 flex flex-col justify-between flex-grow">
                             <div>
                                 <span class="text-[11px] font-bold text-yellow-500/90 uppercase tracking-wider block mb-1">
-                                    <i class="fa-solid fa-location-dot mr-1"></i>${branchTitle}
+                                    <i class="fa-solid fa-location-dot mr-1"></i>KARAOKE PARIS - ${settings.addr}
                                 </span>
                                 <h3 class="text-xl font-black text-white mb-2 group-hover:text-yellow-400 transition">${r.name}</h3>
                                 <p class="text-xs text-gray-300 mb-6 leading-relaxed">${r.desc}</p>
@@ -682,8 +604,7 @@
             document.getElementById('adminBannerPreview').src = settings.bannerUrl;
             document.getElementById('settingHotline').value = settings.hotline;
             document.getElementById('settingZaloLink').value = settings.zaloLink;
-            document.getElementById('settingAddr1').value = settings.addr1;
-            document.getElementById('settingAddr2').value = settings.addr2;
+            document.getElementById('settingAddr').value = settings.addr;
         }
 
         function renderAdminRoomTypes() {
@@ -705,7 +626,7 @@
             if (!val) return alert('Vui lòng nhập tên loại phòng!');
             if (!roomTypes.includes(val)) {
                 roomTypes.push(val);
-                saveStored('ktv_room_types_v8', roomTypes);
+                saveStored('ktv_room_types_v9', roomTypes);
                 input.value = '';
                 renderAdminRoomTypes();
                 initUI();
@@ -719,7 +640,7 @@
             if (roomTypes.length <= 1) return alert('Cần giữ lại ít nhất 1 loại phòng!');
             if (confirm('Xóa loại phòng "' + roomTypes[idx] + '"?')) {
                 roomTypes.splice(idx, 1);
-                saveStored('ktv_room_types_v8', roomTypes);
+                saveStored('ktv_room_types_v9', roomTypes);
                 renderAdminRoomTypes();
                 initUI();
                 showToast('Đã xóa loại phòng!');
@@ -731,12 +652,11 @@
             document.getElementById('totalRoomsCount').innerText = rooms.length;
             list.innerHTML = '';
             rooms.forEach(r => {
-                const branchLabel = r.branch === 'royal' ? 'Royal KTV (97 Cầu Giấy)' : 'Karaoke Paris (69 Trần Thái Tông)';
                 list.innerHTML += `
                     <div class="bg-black p-4 rounded-2xl border border-gray-800 flex items-center justify-between space-x-4 hover:border-yellow-500/40 transition">
                         <img src="${r.image}" class="w-16 h-16 rounded-xl object-cover flex-shrink-0 border border-yellow-500/30 bg-gray-900">
                         <div class="flex-grow min-w-0">
-                            <span class="text-[10px] uppercase font-extrabold text-yellow-500 block truncate">${branchLabel} • ${r.type}</span>
+                            <span class="text-[10px] uppercase font-extrabold text-yellow-500 block truncate">${r.type}</span>
                             <h4 class="font-bold text-white text-sm truncate">${r.name}</h4>
                             <p class="text-gray-400 text-xs truncate">${r.price}</p>
                         </div>
@@ -764,7 +684,6 @@
                 document.getElementById('roomModalTitle').innerText = 'Chỉnh Sửa Thông Tin Phòng';
                 const r = rooms.find(x => x.id == id);
                 document.getElementById('roomId').value = r.id;
-                document.getElementById('roomBranch').value = r.branch;
                 document.getElementById('roomTypeSelect').value = r.type;
                 document.getElementById('roomName').value = r.name;
                 document.getElementById('roomPrice').value = r.price;
@@ -776,11 +695,10 @@
             } else {
                 document.getElementById('roomModalTitle').innerText = 'Thêm Phòng Mới';
                 document.getElementById('roomId').value = '';
-                document.getElementById('roomBranch').value = 'royal';
                 document.getElementById('roomTypeSelect').value = roomTypes[0] || 'Phòng Nhỏ';
                 document.getElementById('roomName').value = '';
                 document.getElementById('roomPrice').value = '';
-                document.getElementById('roomImageBase64').value = 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop';
+                document.getElementById('roomImageBase64').value = 'https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=800&auto=format&fit=crop';
                 document.getElementById('roomDesc').value = '';
                 document.getElementById('roomPreviewBox').classList.add('hidden');
             }
@@ -808,7 +726,6 @@
         function handleRoomSubmit(e) {
             e.preventDefault();
             const id = document.getElementById('roomId').value;
-            const branch = document.getElementById('roomBranch').value;
             const type = document.getElementById('roomTypeSelect').value;
             const name = document.getElementById('roomName').value.trim();
             const price = document.getElementById('roomPrice').value.trim();
@@ -816,15 +733,14 @@
             const desc = document.getElementById('roomDesc').value.trim();
 
             if (id) {
-                rooms = rooms.map(r => r.id == id ? { ...r, branch, type, name, price, image, desc } : r);
+                rooms = rooms.map(r => r.id == id ? { ...r, type, name, price, image, desc } : r);
             } else {
-                rooms.unshift({ id: Date.now(), branch, type, name, price, image, desc });
+                rooms.unshift({ id: Date.now(), type, name, price, image, desc });
             }
 
-            filterRoyal = 'all';
-            filterParis = 'all';
+            currentFilter = 'all';
 
-            if (saveStored('ktv_rooms_v8', rooms)) {
+            if (saveStored('ktv_rooms_v9', rooms)) {
                 closeModal('roomModal');
                 renderAdminRoomsList();
                 initUI();
@@ -835,7 +751,7 @@
         function deleteRoom(id) {
             if (confirm('Bạn có chắc chắn muốn xóa phòng này?')) {
                 rooms = rooms.filter(r => r.id != id);
-                saveStored('ktv_rooms_v8', rooms);
+                saveStored('ktv_rooms_v9', rooms);
                 renderAdminRoomsList();
                 initUI();
                 showToast('Đã xóa phòng!');
@@ -855,7 +771,7 @@
                 document.getElementById('settingBannerUrl').value = '(Đang dùng ảnh tải trực tiếp từ máy)';
                 document.getElementById('adminBannerPreview').src = compressedBase64;
                 
-                if (saveStored('ktv_settings_v8', settings)) {
+                if (saveStored('ktv_settings_v9', settings)) {
                     initUI();
                     statusEl.innerText = '✓ Đã cập nhật ảnh trang chủ thành công!';
                     showToast('Đã đổi ảnh Banner trang chủ!');
@@ -870,23 +786,21 @@
             }
             settings.hotline = document.getElementById('settingHotline').value.trim() || '0869.806.906';
             settings.zaloLink = document.getElementById('settingZaloLink').value.trim() || 'https://zalo.me/0869806906';
-            settings.addr1 = document.getElementById('settingAddr1').value.trim() || '97 Cầu Giấy, Hà Nội';
-            settings.addr2 = document.getElementById('settingAddr2').value.trim() || '69 Trần Thái Tông, Hà Nội';
+            settings.addr = document.getElementById('settingAddr').value.trim() || '69 Trần Thái Tông, Cầu Giấy, Hà Nội';
 
-            if (saveStored('ktv_settings_v8', settings)) {
+            if (saveStored('ktv_settings_v9', settings)) {
                 initUI();
                 showToast('Đã lưu toàn bộ cài đặt!');
             }
         }
 
-        // HÀM XUẤT TOÀN BỘ MÃ NGUỒN ĐÃ GẮN SẴN ẢNH ĐỂ ĐỒNG BỘ LÊN MỌI ĐIỆN THOẠI
         async function exportSyncedHTML() {
             try {
                 const res = await fetch(window.location.href, { cache: 'no-store' });
                 let htmlText = await res.text();
 
                 const newSyncBlock = `/*__START_SYNC_DATA__*/
-        const dataVersion = "v8_${Date.now()}";
+        const dataVersion = "v9_${Date.now()}";
         const defaultRoomTypes = ${JSON.stringify(roomTypes, null, 8)};
         const defaultRooms = ${JSON.stringify(rooms, null, 8)};
         const defaultSettings = ${JSON.stringify(settings, null, 8)};
