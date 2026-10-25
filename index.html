@@ -30,7 +30,6 @@
     <!-- HEADER NAVIGATION -->
     <header class="sticky top-0 z-50 bg-[#0b0f19]/95 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- LOGO / TRANG CHỦ -->
             <a href="https://parisktv.top" class="flex items-center space-x-3 group cursor-pointer">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition">
                     <i class="fa-solid fa-crown text-white text-lg"></i>
@@ -64,25 +63,30 @@
         </div>
     </header>
 
-    <!-- HERO BANNER SECTION -->
-    <section class="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-[#0b0f19] via-[#07090e] to-[#07090e] border-b border-gray-900">
-        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#db2777_1px,transparent_1px)] [background-size:20px_20px]"></div>
+    <!-- HERO BANNER SECTION (ĐÃ THÊM ẢNH NỀN MINH HỌA HOÀNH TRÁNG) -->
+    <section class="relative py-32 lg:py-48 overflow-hidden border-b border-gray-900 flex items-center justify-center">
+        <!-- Background Image với hiệu ứng phủ tối sang trọng -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=1600&auto=format&fit=crop" alt="Nightlife Background" class="w-full h-full object-cover filter brightness-50 transform scale-105 animate-pulse duration-1000">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#07090e] via-[#07090e]/70 to-transparent"></div>
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <span class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-6">
-                <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+            <span class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-brand-500/20 border border-brand-500/40 text-brand-300 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-ping"></span>
                 <span>Hệ Thống Booking Nightlife Đẳng Cấp Sài Gòn</span>
             </span>
-            <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight mb-6">
-                ĐẶT BÀN & PHÒNG VIP <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-400">NHANH CHÓNG</span>
+            <h1 class="text-4xl sm:text-7xl font-black text-white tracking-tight mb-6 drop-shadow-lg">
+                ĐẶT BÀN & PHÒNG VIP <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-400">ĐỈNH CAO</span>
             </h1>
-            <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-400 mb-10">
-                Lựa chọn không gian giải trí đỉnh cao: Karaoke sang trọng, phòng VIP party, âm thanh ánh sáng chuẩn mực cùng nhiều ưu đãi giữ chỗ độc quyền.
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-300 mb-10 drop-shadow">
+                Trải nghiệm không gian giải trí xa hoa, âm thanh ánh sáng đỉnh cao cùng dịch vụ đặt chỗ nhanh chóng và bảo đảm tuyệt đối.
             </p>
             <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="#booking" class="w-full sm:w-auto bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-brand-500/25 transition transform hover:-translate-y-0.5">
-                    <i class="fa-solid fa-calendar-check mr-2"></i> ĐẶT BÀN NGAY
+                <a href="#booking" class="w-full sm:w-auto bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 text-white font-extrabold px-8 py-4 rounded-2xl shadow-2xl shadow-brand-500/40 transition transform hover:-scale-105 text-sm uppercase tracking-wider">
+                    <i class="fa-solid fa-calendar-check mr-2"></i> ĐẶT BÀN NGAY LẬP TỨC
                 </a>
-                <a id="heroZaloLink" href="https://zalo.me/0869806906" target="_blank" class="w-full sm:w-auto bg-gray-900 hover:bg-gray-800 text-white font-bold px-8 py-4 rounded-xl border border-gray-800 transition flex items-center justify-center space-x-2">
+                <a id="heroZaloLink" href="https://zalo.me/0869806906" target="_blank" class="w-full sm:w-auto bg-gray-900/80 hover:bg-gray-800 text-white font-bold px-8 py-4 rounded-2xl border border-gray-700 backdrop-blur-md transition flex items-center justify-center space-x-2 text-sm">
                     <i class="fa-solid fa-comment-dots text-blue-400 text-lg"></i>
                     <span>Tư Vấn Nhanh Qua Zalo</span>
                 </a>
@@ -417,9 +421,9 @@
             return data ? JSON.parse(data) : fallback;
         }
 
-        let services = getStoredData('ktv_services_v4', defaultServices);
-        let settings = getStoredData('ktv_settings_v4', defaultSettings);
-        let bookings = getStoredData('ktv_bookings_v4', []);
+        let services = getStoredData('ktv_services_v5', defaultServices);
+        let settings = getStoredData('ktv_settings_v5', defaultSettings);
+        let bookings = getStoredData('ktv_bookings_v5', []);
         let currentFilter = 'all';
 
         function initUI() {
@@ -520,7 +524,7 @@
             };
 
             bookings.unshift(newBooking);
-            localStorage.setItem('ktv_bookings_v4', JSON.stringify(bookings));
+            localStorage.setItem('ktv_bookings_v5', JSON.stringify(bookings));
 
             document.getElementById('bookingForm').reset();
             const successBox = document.getElementById('bookingSuccessBox');
@@ -636,14 +640,14 @@
 
         function updateBookingStatus(id, status) {
             bookings = bookings.map(b => b.id === id ? {...b, status} : b);
-            localStorage.setItem('ktv_bookings_v4', JSON.stringify(bookings));
+            localStorage.setItem('ktv_bookings_v5', JSON.stringify(bookings));
             loadBookingsTable();
         }
 
         function deleteBooking(id) {
             if(confirm('Bạn có chắc chắn muốn xóa đơn đặt bàn này?')) {
                 bookings = bookings.filter(b => b.id !== id);
-                localStorage.setItem('ktv_bookings_v4', JSON.stringify(bookings));
+                localStorage.setItem('ktv_bookings_v5', JSON.stringify(bookings));
                 loadBookingsTable();
             }
         }
@@ -712,7 +716,7 @@
                 services.push({ id: Date.now(), name, category, price, image, desc });
             }
 
-            localStorage.setItem('ktv_services_v4', JSON.stringify(services));
+            localStorage.setItem('ktv_services_v5', JSON.stringify(services));
             closeModal('serviceModal');
             loadAdminServices();
             renderVenues(currentFilter);
@@ -722,7 +726,7 @@
         function deleteService(id) {
             if(confirm('Bạn có chắc chắn muốn xóa mục này?')) {
                 services = services.filter(s => s.id !== id);
-                localStorage.setItem('ktv_services_v4', JSON.stringify(services));
+                localStorage.setItem('ktv_services_v5', JSON.stringify(services));
                 loadAdminServices();
                 renderVenues(currentFilter);
                 renderBookingSelect();
@@ -746,7 +750,7 @@
                 hotline: document.getElementById('settingHotline').value,
                 address: document.getElementById('settingAddress').value
             };
-            localStorage.setItem('ktv_settings_v4', JSON.stringify(settings));
+            localStorage.setItem('ktv_settings_v5', JSON.stringify(settings));
             initUI();
             alert('Lưu cấu hình thành công!');
         }
