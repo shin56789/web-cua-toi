@@ -30,8 +30,8 @@
     <!-- HEADER NAVIGATION -->
     <header class="sticky top-0 z-50 bg-[#0b0f19]/95 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- LOGO / TRANG CHỦ (Đã gắn hàm reload trang) -->
-            <a href="javascript:void(0)" onclick="location.reload()" class="flex items-center space-x-3 group cursor-pointer">
+            <!-- LOGO / TRANG CHỦ (Tải lại hoàn toàn, không dính dấu #) -->
+            <a href="https://parisktv.top" class="flex items-center space-x-3 group cursor-pointer">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition">
                     <i class="fa-solid fa-crown text-white text-lg"></i>
                 </div>
@@ -42,7 +42,7 @@
             </a>
             
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="javascript:void(0)" onclick="reloadPage()" class="hover:text-brand-400 transition">Trang Chủ</a>
+                <a href="https://parisktv.top" class="hover:text-brand-400 transition">Trang Chủ</a>
                 <a href="#venues" class="hover:text-brand-400 transition">Phòng & Địa Điểm Hot</a>
                 <a href="#booking" class="hover:text-brand-400 transition">Đặt Bàn / Đặt Phòng</a>
                 <a href="#contact" class="hover:text-brand-400 transition">Liên Hệ</a>
@@ -53,7 +53,7 @@
                     <i class="fa-solid fa-comment-dots text-sm"></i>
                     <span>Chat Zalo</span>
                 </a>
-                <a href="tel:0869806906" class="bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-lg shadow-brand-500/20 flex items-center space-x-2">
+                <a href="tel:0869806906" class="bg-gradient-to-r from-brand-600 to-purple-600 hover:from-brand-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-lg shadow-blue-600/20 flex items-center space-x-2">
                     <i class="fa-solid fa-phone"></i>
                     <span class="hidden sm:inline">Gọi Ngay</span>
                 </a>
@@ -421,10 +421,6 @@
         let settings = getStoredData('ktv_settings_v3', defaultSettings);
         let bookings = getStoredData('ktv_bookings_v3', []);
         let currentFilter = 'all';
-
-        function reloadPage() {
-            location.reload();
-        }
 
         function initUI() {
             document.getElementById('brandName').innerText = settings.brandName;
