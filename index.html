@@ -3,215 +3,2159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibe Karaoke - Đặt Phòng Trực Tuyến</title>
-    <!-- Tailwind CSS CDN -->
+    <title>PARIS KTV - 69 Trần Thái Tông, Cầu Giấy | Đặt Phòng Karaoke Đẳng Cấp</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        gold: {
+                            300: '#fde08d',
+                            400: '#f5c542',
+                            500: '#d4af37',
+                            600: '#aa820a',
+                        },
+                        obsidian: {
+                            950: '#07070c',
+                            900: '#0d0d17',
+                            800: '#151525',
+                            700: '#1f1f35',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Outfit', sans-serif; }
+        body {
+            background-color: #07070c;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        /* Luxury Gold Gradient Text */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #fff3c4 0%, #f5c542 45%, #d4af37 75%, #fff3c4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Luxury Gold Button Gradient */
+        .btn-gold {
+            background: linear-gradient(135deg, #f5c542 0%, #d4af37 50%, #b5891c 100%);
+            color: #09090f;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(245, 197, 66, 0.55);
+            filter: brightness(1.06);
+        }
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(21, 21, 37, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+        }
+        .glass-card-hover {
+            transition: all 0.35s ease;
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(245, 197, 66, 0.55);
+            box-shadow: 0 12px 35px -10px rgba(212, 175, 55, 0.25);
+            transform: translateY(-4px);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090910;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2e2e48;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+        /* Pulse Glow Animation */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 197, 66, 0.5); }
+            50% { box-shadow: 0 0 22px 6px rgba(245, 197, 66, 0.28); }
+        }
+        .pulse-gold {
+            animation: pulseGlow 2.5s infinite;
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px) scale(0.95); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        .toast-enter {
+            animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<body class="min-h-screen flex flex-col selection:bg-gold-500 selection:text-black">
 
-    <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-microphone-lines text-rose-500 text-2xl"></i>
-                <span class="text-xl font-bold tracking-wider text-white">VIBE <span class="text-rose-500">KARAOKE</span></span>
+    <!-- ==========================================
+         TOAST NOTIFICATION CONTAINER (UPLOAD & SYNC ALERTS)
+    =========================================== -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none px-2 sm:px-0"></div>
+
+    <!-- ==========================================
+         ADMIN ACTIVE TOP RIBBON (VISIBLE WHEN ADMIN MODE IS ON)
+    =========================================== -->
+    <div id="adminBanner" class="hidden bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 text-black px-4 py-2.5 text-xs sm:text-sm font-semibold shadow-lg z-50 sticky top-0">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="bg-black text-gold-400 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-shield"></i> Chế độ Admin đang bật
+                </span>
+                <span class="hidden md:inline font-medium">Bạn có thể sửa giá trực tiếp trên từng phòng, thêm phòng mới hoặc tải ảnh từ máy tính/điện thoại.</span>
             </div>
-            <nav class="hidden md:flex space-x-6 text-sm font-medium text-slate-300">
-                <a href="#rooms" class="hover:text-rose-500 transition">Danh Sách Phòng</a>
-                <a href="#booking" class="hover:text-rose-500 transition">Đặt Lịch Ngay</a>
-                <a href="#contact" class="hover:text-rose-500 transition">Liên Hệ & Ưu Đãi</a>
+            <div class="flex items-center gap-2 ml-auto">
+                <button type="button" onclick="openRoomModal()" class="bg-black/90 hover:bg-black text-gold-400 px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-plus-circle"></i> Thêm Phòng Mới
+                </button>
+                <button type="button" onclick="openAdminBookingsModal()" class="bg-black/90 hover:bg-black text-white px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-calendar-check text-gold-400"></i> Đơn Đặt (<span id="adminBookingCountBadge">0</span>)
+                </button>
+                <button type="button" onclick="toggleAdminMode(false)" class="bg-red-900/90 hover:bg-red-950 text-white px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                    Thoát Admin
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         STICKY HEADER & NAVIGATION BAR
+    =========================================== -->
+    <header class="sticky top-0 z-40 bg-obsidian-950/90 backdrop-blur-xl border-b border-gold-500/20 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
+            
+            <!-- LOGO: RELOADS FROM VERY BEGINNING WITHOUT ANY '#' HASH -->
+            <button type="button" onclick="reloadHomeFromTop(event)" title="Tải lại trang chủ từ đầu" class="group flex items-center gap-3 text-left focus:outline-none cursor-pointer">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400 via-gold-500 to-amber-700 p-0.5 shadow-lg shadow-gold-500/20 group-hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-obsidian-950 rounded-[14px] flex flex-col items-center justify-center">
+                        <i class="fa-solid fa-crown text-gold-400 text-lg leading-none"></i>
+                        <span class="text-[9px] font-extrabold tracking-widest text-gold-300 mt-0.5">KTV</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-serif text-xl sm:text-2xl font-extrabold tracking-wider text-gold-gradient">PARIS KTV</span>
+                        <span class="hidden sm:inline-block text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-gold-500/15 text-gold-400 border border-gold-500/30">69 Trần Thái Tông</span>
+                    </div>
+                    <p class="text-[11px] text-gray-400 flex items-center gap-1">
+                        <i class="fa-solid fa-location-dot text-gold-400"></i> Cầu Giấy, Hà Nội • <span class="text-gold-300 font-medium">0386.342.147</span>
+                    </p>
+                </div>
+            </button>
+
+            <!-- DESKTOP NAVIGATION LINKS (NO '#' ANCHOR IN URL) -->
+            <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+                <button type="button" onclick="scrollToSection('aboutSection')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-gold-400 hover:bg-white/5 transition">Giới Thiệu</button>
+                <button type="button" onclick="scrollToSection('roomsSection')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-gold-400 hover:bg-white/5 transition">Hệ Thống Phòng & Giá</button>
+                <button type="button" onclick="scrollToSection('gallerySection')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-gold-400 hover:bg-white/5 transition">Không Gian</button>
+                <button type="button" onclick="scrollToSection('bookingSection')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-gold-400 hover:bg-white/5 transition">Đặt Phòng</button>
+                <button type="button" onclick="scrollToSection('mapSection')" class="px-3.5 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-gold-400 hover:bg-white/5 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-map-location-dot text-gold-400"></i> Bản Đồ
+                </button>
             </nav>
-            <a href="#booking" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-full text-sm font-medium transition shadow-lg shadow-rose-600/30">
-                Đặt Phòng Nhanh
-            </a>
+
+            <!-- RIGHT ACTIONS: SYNC BADGE, ADMIN BUTTON, HOTLINE -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Real-Time PC & Mobile Cloud Sync Status -->
+                <div id="syncStatusBadge" title="Đồng bộ dữ liệu thời gian thực giữa Máy tính & Điện thoại" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium">
+                    <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="syncText">Đồng bộ PC & Mobile</span>
+                </div>
+
+                <!-- Admin Mode Toggle Button -->
+                <button type="button" id="adminToggleBtn" onclick="handleAdminButtonClick()" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-gold-500/40 bg-gold-500/10 hover:bg-gold-500/20 text-gold-300 flex items-center gap-1.5 transition cursor-pointer">
+                    <i class="fa-solid fa-sliders text-gold-400"></i>
+                    <span id="adminBtnLabel">Quản Trị Admin</span>
+                </button>
+
+                <!-- Direct Call Button -->
+                <a href="tel:0386342147" class="btn-gold px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-phone-volume animate-bounce"></i>
+                    <span class="hidden md:inline">0386.342.147</span>
+                    <span class="md:hidden">Gọi Ngay</span>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button type="button" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:text-gold-400">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE NAVIGATION DRAWER -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-obsidian-900/98 border-b border-gold-500/20 px-4 pt-3 pb-5 space-y-2">
+            <div class="flex items-center justify-between py-2 px-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs text-emerald-300 mb-2">
+                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Đồng bộ Cloud (Máy tính & Điện thoại)</span>
+                <span class="font-bold">Trực tuyến</span>
+            </div>
+            <button type="button" onclick="scrollToSection('aboutSection'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:bg-white/5 flex items-center justify-between">
+                <span>Giới thiệu PARIS KTV</span> <i class="fa-solid fa-chevron-right text-xs text-gold-400"></i>
+            </button>
+            <button type="button" onclick="scrollToSection('roomsSection'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:bg-white/5 flex items-center justify-between">
+                <span>Hệ thống phòng & Bảng giá</span> <i class="fa-solid fa-chevron-right text-xs text-gold-400"></i>
+            </button>
+            <button type="button" onclick="scrollToSection('gallerySection'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:bg-white/5 flex items-center justify-between">
+                <span>Hình ảnh không gian thực tế</span> <i class="fa-solid fa-chevron-right text-xs text-gold-400"></i>
+            </button>
+            <button type="button" onclick="scrollToSection('bookingSection'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:bg-white/5 flex items-center justify-between">
+                <span>Đặt phòng trực tuyến</span> <i class="fa-solid fa-chevron-right text-xs text-gold-400"></i>
+            </button>
+            <button type="button" onclick="scrollToSection('mapSection'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:bg-white/5 flex items-center justify-between">
+                <span>Bản đồ 69 Trần Thái Tông</span> <i class="fa-solid fa-location-dot text-gold-400"></i>
+            </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative py-20 px-4 text-center overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950">
-        <div class="max-w-3xl mx-auto space-y-6">
-            <span class="bg-rose-500/10 text-rose-400 text-xs font-semibold px-3 py-1 rounded-full border border-rose-500/20 uppercase tracking-widest">
-                Trải nghiệm âm thanh đỉnh cao
-            </span>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
-                Thăng Hoa Cùng <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-purple-600">Đam Mê Ca Hát</span>
-            </h1>
-            <p class="text-slate-400 text-base md:text-lg max-w-xl mx-auto">
-                Hệ thống phòng hát sang trọng, hệ thống âm thanh ánh sáng chuẩn Studio, dịch vụ chuyên nghiệp phục vụ 24/7.
-            </p>
+    <!-- ==========================================
+         HERO SECTION (INSPIRED BY PARIS CLUB 69 TRẦN THÁI TÔNG)
+    =========================================== -->
+    <section class="relative overflow-hidden pt-10 pb-16 md:py-20 lg:py-24 border-b border-gold-500/15">
+        <!-- Ambient Luxury Lighting Background -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1920&q=80" 
+                 alt="PARIS KTV 69 Trần Thái Tông" 
+                 class="w-full h-full object-cover opacity-25 scale-105"
+                 onerror="this.src='https://placehold.co/1920x1080/0d0d17/d4af37?text=PARIS+KTV+69+Tran+Thai+Tong'">
+            <div class="absolute inset-0 bg-gradient-to-b from-obsidian-950/90 via-obsidian-950/80 to-obsidian-950"></div>
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute top-1/3 -right-24 w-96 h-96 bg-gold-500/15 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left Column: Hero Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/15 border border-gold-500/35 text-gold-300 text-xs sm:text-sm font-semibold">
+                        <i class="fa-solid fa-star text-gold-400"></i>
+                        <span>Thiên Đường Giải Trí Đẳng Cấp Bậc Nhất Quận Cầu Giấy</span>
+                    </div>
+
+                    <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+                        <span class="text-white">KARAOKE</span>
+                        <span class="text-gold-gradient block mt-1">PARIS KTV</span>
+                        <span class="text-xl sm:text-2xl lg:text-3xl font-sans font-bold text-gray-200 block mt-3">
+                            69 Trần Thái Tông – Cầu Giấy – Hà Nội
+                        </span>
+                    </h1>
+
+                    <p class="text-gray-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Trải nghiệm không gian kiến trúc Hoàng Gia kết hợp ánh sáng LED vô cực cảm biến theo nhạc và hệ thống âm thanh Digital chuẩn sân khấu. Điểm hẹn hoàn hảo cho tiệc sinh nhật, liên hoan công ty, tiếp đối tác VIP và tụ họp bạn bè.
+                    </p>
+
+                    <!-- Direct Address & Phone Pill -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 text-xs sm:text-sm">
+                        <button type="button" onclick="scrollToSection('mapSection')" class="w-full sm:w-auto flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-gold-500/30 text-gray-200 transition cursor-pointer">
+                            <i class="fa-solid fa-location-dot text-gold-400 text-base"></i>
+                            <span class="text-left"><strong>Địa chỉ:</strong> 69 Trần Thái Tông, Cầu Giấy, Hà Nội <u class="text-gold-400 ml-1">(Xem Map)</u></span>
+                        </button>
+                        <a href="tel:0386342147" class="w-full sm:w-auto flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl bg-gold-500/10 hover:bg-gold-500/20 border border-gold-500/40 text-gold-300 font-bold transition">
+                            <i class="fa-solid fa-headset text-gold-400 text-base"></i>
+                            <span>Hotline Đặt Phòng: 0386.342.147</span>
+                        </a>
+                    </div>
+
+                    <!-- Primary CTA Buttons -->
+                    <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                        <button type="button" onclick="scrollToSection('bookingSection')" class="btn-gold px-7 py-4 rounded-2xl text-base flex items-center gap-2.5 pulse-gold cursor-pointer">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Đặt Phòng Ngay</span>
+                        </button>
+                        <button type="button" onclick="scrollToSection('roomsSection')" class="px-6 py-4 rounded-2xl text-base font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/20 flex items-center gap-2 transition cursor-pointer">
+                            <i class="fa-solid fa-champagne-glasses text-gold-400"></i>
+                            <span>Xem Giá & Chọn Phòng</span>
+                        </button>
+                        <a href="https://zalo.me/0386342147" target="_blank" rel="noopener noreferrer" class="px-5 py-4 rounded-2xl text-base font-semibold bg-blue-600/25 hover:bg-blue-600/35 text-blue-300 border border-blue-400/30 flex items-center gap-2 transition">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <span>Chat Zalo</span>
+                        </a>
+                    </div>
+
+                    <!-- 4 Key Highlights from Paris Club 69 Trần Thái Tông -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
+                        <div class="glass-card p-3.5 rounded-2xl text-center">
+                            <div class="text-xl sm:text-2xl font-extrabold text-gold-400">17+</div>
+                            <div class="text-xs text-gray-300 mt-0.5">Phòng VIP Đa Phong Cách</div>
+                        </div>
+                        <div class="glass-card p-3.5 rounded-2xl text-center">
+                            <div class="text-xl sm:text-2xl font-extrabold text-gold-400">50.000+</div>
+                            <div class="text-xs text-gray-300 mt-0.5">Bài Hát Mới Cập Nhật</div>
+                        </div>
+                        <div class="glass-card p-3.5 rounded-2xl text-center">
+                            <div class="text-xl sm:text-2xl font-extrabold text-gold-400">170+</div>
+                            <div class="text-xs text-gray-300 mt-0.5">Món Ăn & Đồ Uống</div>
+                        </div>
+                        <div class="glass-card p-3.5 rounded-2xl text-center">
+                            <div class="text-xl sm:text-2xl font-extrabold text-gold-400">24/7</div>
+                            <div class="text-xs text-gray-300 mt-0.5">Phục Vụ Tận Tâm</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Quick Booking Express Card -->
+                <div class="lg:col-span-5">
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl relative border border-gold-500/35">
+                        <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-gold-400 to-amber-500 text-black text-xs font-extrabold px-3.5 py-1 rounded-full shadow">
+                            GIỮ PHÒNG ĐẸP MIỄN PHÍ
+                        </div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-11 h-11 rounded-2xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-gold-400 text-xl">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg sm:text-xl font-bold text-white">Đặt Phòng Nhanh 30 Giây</h2>
+                                <p class="text-xs text-gray-400">PARIS KTV • 69 Trần Thái Tông, Cầu Giấy</p>
+                            </div>
+                        </div>
+
+                        <form id="quickBookingForm" onsubmit="submitBookingForm(event, 'quick')" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Họ tên hoặc Danh xưng *</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                                    <input type="text" id="quickName" required placeholder="VD: Anh Minh / Chị Lan" class="w-full pl-10 pr-4 py-3 rounded-xl bg-obsidian-950/90 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Số điện thoại *</label>
+                                    <div class="relative">
+                                        <i class="fa-solid fa-phone absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                                        <input type="tel" id="quickPhone" required placeholder="09xx / 03xx..." class="w-full pl-10 pr-3 py-3 rounded-xl bg-obsidian-950/90 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Số lượng khách</label>
+                                    <div class="relative">
+                                        <i class="fa-solid fa-users absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                                        <select id="quickGuests" class="w-full pl-10 pr-3 py-3 rounded-xl bg-obsidian-950/90 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                            <option value="5 - 10 khách">5 - 10 khách</option>
+                                            <option value="10 - 15 khách" selected>10 - 15 khách</option>
+                                            <option value="15 - 25 khách">15 - 25 khách</option>
+                                            <option value="25 - 40 khách (VIP Đại Tiệc)">25 - 40 khách (Đại Tiệc)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Chọn Hạng Phòng Ưa Thích</label>
+                                <select id="quickRoomSelect" class="w-full px-4 py-3 rounded-xl bg-obsidian-950/90 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                    <!-- Populated dynamically from synced rooms -->
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Ngày nhận phòng</label>
+                                    <input type="date" id="quickDate" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950/90 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Giờ dự kiến đến</label>
+                                    <input type="time" id="quickTime" required value="20:30" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950/90 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full btn-gold py-3.5 rounded-xl text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Gửi Yêu Cầu Giữ Phòng Ngay</span>
+                            </button>
+
+                            <div class="text-center pt-1">
+                                <p class="text-xs text-gray-400">
+                                    Hoặc gọi trực tiếp Quản lý: <a href="tel:0386342147" class="text-gold-400 font-bold hover:underline">0386.342.147</a> (Hỗ trợ 24/7)
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <!-- Room List Grid -->
-    <section id="rooms" class="max-w-7xl mx-auto px-4 py-12">
-        <div class="text-center mb-10">
-            <h2 class="text-2xl md:text-3xl font-bold">Các Loại Phòng Hát</h2>
-            <p class="text-slate-400 text-sm mt-1">Lựa chọn không gian phù hợp với buổi tiệc của bạn</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Room 1 -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-rose-500/50 transition group">
-                <div class="h-48 bg-slate-800 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=600" alt="Standard Room" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur text-rose-400 text-xs font-bold px-3 py-1 rounded-full">
-                        250.000đ / giờ
-                    </span>
-                </div>
-                <div class="p-5 space-y-3">
-                    <h3 class="text-lg font-bold">Phòng Standard</h3>
-                    <p class="text-slate-400 text-sm">Phù hợp cho nhóm bạn từ 4 - 6 người. Không gian ấm cúng, âm thanh sống động.</p>
-                    <div class="flex items-center text-xs text-slate-400 space-x-4 pt-2 border-t border-slate-800">
-                        <span><i class="fa-solid fa-user-group text-rose-500 mr-1"></i> Tối đa 6 khách</span>
-                        <span><i class="fa-solid fa-volume-high text-rose-500 mr-1"></i> Loa Bass đôi</span>
-                    </div>
-                </div>
+    <!-- ==========================================
+         ABOUT / HIGHLIGHTS OF PARIS KTV 69 TRẦN THÁI TÔNG
+    =========================================== -->
+    <section id="aboutSection" class="py-14 sm:py-20 bg-obsidian-900/60 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Điểm Đến Giải Trí Hàng Đầu Cầu Giấy</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-2">Vì Sao Khách Hàng Chọn <span class="text-gold-gradient">PARIS KTV 69 Trần Thái Tông?</span></h2>
+                <p class="text-sm sm:text-base text-gray-400 mt-3">
+                    Tọa lạc tại vị trí trung tâm số 69 Trần Thái Tông, Dịch Vọng Hậu, Cầu Giấy, PARIS KTV mang tới chuẩn mực mới về không gian phòng hát sang trọng, âm thanh đỉnh cao và dịch vụ chuyên nghiệp.
+                </p>
             </div>
 
-            <!-- Room 2 -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-rose-500/50 transition group">
-                <div class="h-48 bg-slate-800 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=600" alt="VIP Room" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur text-rose-400 text-xs font-bold px-3 py-1 rounded-full">
-                        450.000đ / giờ
-                    </span>
-                </div>
-                <div class="p-5 space-y-3">
-                    <h3 class="text-lg font-bold">Phòng VIP Party</h3>
-                    <p class="text-slate-400 text-sm">Sức chứa từ 10 - 15 người. Thiết kế đèn LED hiện đại, màn hình LED cực lớn.</p>
-                    <div class="flex items-center text-xs text-slate-400 space-x-4 pt-2 border-t border-slate-800">
-                        <span><i class="fa-solid fa-user-group text-rose-500 mr-1"></i> Tối đa 15 khách</span>
-                        <span><i class="fa-solid fa-lightbulb text-rose-500 mr-1"></i> Đèn LED cảm ứng</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl">
+                    <div class="w-12 h-12 rounded-2xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-gold-400 text-xl mb-4">
+                        <i class="fa-solid fa-sliders"></i>
                     </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Âm Thanh Digital Sân Khấu</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Hệ thống loa công suất lớn nhập khẩu, micro không dây chống hú tuyệt đối, nâng giọng mượt mà giúp mọi khách hàng tự tin tỏa sáng.
+                    </p>
                 </div>
-            </div>
 
-            <!-- Room 3 -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-rose-500/50 transition group">
-                <div class="h-48 bg-slate-800 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1545128485-c400e7702796?auto=format&fit=crop&q=80&w=600" alt="Luxury Room" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur text-rose-400 text-xs font-bold px-3 py-1 rounded-full">
-                        800.000đ / giờ
-                    </span>
-                </div>
-                <div class="p-5 space-y-3">
-                    <h3 class="text-lg font-bold">Phòng President Luxury</h3>
-                    <p class="text-slate-400 text-sm">Không gian siêu VIP dành cho hội họp, sinh nhật lớn, sức chứa lên tới 30 khách.</p>
-                    <div class="flex items-center text-xs text-slate-400 space-x-4 pt-2 border-t border-slate-800">
-                        <span><i class="fa-solid fa-user-group text-rose-500 mr-1"></i> Tối đa 30 khách</span>
-                        <span><i class="fa-solid fa-crown text-rose-500 mr-1"></i> Quầy bar riêng</span>
+                <!-- Feature 2 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl mb-4">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Kiến Trúc Hoàng Gia & LED Vô Cực</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        17+ phòng hát thiết kế đa phong cách từ Tân Cổ Điển Paris sang trọng đến Hiện Đại LightStage chuyển động theo giai điệu nhạc.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl mb-4">
+                        <i class="fa-solid fa-square-parking"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Mặt Tiền Lớn & Đỗ Xe Rộng Rãi</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Vị trí đắc địa ngay số 69 Trần Thái Tông, giao thông thuận tiện, có khu vực đỗ xe ô tô và xe máy rộng rãi, an ninh 24/24.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-card glass-card-hover p-6 rounded-2xl">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl mb-4">
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Tổ Chức Sự Kiện & Sinh Nhật</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Hỗ trợ trang trí sinh nhật, tiệc liên hoan công ty, tiếp khách đối tác với thực đơn hơn 170 món ăn & đồ uống thượng hạng, xuất hóa đơn VAT.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Booking Form Section -->
-    <section id="booking" class="max-w-4xl mx-auto px-4 py-12">
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-10 shadow-2xl">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl md:text-3xl font-bold">Đặt Lịch Phòng Ngay</h2>
-                <p class="text-slate-400 text-sm mt-1">Điền thông tin bên dưới để giữ chỗ và nhận ưu đãi giờ vàng</p>
+    <!-- ==========================================
+         ROOMS & PRICING SECTION (WITH ADMIN LIVE EDIT & UPLOAD)
+    =========================================== -->
+    <section id="roomsSection" class="py-16 sm:py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header + Admin Quick Toolbar -->
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold-400 mb-2">
+                        <i class="fa-solid fa-couch"></i>
+                        <span>Bảng Giá & Hệ Thống Phòng Hát</span>
+                    </div>
+                    <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white">
+                        Hệ Thống Phòng Hát <span class="text-gold-gradient">PARIS KTV</span>
+                    </h2>
+                    <p class="text-sm sm:text-base text-gray-400 mt-2 max-w-2xl">
+                        Giá phòng niêm yết minh bạch, cập nhật trực tiếp theo thời gian thực giữa Máy tính và Điện thoại.
+                    </p>
+                </div>
+
+                <!-- Filter & Admin Action Buttons -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" onclick="filterRooms('all')" id="filter-all" class="room-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gold-500 text-black transition cursor-pointer">
+                        Tất cả phòng
+                    </button>
+                    <button type="button" onclick="filterRooms('Standard')" id="filter-Standard" class="room-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition cursor-pointer">
+                        Standard / Hiện Đại
+                    </button>
+                    <button type="button" onclick="filterRooms('VIP')" id="filter-VIP" class="room-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition cursor-pointer">
+                        VIP Hoàng Gia
+                    </button>
+                    <button type="button" onclick="filterRooms('Super VIP')" id="filter-Super VIP" class="room-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition cursor-pointer">
+                        Super VIP Đại Tiệc
+                    </button>
+
+                    <!-- Always visible Add Room button for Admin (or prompts Admin Mode) -->
+                    <button type="button" onclick="triggerAdminAddRoom()" class="ml-auto lg:ml-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-lg flex items-center gap-1.5 transition cursor-pointer">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>+ Thêm Phòng / Sửa Giá (Admin)</span>
+                    </button>
+                </div>
             </div>
 
-            <form id="bookingForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Họ và tên</label>
-                        <input type="text" id="name" required placeholder="Nhập họ tên của bạn" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-rose-500 transition">
+            <!-- Admin Inline Helper Panel (Shown when Admin Mode is Active) -->
+            <div id="adminRoomsToolbar" class="hidden mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-gold-500/10 to-purple-500/15 border border-gold-500/40">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gold-500 text-black flex items-center justify-center font-bold shrink-0 mt-0.5">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm sm:text-base font-bold text-gold-300">Bảng Điều Khiển Quản Trị Phòng & Giá (Đồng Bộ Thời Gian Thực)</h3>
+                            <p class="text-xs text-gray-300 mt-0.5">
+                                • Nhập giá mới trực tiếp vào ô <strong>"Giá phòng (VNĐ/giờ)"</strong> trên thẻ phòng và bấm <strong>Lưu Giá</strong>.<br>
+                                • Bấm <strong>"Đổi Ảnh Từ Máy"</strong> trên từng phòng để tải ảnh từ điện thoại hoặc máy tính (có thông báo ngay khi tải xong).
+                            </p>
+                        </div>
                     </div>
+                    <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+                        <button type="button" onclick="openRoomModal()" class="btn-gold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-folder-plus"></i>
+                            <span>Thêm Phòng Hát Mới</span>
+                        </button>
+                        <button type="button" onclick="resetDefaultRoomsConfirm()" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-gray-200 border border-white/15 transition cursor-pointer">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Khôi phục mẫu
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Rooms Grid -->
+            <div id="roomsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                <!-- Populated dynamically via JS & Firestore -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+         GALLERY SECTION (WITH DIRECT DEVICE PHOTO UPLOAD)
+    =========================================== -->
+    <section id="gallerySection" class="py-16 bg-obsidian-900/70 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Hình Ảnh Thực Tế</span>
+                    <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1">Không Gian <span class="text-gold-gradient">PARIS KTV 69 Trần Thái Tông</span></h2>
+                    <p class="text-sm text-gray-400 mt-1">Khám phá sảnh đón tiếp Hoàng Gia và hệ thống phòng hát hiện đại tại quán.</p>
+                </div>
+
+                <!-- Upload Photo to Gallery Button (Direct from Device) -->
+                <div>
+                    <label for="galleryDirectUploadInput" class="btn-gold px-4 py-2.5 rounded-xl text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Tải Ảnh Không Gian Từ Máy</span>
+                    </label>
+                    <input type="file" id="galleryDirectUploadInput" accept="image/*" class="hidden" onchange="handleDirectGalleryUpload(event)">
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Populated via JS & Firestore -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FULL ONLINE BOOKING SECTION
+    =========================================== -->
+    <section id="bookingSection" class="py-16 sm:py-20 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 lg:p-12 border border-gold-500/35 shadow-2xl">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="px-3.5 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-xs font-bold uppercase tracking-wider">
+                        Đặt Lịch Trực Tuyến 24/7
+                    </span>
+                    <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-3">
+                        Đặt Phòng Hát Tại <span class="text-gold-gradient">PARIS KTV</span>
+                    </h2>
+                    <p class="text-sm text-gray-300 mt-2">
+                        Địa chỉ: <strong>69 Trần Thái Tông, Cầu Giấy, Hà Nội</strong> • Hotline/Zalo: <a href="tel:0386342147" class="text-gold-400 font-bold">0386.342.147</a>
+                    </p>
+                </div>
+
+                <form id="mainBookingForm" onsubmit="submitBookingForm(event, 'main')" class="space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Họ và Tên Khách Hàng *</label>
+                            <input type="text" id="mainName" required placeholder="Nhập tên của bạn..." class="w-full px-4 py-3.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Số Điện Thoại Liên Hệ *</label>
+                            <input type="tel" id="mainPhone" required placeholder="Nhập số điện thoại (VD: 0386342147)..." class="w-full px-4 py-3.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Chọn Phòng Hát *</label>
+                            <select id="mainRoomSelect" class="w-full px-4 py-3.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Số Lượng Khách Dự Kiến *</label>
+                            <select id="mainGuests" class="w-full px-4 py-3.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                                <option value="5 - 10 người">5 - 10 người (Nhóm bạn / Gia đình)</option>
+                                <option value="10 - 15 người" selected>10 - 15 người (Tiệc vừa)</option>
+                                <option value="15 - 25 người">15 - 25 người (Phòng VIP Hoàng Gia)</option>
+                                <option value="25 - 40 người">25 - 40 người (Super VIP Đại Tiệc / Công ty)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Ngày Đặt Phòng *</label>
+                            <input type="date" id="mainDate" required class="w-full px-4 py-3.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Khung Giờ Nhận Phòng *</label>
+                            <input type="time" id="mainTime" required value="20:00" class="w-full px-4 py-3.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                        </div>
+                    </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Số điện thoại</label>
-                        <input type="tel" id="phone" required placeholder="Nhập số điện thoại liên hệ" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-rose-500 transition">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Yêu Cầu Đặc Biệt (Trang trí sinh nhật, Combo đồ uống, Xuất VAT...)</label>
+                        <textarea id="mainNotes" rows="3" placeholder="VD: Chuẩn bị trang trí chữ Happy Birthday, hoa quả tươi, bia lạnh..." class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white"></textarea>
+                    </div>
+
+                    <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="text-xs text-gray-400 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-gold-400 text-base"></i>
+                            <span>Thông tin đặt phòng được đồng bộ trực tiếp tới bộ phận Lễ tân & Quản lý PARIS KTV.</span>
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto btn-gold px-8 py-4 rounded-2xl text-base flex items-center justify-center gap-2.5 cursor-pointer shrink-0">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Xác Nhận Đặt Phòng</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         DIRECT GOOGLE MAPS SECTION (69 TRẦN THÁI TÔNG, CẦU GIẤY, HÀ NỘI)
+    =========================================== -->
+    <section id="mapSection" class="py-16 bg-obsidian-900/80 border-t border-gold-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                
+                <!-- Contact & Directions Info -->
+                <div class="lg:col-span-5 glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Vị Trí Trung Tâm Cầu Giấy</span>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-1">Bản Đồ Chỉ Đường <span class="text-gold-gradient">PARIS KTV</span></h2>
+                            <p class="text-sm text-gray-400 mt-2">
+                                Trỏ thẳng tới địa chỉ chính xác của quán tại số 69 Trần Thái Tông, Cầu Giấy, Hà Nội.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="w-10 h-10 rounded-xl bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-location-dot text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-400 uppercase font-semibold">Địa chỉ chính thức</div>
+                                    <div class="text-sm sm:text-base font-bold text-white mt-0.5">69 Trần Thái Tông, Phường Dịch Vọng Hậu, Quận Cầu Giấy, Hà Nội</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-phone-volume text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-400 uppercase font-semibold">Hotline Đặt Phòng & Tư Vấn Giá</div>
+                                    <a href="tel:0386342147" class="text-lg sm:text-xl font-extrabold text-gold-400 hover:underline block mt-0.5">0386.342.147</a>
+                                    <span class="text-xs text-gray-400">Đón khách & hỗ trợ đặt lịch 24/7</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-clock text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-400 uppercase font-semibold">Giờ mở cửa hoạt động</div>
+                                    <div class="text-sm sm:text-base font-bold text-white mt-0.5">Mở cửa từ 10:00 Sáng – Phục vụ xuyên đêm</div>
+                                    <span class="text-xs text-gray-400">Có chỗ để xe Ô tô & Xe máy miễn phí ngay trước sảnh</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 mt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3">
+                        <a href="https://www.google.com/maps/search/?api=1&query=69+Tr%E1%BA%A7n+Th%C3%A1i+T%C3%B4ng,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i" 
+                           target="_blank" rel="noopener noreferrer"
+                           class="flex-1 btn-gold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 text-center">
+                            <i class="fa-solid fa-diamond-turn-right"></i>
+                            <span>Mở Google Maps Chỉ Đường</span>
+                        </a>
+                        <a href="tel:0386342147" class="py-3.5 px-5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm flex items-center justify-center gap-2 border border-white/15 transition">
+                            <i class="fa-solid fa-phone text-gold-400"></i>
+                            <span>0386342147</span>
+                        </a>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Direct Embedded Google Maps Iframe pointing to 69 Trần Thái Tông, Cầu Giấy, Hà Nội -->
+                <div class="lg:col-span-7 glass-card rounded-3xl overflow-hidden p-2 border border-gold-500/30 min-h-[380px] sm:min-h-[450px] flex flex-col">
+                    <div class="relative w-full h-full flex-1 rounded-2xl overflow-hidden">
+                        <iframe 
+                            title="Bản đồ PARIS KTV 69 Trần Thái Tông, Cầu Giấy, Hà Nội"
+                            src="https://maps.google.com/maps?q=69%20Tr%E1%BA%A7n%20Th%C3%A1i%20T%C3%B4ng,%20C%E1%BA%A7u%20Gi%E1%BA%A5y,%20H%C3%A0%20N%E1%BB%99i&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                            class="w-full h-full min-h-[370px] sm:min-h-[440px] border-0"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER (LOGO RELOADS FROM VERY TOP WITHOUT '#')
+    =========================================== -->
+    <footer class="bg-obsidian-950 border-t border-gold-500/20 pt-12 pb-24 md:pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-white/10">
+                <div>
+                    <!-- Footer Logo also triggers clean reload from top without '#' -->
+                    <button type="button" onclick="reloadHomeFromTop(event)" class="flex items-center gap-3 text-left group cursor-pointer focus:outline-none">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-amber-700 p-0.5">
+                            <div class="w-full h-full bg-obsidian-950 rounded-[10px] flex items-center justify-center">
+                                <i class="fa-solid fa-crown text-gold-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-serif text-xl font-extrabold text-gold-gradient">PARIS KTV</span>
+                            <p class="text-xs text-gray-400">69 Trần Thái Tông, Cầu Giấy, Hà Nội</p>
+                        </div>
+                    </button>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-3 leading-relaxed">
+                        Hệ thống Karaoke đẳng cấp thượng lưu tại trung tâm Quận Cầu Giấy. Không gian sang trọng, âm thanh chuẩn sân khấu, phục vụ chuyên nghiệp 24/7.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-gold-400 mb-3">Thông Tin Liên Hệ</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot text-gold-400 mt-1"></i>
+                            <span>69 Trần Thái Tông, Dịch Vọng Hậu, Cầu Giấy, Hà Nội</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-gold-400"></i>
+                            <a href="tel:0386342147" class="hover:text-gold-400 font-semibold">0386.342.147 (Hotline / Zalo)</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-cloud text-emerald-400"></i>
+                            <span>Đồng bộ dữ liệu trực tuyến PC & Điện thoại</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-gold-400 mb-3">Thao Tác Nhanh</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="reloadHomeFromTop(event)" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-gray-300 border border-white/10 cursor-pointer">
+                            <i class="fa-solid fa-rotate mr-1 text-gold-400"></i> Tải lại Trang Chủ
+                        </button>
+                        <button type="button" onclick="scrollToSection('roomsSection')" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-gray-300 border border-white/10 cursor-pointer">
+                            Bảng Giá Phòng
+                        </button>
+                        <button type="button" onclick="scrollToSection('bookingSection')" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-gray-300 border border-white/10 cursor-pointer">
+                            Đặt Phòng Online
+                        </button>
+                        <button type="button" onclick="handleAdminButtonClick()" class="px-3.5 py-2 rounded-xl bg-gold-500/15 hover:bg-gold-500/25 text-xs text-gold-300 border border-gold-500/30 cursor-pointer">
+                            <i class="fa-solid fa-user-gear mr-1"></i> Quản Trị Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+                <p>© 2026 PARIS KTV – 69 Trần Thái Tông, Cầu Giấy, Hà Nội. All rights reserved.</p>
+                <p>Hotline Đặt Phòng Nhanh: <a href="tel:0386342147" class="text-gold-400 font-semibold">0386342147</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         MOBILE STICKY BOTTOM CALL / ZALO / BOOKING BAR
+    =========================================== -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/95 backdrop-blur-xl border-t border-gold-500/30 px-3 py-2.5 flex items-center justify-between gap-2">
+        <a href="tel:0386342147" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-phone-volume"></i>
+            <span>0386.342.147</span>
+        </a>
+        <a href="https://zalo.me/0386342147" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3.5 rounded-xl bg-blue-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span>Zalo</span>
+        </a>
+        <button type="button" onclick="scrollToSection('bookingSection')" class="flex-1 btn-gold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Đặt Phòng</span>
+        </button>
+    </div>
+
+    <!-- ==========================================
+         MODAL 1: ADD / EDIT ROOM MODAL (ADMIN)
+         Includes Direct Image Upload from Computer/Phone + Preview
+    =========================================== -->
+    <div id="roomModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-card rounded-3xl max-w-xl w-full p-6 sm:p-8 border border-gold-500/40 shadow-2xl my-8 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-xl bg-gold-500/20 text-gold-400 flex items-center justify-center">
+                        <i class="fa-solid fa-door-open"></i>
+                    </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Chọn Loại Phòng</label>
-                        <select id="roomType" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-rose-500 transition">
-                            <option value="250000">Phòng Standard (250k/h)</option>
-                            <option value="450000">Phòng VIP Party (450k/h)</option>
-                            <option value="800000">Phòng President Luxury (800k/h)</option>
+                        <h3 id="roomModalTitle" class="text-lg sm:text-xl font-bold text-white">Thêm Phòng Hát Mới</h3>
+                        <p class="text-xs text-gray-400">Đồng bộ trực tiếp giữa Máy tính & Điện thoại</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeRoomModal()" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/15 text-gray-300 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="roomForm" onsubmit="saveRoomForm(event)" class="space-y-4 mt-5">
+                <input type="hidden" id="editRoomId">
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1.5">Tên Phòng Hát *</label>
+                    <input type="text" id="roomNameInput" required placeholder="VD: Phòng VIP Royal Paris 01" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gold-300 mb-1.5">Giá Phòng (VNĐ / Giờ) *</label>
+                        <input type="number" id="roomPriceInput" required min="50000" step="10000" placeholder="VD: 450000" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-gold-500/40 focus:border-gold-400 focus:outline-none text-sm font-bold text-gold-300">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1.5">Sức Chứa Khách *</label>
+                        <input type="text" id="roomCapacityInput" required placeholder="VD: 15 - 25 người" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1.5">Hạng Phòng</label>
+                        <select id="roomCategoryInput" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                            <option value="Standard">Standard (Hiện Đại)</option>
+                            <option value="VIP" selected>VIP (Hoàng Gia)</option>
+                            <option value="Super VIP">Super VIP (Đại Tiệc)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Ngày Nhận Phòng</label>
-                        <input type="date" id="date" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-rose-500 transition">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1.5">Trạng Thái Phòng</label>
+                        <select id="roomStatusInput" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white">
+                            <option value="available">Còn phòng trống</option>
+                            <option value="busy">Đang kín khách</option>
+                        </select>
                     </div>
+                </div>
+
+                <!-- DIRECT IMAGE UPLOAD FROM COMPUTER OR PHONE -->
+                <div class="p-4 rounded-2xl bg-obsidian-950/90 border border-dashed border-gold-500/50 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-gold-400">
+                            <i class="fa-solid fa-camera-retro mr-1"></i> Hình Ảnh Phòng (Tải Trực Tiếp Từ Máy)
+                        </label>
+                        <span id="uploadBadgeStatus" class="text-[11px] text-gray-400">Hỗ trợ JPG, PNG, WEBP</span>
+                    </div>
+
+                    <!-- Preview Image Box -->
+                    <div class="relative w-full h-44 rounded-xl overflow-hidden bg-obsidian-900 border border-white/10 flex items-center justify-center">
+                        <img id="roomImagePreview" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80" alt="Preview" class="w-full h-full object-cover">
+                        <div id="roomUploadOverlayBadge" class="hidden absolute bottom-2 right-2 bg-emerald-600/95 text-white text-xs font-bold px-3 py-1 rounded-lg shadow flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check"></i> Đã tải ảnh lên thành công
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-2.5">
+                        <label for="roomFileInput" class="w-full sm:w-auto flex-1 btn-gold py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer text-center">
+                            <i class="fa-solid fa-upload"></i>
+                            <span>Chọn Ảnh Từ Máy Tính / Điện Thoại</span>
+                        </label>
+                        <input type="file" id="roomFileInput" accept="image/*" class="hidden" onchange="handleModalRoomImageUpload(event)">
+                    </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-2">Thời Gian Hát (Số Giờ)</label>
-                        <input type="number" id="hours" min="1" max="10" value="2" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-rose-500 transition">
+                        <label class="block text-[11px] text-gray-400 mb-1">Hoặc dán đường dẫn URL ảnh (tùy chọn):</label>
+                        <input type="text" id="roomImageUrlInput" placeholder="https://..." oninput="handleRoomUrlInput(this.value)" class="w-full px-3 py-2 rounded-lg bg-obsidian-900 border border-white/10 text-xs text-gray-300">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Ghi chú thêm (Món ăn kèm, trang trí sinh nhật...)</label>
-                    <textarea id="note" rows="3" placeholder="Yêu cầu đặc biệt nếu có..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-rose-500 transition"></textarea>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1.5">Mô Tả & Tiện Ích Phòng</label>
+                    <textarea id="roomDescInput" rows="2" placeholder="VD: Hệ thống âm thanh Digital sân khấu, 2 màn hình LED 4K, bàn DJ riêng..." class="w-full px-4 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white"></textarea>
                 </div>
 
-                <!-- Total estimate box -->
-                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
-                    <span class="text-slate-400 text-sm">Tạm tính ước tính:</span>
-                    <span id="totalPrice" class="text-xl font-bold text-rose-500">500.000 đ</span>
+                <div class="pt-3 flex items-center justify-end gap-3 border-t border-white/10">
+                    <button type="button" onclick="closeRoomModal()" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs sm:text-sm font-semibold text-gray-300">
+                        Hủy
+                    </button>
+                    <button type="submit" id="saveRoomSubmitBtn" class="btn-gold px-6 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Lưu & Đồng Bộ Ngay</span>
+                    </button>
                 </div>
-
-                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-rose-600/30">
-                    Xác Nhận Đặt Phòng
-                </button>
             </form>
+        </div>
+    </div>
 
-            <!-- Success Alert Modal (Hidden by default) -->
-            <div id="successAlert" class="hidden mt-6 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 p-4 rounded-xl text-center">
-                <i class="fa-solid fa-circle-check text-2xl mb-1"></i>
-                <h3 class="font-bold text-lg">Đặt phòng thành công!</h3>
-                <p class="text-sm text-slate-300 mt-1">Nhân viên quán sẽ gọi điện xác nhận lại lịch đặt của bạn trong vòng 5 phút tới.</p>
+    <!-- ==========================================
+         MODAL 2: ADMIN LOGIN / QUICK ACCESS MODAL
+    =========================================== -->
+    <div id="adminAuthModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl max-w-md w-full p-6 sm:p-8 border border-gold-500/40 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-user-shield text-gold-400 text-xl"></i>
+                    <h3 class="text-lg font-bold text-white">Kích Hoạt Quyền Quản Trị Admin</h3>
+                </div>
+                <button type="button" onclick="closeAdminAuthModal()" class="w-8 h-8 rounded-lg bg-white/5 text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="mt-4 space-y-4">
+                <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                    Chế độ <strong>Admin PARIS KTV</strong> cho phép bạn chỉnh sửa giá phòng, thêm/xóa phòng, tải ảnh trực tiếp từ máy tính hoặc điện thoại và đồng bộ tức thì giữa mọi thiết bị.
+                </p>
+
+                <div class="p-3.5 rounded-2xl bg-gold-500/10 border border-gold-500/30 text-xs text-gold-300">
+                    <i class="fa-solid fa-key mr-1"></i> Mã PIN quản trị mặc định: <strong>6969</strong> (hoặc bấm nút <em>Vào Nhanh Quyền Admin</em> bên dưới).
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1.5">Nhập mã PIN Admin</label>
+                    <input type="password" id="adminPinInput" value="6969" placeholder="Nhập 6969" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/20 text-center text-lg font-extrabold tracking-widest text-gold-400 focus:border-gold-400 focus:outline-none">
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+                    <button type="button" onclick="confirmAdminLogin()" class="flex-1 btn-gold py-3 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-unlock-keyhole"></i>
+                        <span>Vào Nhanh Quyền Admin</span>
+                    </button>
+                    <button type="button" onclick="closeAdminAuthModal()" class="py-3 px-4 rounded-xl bg-white/10 text-gray-300 text-sm font-semibold">
+                        Đóng
+                    </button>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer id="contact" class="border-t border-slate-800 bg-slate-900 py-8 text-center text-sm text-slate-500">
-        <p>&copy; 2026 Vibe Karaoke. All rights reserved. Hotline: 0900.xxx.xxx</p>
-    </footer>
+    <!-- ==========================================
+         MODAL 3: ADMIN BOOKINGS MANAGER MODAL
+    =========================================== -->
+    <div id="adminBookingsModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl max-w-4xl w-full p-6 sm:p-8 border border-gold-500/40 shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list text-gold-400"></i>
+                        <span>Danh Sách Khách Đặt Phòng (Đồng Bộ Thời Gian Thực)</span>
+                    </h3>
+                    <p class="text-xs text-gray-400 mt-0.5">PARIS KTV • 69 Trần Thái Tông, Cầu Giấy • Hotline: 0386.342.147</p>
+                </div>
+                <button type="button" onclick="closeAdminBookingsModal()" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/15 text-gray-300 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
 
-    <!-- JavaScript for Dynamic Calculation & Form Handling -->
-    <script>
-        const roomTypeSelect = document.getElementById('roomType');
-        const hoursInput = document.getElementById('hours');
-        const totalPriceEl = document.getElementById('totalPrice');
-        const bookingForm = document.getElementById('bookingForm');
-        const successAlert = document.getElementById('successAlert');
+            <div id="adminBookingsList" class="mt-4 space-y-3 overflow-y-auto flex-1 pr-1">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
 
-        // Set default date to today
-        document.getElementById('date').valueAsDate = new Date();
+    <!-- ==========================================
+         MODAL 4: BOOKING SUCCESS CONFIRMATION MODAL
+    =========================================== -->
+    <div id="bookingSuccessModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl max-w-md w-full p-6 sm:p-8 border border-emerald-500/40 text-center shadow-2xl">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-white">Đặt Phòng Thành Công!</h3>
+            <p class="text-sm text-gray-300 mt-2">
+                Yêu cầu đặt phòng của quý khách tại <strong>PARIS KTV (69 Trần Thái Tông)</strong> đã được ghi nhận và đồng bộ lên hệ thống.
+            </p>
+            <div id="bookingSuccessSummary" class="mt-4 p-4 rounded-2xl bg-obsidian-950/90 border border-white/10 text-left text-xs sm:text-sm space-y-1.5 text-gray-200"></div>
+            <div class="mt-6 flex flex-col sm:flex-row gap-2.5">
+                <a href="tel:0386342147" class="flex-1 btn-gold py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-phone-volume"></i> Gọi Ngay 0386.342.147
+                </a>
+                <button type="button" onclick="closeBookingSuccessModal()" class="py-3 px-5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold">
+                    Hoàn Tất
+                </button>
+            </div>
+        </div>
+    </div>
 
-        function calculateTotal() {
-            const pricePerHour = parseInt(roomTypeSelect.value);
-            const hours = parseInt(hoursInput.value) || 1;
-            const total = pricePerHour * hours;
-            totalPriceEl.textContent = total.toLocaleString('vi-VN') + ' đ';
+    <!-- ==========================================
+         MODAL 5: CUSTOM CONFIRMATION DIALOG (NO BROWSER ALERT/CONFIRM)
+    =========================================== -->
+    <div id="confirmDialogModal" class="hidden fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-sm w-full p-6 border border-gold-500/40 text-center">
+            <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl mx-auto mb-3">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 id="confirmDialogTitle" class="text-base font-bold text-white">Xác nhận thao tác</h4>
+            <p id="confirmDialogMessage" class="text-xs sm:text-sm text-gray-300 mt-2"></p>
+            <div class="mt-5 flex items-center justify-center gap-3">
+                <button type="button" onclick="closeConfirmDialog()" class="px-4 py-2 rounded-xl bg-white/10 text-gray-300 text-xs sm:text-sm font-semibold">Hủy</button>
+                <button type="button" id="confirmDialogActionBtn" class="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs sm:text-sm font-bold">Xác Nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for quick direct upload on any individual room card -->
+    <input type="file" id="quickCardFileInput" accept="image/*" class="hidden" onchange="handleQuickCardImageUpload(event)">
+
+    <!-- ==========================================
+         FIREBASE FIRESTORE & APPLICATION LOGIC
+    =========================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ====================================================
+        // 1. DEFAULT SEED DATA FOR PARIS KTV 69 TRẦN THÁI TÔNG
+        // ====================================================
+        const DEFAULT_ROOMS = [
+            {
+                id: "room_paris_standard_101",
+                name: "Phòng Standard Modern 101",
+                category: "Standard",
+                price: 280000,
+                capacity: "5 - 10 người",
+                status: "available",
+                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80",
+                description: "Không gian trẻ trung ấm cúng, màn hình LED 4K sắc nét, hệ thống âm thanh Digital chống hú tuyệt đối.",
+                order: 1
+            },
+            {
+                id: "room_paris_deluxe_201",
+                name: "Phòng Deluxe LightStage 201",
+                category: "Standard",
+                price: 380000,
+                capacity: "10 - 15 người",
+                status: "available",
+                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
+                description: "Hệ thống đèn LED vô cực cảm biến theo nhịp nhạc sôi động, sofa da cao cấp, phù hợp sinh nhật & nhóm bạn.",
+                order: 2
+            },
+            {
+                id: "room_paris_vip_301",
+                name: "Phòng VIP Royal Paris 301",
+                category: "VIP",
+                price: 520000,
+                capacity: "15 - 25 người",
+                status: "available",
+                image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=900&q=80",
+                description: "Thiết kế Tân Cổ Điển Hoàng Gia Paris sang trọng, 2 màn hình lớn, âm thanh sân khấu công suất lớn tiếp khách VIP.",
+                order: 3
+            },
+            {
+                id: "room_paris_supervip_888",
+                name: "Phòng Super VIP President 888",
+                category: "Super VIP",
+                price: 850000,
+                capacity: "25 - 40 người",
+                status: "available",
+                image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=900&q=80",
+                description: "Không gian Đại Tiệc Liên Hoan Công Ty & Sự Kiện Sinh Nhật, sân khấu riêng, ánh sáng Laser Moving Head đỉnh cao.",
+                order: 4
+            }
+        ];
+
+        const DEFAULT_GALLERY = [
+            {
+                id: "gal_paris_1",
+                title: "Phòng Super VIP Hoàng Gia Paris",
+                image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=900&q=80",
+                createdAt: 1710000001
+            },
+            {
+                id: "gal_paris_2",
+                title: "Hệ Thống Ánh Sáng LED Vô Cực",
+                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
+                createdAt: 1710000002
+            },
+            {
+                id: "gal_paris_3",
+                title: "Âm Thanh Sân Khấu Sống Động",
+                image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=900&q=80",
+                createdAt: 1710000003
+            },
+            {
+                id: "gal_paris_4",
+                title: "Không Gian Tiệc Sinh Nhật & Liên Hoan",
+                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80",
+                createdAt: 1710000004
+            }
+        ];
+
+        // ====================================================
+        // 2. APPLICATION STATE
+        // ====================================================
+        let roomsData = [...DEFAULT_ROOMS];
+        let galleryData = [...DEFAULT_GALLERY];
+        let bookingsData = [];
+        let activeFilter = "all";
+        let isAdminMode = false;
+        let currentUploadedModalImage = "";
+        let quickUploadTargetRoomId = null;
+
+        // Firebase instances
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let isCloudConnected = false;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'paris-ktv-69-tran-thai-tong';
+
+        // ====================================================
+        // 3. CRITICAL REQUIREMENT: LOGO RELOAD FROM VERY TOP WITHOUT '#'
+        // ====================================================
+        window.reloadHomeFromTop = function(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            // Close any open modals
+            document.getElementById('roomModal')?.classList.add('hidden');
+            document.getElementById('adminAuthModal')?.classList.add('hidden');
+            document.getElementById('adminBookingsModal')?.classList.add('hidden');
+            document.getElementById('bookingSuccessModal')?.classList.add('hidden');
+
+            // Strip any '#' hash from the URL so it never points to any anchor
+            const cleanUrl = window.location.pathname + window.location.search;
+            window.history.replaceState(null, document.title, cleanUrl);
+
+            // Scroll immediately to the very top (0, 0)
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+            // Trigger full page reload from the beginning
+            window.location.reload();
+        };
+
+        // Smooth scroll helper that NEVER adds '#' hash to URL
+        window.scrollToSection = function(sectionId) {
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+
+        window.toggleMobileMenu = function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        };
+
+        // ====================================================
+        // 4. TOAST NOTIFICATION SYSTEM (WITH IMAGE PREVIEW)
+        // ====================================================
+        window.showToast = function({ title, message, type = "success", imagePreview = null }) {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = "toast-enter pointer-events-auto glass-card rounded-2xl p-4 border shadow-2xl flex items-start gap-3.5 " +
+                (type === "success" ? "border-emerald-400/60 bg-obsidian-900/95" : "border-gold-400/60 bg-obsidian-900/95");
+
+            const iconHtml = imagePreview
+                ? `<img src="${imagePreview}" alt="Uploaded" class="w-12 h-12 rounded-xl object-cover border border-emerald-400 shrink-0">`
+                : `<div class="w-10 h-10 rounded-xl ${type === 'success' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gold-500/20 text-gold-400'} flex items-center justify-center shrink-0 text-lg">
+                     <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-bell'}"></i>
+                   </div>`;
+
+            toast.innerHTML = `
+                ${iconHtml}
+                <div class="flex-1 min-w-0">
+                    <div class="text-xs sm:text-sm font-extrabold text-white flex items-center gap-1.5">
+                        <span>${title}</span>
+                    </div>
+                    <p class="text-xs text-gray-300 mt-0.5 leading-snug">${message}</p>
+                </div>
+                <button type="button" class="text-gray-400 hover:text-white text-xs p-1" onclick="this.parentElement.remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast && toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(30px)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4800);
+        };
+
+        // ====================================================
+        // 5. CLIENT-SIDE IMAGE COMPRESSION FOR FAST PC/MOBILE SYNC
+        // ====================================================
+        function compressImageFromFile(file, maxWidth = 900, quality = 0.72) {
+            return new Promise((resolve, reject) => {
+                if (!file || !file.type.startsWith('image/')) {
+                    reject(new Error("Vui lòng chọn tệp hình ảnh hợp lệ."));
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                        resolve(compressedDataUrl);
+                    };
+                    img.onerror = () => reject(new Error("Không thể đọc định dạng ảnh này."));
+                    img.src = event.target.result;
+                };
+                reader.onerror = () => reject(new Error("Lỗi khi tải tệp từ thiết bị."));
+                reader.readAsDataURL(file);
+            });
         }
 
-        roomTypeSelect.addEventListener('change', calculateTotal);
-        hoursInput.addEventListener('input', calculateTotal);
+        // ====================================================
+        // 6. FIREBASE CLOUD INITIALIZATION & REAL-TIME SYNC
+        // ====================================================
+        async function initFirebaseSync() {
+            try {
+                if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+                    updateSyncBadgeStatus(false, "Chế độ Trực tiếp");
+                    renderAllUI();
+                    return;
+                }
 
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            successAlert.classList.remove('hidden');
-            bookingForm.reset();
-            document.getElementById('date').valueAsDate = new Date();
-            calculateTotal();
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                // RULE 3: Authenticate FIRST before any Firestore query
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    if (user) {
+                        isCloudConnected = true;
+                        updateSyncBadgeStatus(true, "Đã đồng bộ PC & Mobile");
+                        setupRealtimeListeners();
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase init error:", error);
+                updateSyncBadgeStatus(false, "Sẵn sàng");
+                renderAllUI();
+            }
+        }
+
+        function updateSyncBadgeStatus(online, labelText) {
+            const dot = document.getElementById('syncDot');
+            const text = document.getElementById('syncText');
+            if (dot && text) {
+                dot.className = online
+                    ? "w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
+                    : "w-2 h-2 rounded-full bg-gold-400";
+                text.textContent = labelText;
+            }
+        }
+
+        function setupRealtimeListeners() {
+            if (!currentUser || !db) return;
+
+            // RULE 1 & RULE 2: Strict path `/artifacts/{appId}/public/data/{collectionName}` without complex queries
+            const roomsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms');
+            onSnapshot(roomsColRef, async (snapshot) => {
+                if (snapshot.empty) {
+                    // Seed default rooms on first run so both PC and Mobile share the initial rooms
+                    for (const room of DEFAULT_ROOMS) {
+                        if (!currentUser) return;
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms', room.id), room);
+                    }
+                } else {
+                    const loadedRooms = [];
+                    snapshot.forEach((docSnap) => {
+                        loadedRooms.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    // Sort in JS memory
+                    loadedRooms.sort((a, b) => (a.order || 99) - (b.order || 99));
+                    roomsData = loadedRooms;
+                    renderRooms();
+                    populateRoomSelectDropdowns();
+                }
+            }, (err) => {
+                console.error("Rooms sync error:", err);
+            });
+
+            // Real-time Gallery Listener
+            const galleryColRef = collection(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_gallery');
+            onSnapshot(galleryColRef, async (snapshot) => {
+                if (snapshot.empty) {
+                    for (const item of DEFAULT_GALLERY) {
+                        if (!currentUser) return;
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_gallery', item.id), item);
+                    }
+                } else {
+                    const loadedGallery = [];
+                    snapshot.forEach((docSnap) => {
+                        loadedGallery.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    loadedGallery.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                    galleryData = loadedGallery;
+                    renderGallery();
+                }
+            }, (err) => {
+                console.error("Gallery sync error:", err);
+            });
+
+            // Real-time Bookings Listener
+            const bookingsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_bookings');
+            onSnapshot(bookingsColRef, (snapshot) => {
+                const loadedBookings = [];
+                snapshot.forEach((docSnap) => {
+                    loadedBookings.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                loadedBookings.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                bookingsData = loadedBookings;
+                updateBookingCountUI();
+                renderAdminBookingsList();
+            }, (err) => {
+                console.error("Bookings sync error:", err);
+            });
+        }
+
+        // ====================================================
+        // 7. RENDER FUNCTIONS (ROOMS, GALLERY, SELECTS)
+        // ====================================================
+        function formatVND(amount) {
+            const num = Number(amount) || 0;
+            return num.toLocaleString('vi-VN') + 'đ';
+        }
+
+        function renderAllUI() {
+            renderRooms();
+            renderGallery();
+            populateRoomSelectDropdowns();
+            updateBookingCountUI();
+        }
+
+        window.filterRooms = function(category) {
+            activeFilter = category;
+            document.querySelectorAll('.room-filter-btn').forEach(btn => {
+                btn.className = "room-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition cursor-pointer";
+            });
+            const activeBtn = document.getElementById('filter-' + category);
+            if (activeBtn) {
+                activeBtn.className = "room-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gold-500 text-black transition cursor-pointer";
+            }
+            renderRooms();
+        };
+
+        function renderRooms() {
+            const grid = document.getElementById('roomsGrid');
+            if (!grid) return;
+
+            const filtered = activeFilter === 'all'
+                ? roomsData
+                : roomsData.filter(r => r.category === activeFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full glass-card rounded-2xl p-10 text-center text-gray-400">
+                        Chưa có phòng nào trong danh mục này.
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(room => {
+                const isAvailable = room.status !== 'busy';
+                const statusBadge = isAvailable
+                    ? `<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/90 text-white shadow flex items-center gap-1.5">
+                         <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span> Còn Phòng
+                       </span>`
+                    : `<span class="px-3 py-1 rounded-full text-xs font-bold bg-red-600/90 text-white shadow flex items-center gap-1.5">
+                         <i class="fa-solid fa-clock"></i> Đang Kín Khách
+                       </span>`;
+
+                const adminControlsHtml = isAdminMode ? `
+                    <div class="mt-4 pt-4 border-t border-gold-500/30 bg-obsidian-950/80 -mx-5 -mb-5 p-4 rounded-b-3xl space-y-3">
+                        <div class="flex items-center justify-between text-xs font-bold text-gold-400">
+                            <span><i class="fa-solid fa-wrench mr-1"></i> QUYỀN ADMIN CHỈNH SỬA NHANH</span>
+                            <button type="button" onclick="toggleRoomStatusQuick('${room.id}')" class="underline text-gray-300 hover:text-white">
+                                Đổi trạng thái
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="relative flex-1">
+                                <input type="number" id="quickPrice_${room.id}" value="${room.price}" step="10000"
+                                       class="w-full pl-3 pr-14 py-2 rounded-xl bg-obsidian-900 border border-gold-500/40 text-sm font-extrabold text-gold-300 focus:outline-none">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-gray-400">đ/giờ</span>
+                            </div>
+                            <button type="button" onclick="saveQuickPrice('${room.id}')" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-extrabold cursor-pointer shrink-0">
+                                <i class="fa-solid fa-check mr-1"></i> Lưu Giá
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" onclick="triggerQuickCardImageUpload('${room.id}')" class="py-2 px-2 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 border border-purple-400/40 text-purple-200 text-xs font-semibold flex items-center justify-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-camera"></i> Đổi Ảnh Máy
+                            </button>
+                            <button type="button" onclick="openRoomModal('${room.id}')" class="py-2 px-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-semibold flex items-center justify-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-pen"></i> Sửa Chi Tiết
+                            </button>
+                            <button type="button" onclick="confirmDeleteRoom('${room.id}')" class="py-2 px-2 rounded-xl bg-red-600/25 hover:bg-red-600/40 border border-red-500/30 text-red-300 text-xs font-semibold flex items-center justify-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-trash"></i> Xóa
+                            </button>
+                        </div>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col justify-between">
+                        <div>
+                            <!-- Room Image Container -->
+                            <div class="relative h-56 overflow-hidden bg-obsidian-950">
+                                <img src="${room.image}" alt="${room.name}"
+                                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                     onerror="this.src='https://placehold.co/800x500/151525/f5c542?text=PARIS+KTV'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-black/30"></div>
+                                
+                                <div class="absolute top-3 left-3 flex items-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-black/75 text-gold-400 border border-gold-500/40 backdrop-blur-md">
+                                        ${room.category}
+                                    </span>
+                                </div>
+
+                                <div class="absolute top-3 right-3">
+                                    ${statusBadge}
+                                </div>
+
+                                <div class="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                                    <div>
+                                        <span class="text-xs text-gray-300 bg-black/60 px-2.5 py-1 rounded-lg backdrop-blur-sm inline-flex items-center gap-1.5">
+                                            <i class="fa-solid fa-users text-gold-400"></i> Sức chứa: <strong>${room.capacity}</strong>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Room Details -->
+                            <div class="p-5">
+                                <h3 class="text-lg sm:text-xl font-bold text-white leading-snug">${room.name}</h3>
+                                <p class="text-xs sm:text-sm text-gray-400 mt-2 line-clamp-2 leading-relaxed">${room.description || ''}</p>
+                            </div>
+                        </div>
+
+                        <div class="px-5 pb-5">
+                            <!-- Price & Book Button Row -->
+                            <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
+                                <div>
+                                    <span class="text-[11px] uppercase tracking-wider text-gray-400 block">Giá niêm yết</span>
+                                    <div class="text-xl sm:text-2xl font-extrabold text-gold-400">
+                                        ${formatVND(room.price)}<span class="text-xs font-normal text-gray-400">/giờ</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" onclick="selectRoomAndScrollToBooking('${room.id}')" class="btn-gold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 cursor-pointer">
+                                    <i class="fa-solid fa-calendar-plus"></i>
+                                    <span>Đặt Phòng Này</span>
+                                </button>
+                            </div>
+
+                            ${adminControlsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            if (!grid) return;
+
+            grid.innerHTML = galleryData.map(item => `
+                <div class="group relative h-60 rounded-2xl overflow-hidden glass-card">
+                    <img src="${item.image}" alt="${item.title}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                         onerror="this.src='https://placehold.co/600x400/151525/f5c542?text=PARIS+KTV'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-4">
+                        <h4 class="text-sm font-bold text-white">${item.title}</h4>
+                        <p class="text-[11px] text-gold-400">PARIS KTV • 69 Trần Thái Tông</p>
+                    </div>
+                    ${isAdminMode ? `
+                        <button type="button" onclick="deleteGalleryPhoto('${item.id}')" title="Xóa ảnh này"
+                                class="absolute top-2.5 right-2.5 w-8 h-8 rounded-lg bg-red-600/90 hover:bg-red-500 text-white flex items-center justify-center shadow cursor-pointer">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function populateRoomSelectDropdowns() {
+            const quickSelect = document.getElementById('quickRoomSelect');
+            const mainSelect = document.getElementById('mainRoomSelect');
+
+            const optionsHtml = roomsData.map(r =>
+                `<option value="${r.name} (${formatVND(r.price)}/giờ)">${r.name} — ${formatVND(r.price)}/giờ (${r.capacity})</option>`
+            ).join('');
+
+            if (quickSelect) quickSelect.innerHTML = optionsHtml;
+            if (mainSelect) mainSelect.innerHTML = optionsHtml;
+        }
+
+        window.selectRoomAndScrollToBooking = function(roomId) {
+            const room = roomsData.find(r => r.id === roomId);
+            if (room) {
+                const mainSelect = document.getElementById('mainRoomSelect');
+                const targetVal = `${room.name} (${formatVND(room.price)}/giờ)`;
+                if (mainSelect) mainSelect.value = targetVal;
+            }
+            scrollToSection('bookingSection');
+        };
+
+        // ====================================================
+        // 8. ADMIN MODE & ROOM MANAGEMENT + DIRECT IMAGE UPLOAD
+        // ====================================================
+        window.handleAdminButtonClick = function() {
+            if (isAdminMode) {
+                toggleAdminMode(false);
+            } else {
+                document.getElementById('adminAuthModal')?.classList.remove('hidden');
+            }
+        };
+
+        window.closeAdminAuthModal = function() {
+            document.getElementById('adminAuthModal')?.classList.add('hidden');
+        };
+
+        window.confirmAdminLogin = function() {
+            closeAdminAuthModal();
+            toggleAdminMode(true);
+        };
+
+        window.toggleAdminMode = function(enable) {
+            isAdminMode = enable;
+            const banner = document.getElementById('adminBanner');
+            const toolbar = document.getElementById('adminRoomsToolbar');
+            const btnLabel = document.getElementById('adminBtnLabel');
+
+            if (isAdminMode) {
+                banner?.classList.remove('hidden');
+                toolbar?.classList.remove('hidden');
+                if (btnLabel) btnLabel.textContent = "Đang ở Admin";
+                showToast({
+                    title: "Đã bật quyền Quản Trị Admin!",
+                    message: "Bạn có thể chỉnh sửa giá phòng, thêm phòng mới và tải ảnh trực tiếp từ máy.",
+                    type: "success"
+                });
+            } else {
+                banner?.classList.add('hidden');
+                toolbar?.classList.add('hidden');
+                if (btnLabel) btnLabel.textContent = "Quản Trị Admin";
+                showToast({
+                    title: "Đã thoát chế độ Admin",
+                    message: "Giao diện đã trở về chế độ khách hàng.",
+                    type: "info"
+                });
+            }
+            renderRooms();
+            renderGallery();
+        };
+
+        window.triggerAdminAddRoom = function() {
+            if (!isAdminMode) {
+                toggleAdminMode(true);
+            }
+            openRoomModal();
+        };
+
+        // Quick Price Save directly on card
+        window.saveQuickPrice = async function(roomId) {
+            const input = document.getElementById('quickPrice_' + roomId);
+            if (!input) return;
+            const newPrice = Number(input.value);
+            if (!newPrice || newPrice < 10000) {
+                showToast({ title: "Giá không hợp lệ", message: "Vui lòng nhập mức giá hợp lệ (VNĐ/giờ).", type: "info" });
+                return;
+            }
+
+            const roomIndex = roomsData.findIndex(r => r.id === roomId);
+            if (roomIndex === -1) return;
+
+            roomsData[roomIndex].price = newPrice;
+            renderRooms();
+            populateRoomSelectDropdowns();
+
+            if (currentUser && db) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms', roomId), roomsData[roomIndex]);
+                } catch (e) {
+                    console.error("Save price error:", e);
+                }
+            }
+
+            showToast({
+                title: "Cập nhật giá phòng thành công!",
+                message: `${roomsData[roomIndex].name}: ${formatVND(newPrice)}/giờ (Đã đồng bộ PC & Điện thoại).`,
+                type: "success"
+            });
+        };
+
+        window.toggleRoomStatusQuick = async function(roomId) {
+            const roomIndex = roomsData.findIndex(r => r.id === roomId);
+            if (roomIndex === -1) return;
+
+            roomsData[roomIndex].status = roomsData[roomIndex].status === 'busy' ? 'available' : 'busy';
+            renderRooms();
+
+            if (currentUser && db) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms', roomId), roomsData[roomIndex]);
+                } catch (e) {
+                    console.error("Status toggle error:", e);
+                }
+            }
+
+            showToast({
+                title: "Đã đổi trạng thái phòng!",
+                message: `${roomsData[roomIndex].name} hiện đang: ${roomsData[roomIndex].status === 'available' ? 'Còn phòng trống' : 'Đang kín khách'}.`,
+                type: "success"
+            });
+        };
+
+        // Quick Direct Image Upload from a Room Card
+        window.triggerQuickCardImageUpload = function(roomId) {
+            quickUploadTargetRoomId = roomId;
+            const fileInput = document.getElementById('quickCardFileInput');
+            if (fileInput) {
+                fileInput.value = '';
+                fileInput.click();
+            }
+        };
+
+        window.handleQuickCardImageUpload = async function(event) {
+            const file = event.target.files?.[0];
+            if (!file || !quickUploadTargetRoomId) return;
+
+            try {
+                const compressedBase64 = await compressImageFromFile(file, 900, 0.72);
+                const roomIndex = roomsData.findIndex(r => r.id === quickUploadTargetRoomId);
+                if (roomIndex === -1) return;
+
+                roomsData[roomIndex].image = compressedBase64;
+                renderRooms();
+
+                if (currentUser && db) {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms', quickUploadTargetRoomId), roomsData[roomIndex]);
+                }
+
+                // PROMINENT UPLOAD SUCCESS NOTIFICATION
+                showToast({
+                    title: "✅ Tải ảnh lên thành công!",
+                    message: `Ảnh mới của "${roomsData[roomIndex].name}" đã được tải từ máy và đồng bộ giữa Máy tính & Điện thoại.`,
+                    type: "success",
+                    imagePreview: compressedBase64
+                });
+            } catch (err) {
+                showToast({
+                    title: "Không thể tải ảnh",
+                    message: err.message || "Vui lòng thử lại với ảnh khác.",
+                    type: "info"
+                });
+            }
+        };
+
+        // Open Add/Edit Room Modal
+        window.openRoomModal = function(roomId = null) {
+            const modal = document.getElementById('roomModal');
+            const title = document.getElementById('roomModalTitle');
+            const overlayBadge = document.getElementById('roomUploadOverlayBadge');
+            overlayBadge?.classList.add('hidden');
+
+            if (roomId) {
+                const room = roomsData.find(r => r.id === roomId);
+                if (!room) return;
+                title.textContent = "Chỉnh Sửa Thông Tin & Giá Phòng";
+                document.getElementById('editRoomId').value = room.id;
+                document.getElementById('roomNameInput').value = room.name;
+                document.getElementById('roomPriceInput').value = room.price;
+                document.getElementById('roomCapacityInput').value = room.capacity;
+                document.getElementById('roomCategoryInput').value = room.category;
+                document.getElementById('roomStatusInput').value = room.status || 'available';
+                document.getElementById('roomDescInput').value = room.description || '';
+                document.getElementById('roomImagePreview').src = room.image;
+                document.getElementById('roomImageUrlInput').value = room.image.startsWith('data:') ? '' : room.image;
+                currentUploadedModalImage = room.image;
+            } else {
+                title.textContent = "Thêm Phòng Hát Mới";
+                document.getElementById('editRoomId').value = '';
+                document.getElementById('roomNameInput').value = '';
+                document.getElementById('roomPriceInput').value = 450000;
+                document.getElementById('roomCapacityInput').value = '10 - 20 người';
+                document.getElementById('roomCategoryInput').value = 'VIP';
+                document.getElementById('roomStatusInput').value = 'available';
+                document.getElementById('roomDescInput').value = 'Không gian sang trọng, âm thanh Digital chuẩn sân khấu, màn hình LED 4K.';
+                const defaultImg = "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=900&q=80";
+                document.getElementById('roomImagePreview').src = defaultImg;
+                document.getElementById('roomImageUrlInput').value = '';
+                currentUploadedModalImage = defaultImg;
+            }
+
+            modal?.classList.remove('hidden');
+        };
+
+        window.closeRoomModal = function() {
+            document.getElementById('roomModal')?.classList.add('hidden');
+        };
+
+        // Direct Image Upload inside Add/Edit Room Modal
+        window.handleModalRoomImageUpload = async function(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+
+            const badge = document.getElementById('uploadBadgeStatus');
+            if (badge) badge.textContent = "Đang xử lý & tải ảnh...";
+
+            try {
+                const compressedDataUrl = await compressImageFromFile(file, 900, 0.72);
+                currentUploadedModalImage = compressedDataUrl;
+
+                const preview = document.getElementById('roomImagePreview');
+                if (preview) preview.src = compressedDataUrl;
+
+                const overlayBadge = document.getElementById('roomUploadOverlayBadge');
+                overlayBadge?.classList.remove('hidden');
+
+                if (badge) badge.textContent = "Đã tải ảnh từ thiết bị thành công!";
+
+                // PROMINENT TOAST NOTIFICATION WHEN IMAGE IS UPLOADED
+                showToast({
+                    title: "✅ Tải ảnh lên thành công!",
+                    message: `Đã nhận ảnh "${file.name}" trực tiếp từ thiết bị. Bấm "Lưu & Đồng Bộ Ngay" để áp dụng.`,
+                    type: "success",
+                    imagePreview: compressedDataUrl
+                });
+            } catch (err) {
+                showToast({
+                    title: "Lỗi khi tải ảnh",
+                    message: err.message || "Vui lòng chọn tệp ảnh hợp lệ.",
+                    type: "info"
+                });
+            }
+        };
+
+        window.handleRoomUrlInput = function(url) {
+            if (url && url.trim().startsWith('http')) {
+                currentUploadedModalImage = url.trim();
+                document.getElementById('roomImagePreview').src = url.trim();
+            }
+        };
+
+        window.saveRoomForm = async function(event) {
+            event.preventDefault();
+            const editId = document.getElementById('editRoomId').value;
+            const name = document.getElementById('roomNameInput').value.trim();
+            const price = Number(document.getElementById('roomPriceInput').value) || 350000;
+            const capacity = document.getElementById('roomCapacityInput').value.trim();
+            const category = document.getElementById('roomCategoryInput').value;
+            const status = document.getElementById('roomStatusInput').value;
+            const description = document.getElementById('roomDescInput').value.trim();
+            const image = currentUploadedModalImage || "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80";
+
+            const roomId = editId || ('room_paris_' + Date.now());
+            const roomObj = {
+                id: roomId,
+                name,
+                price,
+                capacity,
+                category,
+                status,
+                description,
+                image,
+                order: editId ? (roomsData.find(r => r.id === editId)?.order || roomsData.length + 1) : (roomsData.length + 1)
+            };
+
+            const existingIndex = roomsData.findIndex(r => r.id === roomId);
+            if (existingIndex >= 0) {
+                roomsData[existingIndex] = roomObj;
+            } else {
+                roomsData.push(roomObj);
+            }
+
+            renderRooms();
+            populateRoomSelectDropdowns();
+            closeRoomModal();
+
+            if (currentUser && db) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms', roomId), roomObj);
+                } catch (e) {
+                    console.error("Save room error:", e);
+                }
+            }
+
+            showToast({
+                title: editId ? "Đã cập nhật phòng hát!" : "Đã thêm phòng hát mới!",
+                message: `${name} (${formatVND(price)}/giờ) đã được lưu và đồng bộ giữa Máy tính & Điện thoại.`,
+                type: "success",
+                imagePreview: image
+            });
+        };
+
+        // Direct Gallery Upload from Device
+        window.handleDirectGalleryUpload = async function(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+
+            try {
+                const compressedDataUrl = await compressImageFromFile(file, 900, 0.72);
+                const newGalleryItem = {
+                    id: 'gal_paris_' + Date.now(),
+                    title: 'Không Gian PARIS KTV 69 Trần Thái Tông',
+                    image: compressedDataUrl,
+                    createdAt: Date.now()
+                };
+
+                galleryData.unshift(newGalleryItem);
+                renderGallery();
+
+                if (currentUser && db) {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_gallery', newGalleryItem.id), newGalleryItem);
+                }
+
+                showToast({
+                    title: "✅ Tải ảnh lên thành công!",
+                    message: "Hình ảnh không gian mới đã được tải lên từ máy và đồng bộ trên cả Máy tính & Điện thoại.",
+                    type: "success",
+                    imagePreview: compressedDataUrl
+                });
+            } catch (err) {
+                showToast({
+                    title: "Lỗi tải ảnh",
+                    message: err.message || "Không thể xử lý ảnh này.",
+                    type: "info"
+                });
+            }
+        };
+
+        // Custom Confirmation Modal Logic (No browser alert/confirm)
+        let pendingConfirmCallback = null;
+        function openConfirmDialog(title, message, onConfirm) {
+            document.getElementById('confirmDialogTitle').textContent = title;
+            document.getElementById('confirmDialogMessage').textContent = message;
+            pendingConfirmCallback = onConfirm;
+            document.getElementById('confirmDialogModal')?.classList.remove('hidden');
+        }
+
+        window.closeConfirmDialog = function() {
+            document.getElementById('confirmDialogModal')?.classList.add('hidden');
+            pendingConfirmCallback = null;
+        };
+
+        document.getElementById('confirmDialogActionBtn')?.addEventListener('click', () => {
+            if (typeof pendingConfirmCallback === 'function') {
+                pendingConfirmCallback();
+            }
+            closeConfirmDialog();
         });
 
-        // Initial call
-        calculateTotal();
+        window.confirmDeleteRoom = function(roomId) {
+            const room = roomsData.find(r => r.id === roomId);
+            if (!room) return;
+            openConfirmDialog(
+                "Xóa phòng hát?",
+                `Bạn có chắc chắn muốn xóa "${room.name}" khỏi hệ thống PARIS KTV?`,
+                async () => {
+                    roomsData = roomsData.filter(r => r.id !== roomId);
+                    renderRooms();
+                    populateRoomSelectDropdowns();
+                    if (currentUser && db) {
+                        try {
+                            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms', roomId));
+                        } catch (e) {
+                            console.error("Delete room error:", e);
+                        }
+                    }
+                    showToast({
+                        title: "Đã xóa phòng hát",
+                        message: `Đã xóa "${room.name}" và đồng bộ dữ liệu.`,
+                        type: "info"
+                    });
+                }
+            );
+        };
+
+        window.deleteGalleryPhoto = function(photoId) {
+            openConfirmDialog(
+                "Xóa hình ảnh này?",
+                "Hình ảnh sẽ được xóa khỏi bộ sưu tập không gian quán.",
+                async () => {
+                    galleryData = galleryData.filter(g => g.id !== photoId);
+                    renderGallery();
+                    if (currentUser && db) {
+                        try {
+                            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_gallery', photoId));
+                        } catch (e) {
+                            console.error(e);
+                        }
+                    }
+                    showToast({
+                        title: "Đã xóa ảnh",
+                        message: "Ảnh đã được xóa và đồng bộ.",
+                        type: "info"
+                    });
+                }
+            );
+        };
+
+        window.resetDefaultRoomsConfirm = function() {
+            openConfirmDialog(
+                "Khôi phục danh sách phòng mẫu?",
+                "Hệ thống sẽ khôi phục lại 4 hạng phòng tiêu chuẩn ban đầu của PARIS KTV.",
+                async () => {
+                    roomsData = [...DEFAULT_ROOMS];
+                    renderRooms();
+                    populateRoomSelectDropdowns();
+                    if (currentUser && db) {
+                        for (const room of DEFAULT_ROOMS) {
+                            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_rooms', room.id), room);
+                        }
+                    }
+                    showToast({
+                        title: "Đã khôi phục phòng mẫu!",
+                        message: "Danh sách phòng mặc định của PARIS KTV đã được cập nhật.",
+                        type: "success"
+                    });
+                }
+            );
+        };
+
+        // ====================================================
+        // 9. CUSTOMER BOOKING SUBMISSION & ADMIN BOOKINGS PANEL
+        // ====================================================
+        window.submitBookingForm = async function(event, source) {
+            event.preventDefault();
+
+            const name = source === 'quick'
+                ? document.getElementById('quickName').value.trim()
+                : document.getElementById('mainName').value.trim();
+            const phone = source === 'quick'
+                ? document.getElementById('quickPhone').value.trim()
+                : document.getElementById('mainPhone').value.trim();
+            const guests = source === 'quick'
+                ? document.getElementById('quickGuests').value
+                : document.getElementById('mainGuests').value;
+            const roomChoice = source === 'quick'
+                ? document.getElementById('quickRoomSelect').value
+                : document.getElementById('mainRoomSelect').value;
+            const date = source === 'quick'
+                ? document.getElementById('quickDate').value
+                : document.getElementById('mainDate').value;
+            const time = source === 'quick'
+                ? document.getElementById('quickTime').value
+                : document.getElementById('mainTime').value;
+            const notes = source === 'quick'
+                ? 'Đặt nhanh từ trang chủ'
+                : (document.getElementById('mainNotes').value.trim() || 'Không có ghi chú thêm');
+
+            const bookingId = 'booking_' + Date.now();
+            const newBooking = {
+                id: bookingId,
+                customerName: name,
+                customerPhone: phone,
+                guests,
+                roomChoice,
+                date,
+                time,
+                notes,
+                status: 'Chờ xác nhận',
+                createdAt: Date.now()
+            };
+
+            bookingsData.unshift(newBooking);
+            updateBookingCountUI();
+            renderAdminBookingsList();
+
+            if (currentUser && db) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_bookings', bookingId), newBooking);
+                } catch (err) {
+                    console.error("Save booking error:", err);
+                }
+            }
+
+            // Show Confirmation Modal
+            const summaryEl = document.getElementById('bookingSuccessSummary');
+            if (summaryEl) {
+                summaryEl.innerHTML = `
+                    <div><strong>Khách hàng:</strong> ${name} (${phone})</div>
+                    <div><strong>Phòng đăng ký:</strong> <span class="text-gold-400">${roomChoice}</span></div>
+                    <div><strong>Số lượng khách:</strong> ${guests}</div>
+                    <div><strong>Thời gian:</strong> ${time} — Ngày ${date}</div>
+                    <div><strong>Địa chỉ:</strong> 69 Trần Thái Tông, Cầu Giấy, Hà Nội</div>
+                `;
+            }
+            document.getElementById('bookingSuccessModal')?.classList.remove('hidden');
+
+            if (source === 'quick') {
+                document.getElementById('quickBookingForm').reset();
+                setDefaultDates();
+            } else {
+                document.getElementById('mainBookingForm').reset();
+                setDefaultDates();
+            }
+        };
+
+        window.closeBookingSuccessModal = function() {
+            document.getElementById('bookingSuccessModal')?.classList.add('hidden');
+        };
+
+        function updateBookingCountUI() {
+            const badge = document.getElementById('adminBookingCountBadge');
+            if (badge) badge.textContent = bookingsData.length;
+        }
+
+        window.openAdminBookingsModal = function() {
+            renderAdminBookingsList();
+            document.getElementById('adminBookingsModal')?.classList.remove('hidden');
+        };
+
+        window.closeAdminBookingsModal = function() {
+            document.getElementById('adminBookingsModal')?.classList.add('hidden');
+        };
+
+        function renderAdminBookingsList() {
+            const container = document.getElementById('adminBookingsList');
+            if (!container) return;
+
+            if (bookingsData.length === 0) {
+                container.innerHTML = `
+                    <div class="p-8 rounded-2xl bg-obsidian-950/70 border border-white/10 text-center text-gray-400 text-sm">
+                        Hiện chưa có đơn đặt phòng trực tuyến nào. Khi khách đặt trên điện thoại hoặc máy tính, đơn sẽ hiển thị tức thì tại đây.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = bookingsData.map(b => `
+                <div class="p-4 rounded-2xl bg-obsidian-950/90 border border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-sm font-bold text-white">${b.customerName}</span>
+                            <a href="tel:${b.customerPhone}" class="text-xs font-extrabold text-gold-400 bg-gold-500/15 px-2.5 py-0.5 rounded-lg border border-gold-500/30">
+                                <i class="fa-solid fa-phone mr-1"></i>${b.customerPhone}
+                            </a>
+                            <span class="text-xs px-2.5 py-0.5 rounded-full font-bold ${b.status === 'Đã xác nhận' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
+                                ${b.status}
+                            </span>
+                        </div>
+                        <div class="text-xs text-gold-300 font-semibold">${b.roomChoice} • ${b.guests}</div>
+                        <div class="text-xs text-gray-400">Giờ đến: <strong>${b.time}</strong> ngày <strong>${b.date}</strong> | Ghi chú: ${b.notes}</div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button type="button" onclick="markBookingConfirmed('${b.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer">
+                            <i class="fa-solid fa-check mr-1"></i> Xác nhận
+                        </button>
+                        <button type="button" onclick="deleteBookingItem('${b.id}')" class="px-3 py-1.5 rounded-xl bg-red-600/30 hover:bg-red-600/50 text-red-200 text-xs font-bold cursor-pointer">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.markBookingConfirmed = async function(bookingId) {
+            const idx = bookingsData.findIndex(b => b.id === bookingId);
+            if (idx === -1) return;
+            bookingsData[idx].status = 'Đã xác nhận';
+            renderAdminBookingsList();
+            if (currentUser && db) {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_bookings', bookingId), bookingsData[idx]);
+            }
+            showToast({
+                title: "Đã xác nhận đơn đặt phòng",
+                message: `Khách hàng: ${bookingsData[idx].customerName}`,
+                type: "success"
+            });
+        };
+
+        window.deleteBookingItem = async function(bookingId) {
+            bookingsData = bookingsData.filter(b => b.id !== bookingId);
+            updateBookingCountUI();
+            renderAdminBookingsList();
+            if (currentUser && db) {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'paris_ktv_bookings', bookingId));
+            }
+        };
+
+        function setDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            const quickDate = document.getElementById('quickDate');
+            const mainDate = document.getElementById('mainDate');
+            if (quickDate) quickDate.value = today;
+            if (mainDate) mainDate.value = today;
+        }
+
+        // ====================================================
+        // 10. INITIALIZE ON LOAD
+        // ====================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Strip any accidental '#' hash on initial page load
+            if (window.location.hash) {
+                window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+            }
+            setDefaultDates();
+            renderAllUI();
+            initFirebaseSync();
+        });
     </script>
 </body>
 </html>
