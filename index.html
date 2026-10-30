@@ -2654,4 +2654,21 @@
         renderSiteFeatures();
     };
     </script>
+    <script>
+        // 1. Dành cho Máy tính: Bấm Ctrl + Shift + A
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'A' || event.key === 'a')) {
+                event.preventDefault(); 
+                if(prompt("Nhập mật khẩu Quản trị (Admin):") === "admin123") toggleAdminMode(true);
+            }
+        });
+
+        // 2. Dành cho Điện thoại di động: Chạm 3 ngón tay cùng lúc vào màn hình
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length === 3) { 
+                event.preventDefault();
+                if(prompt("Nhập mật khẩu Quản trị (Admin):") === "admin123") toggleAdminMode(true);
+            }
+        });
+    </script>
 </body></html>
