@@ -2567,5 +2567,91 @@
         });
     </script>
 
+<!-- Modals Admin -->
+    <div id="settingsModal" class="hidden fixed inset-0 z-[110] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-obsidian-900 border border-gold-500/30 rounded-2xl w-full max-w-lg p-6 shadow-2xl">
+            <h3 class="text-xl font-bold text-gold-400 mb-4 border-b border-gold-500/20 pb-2">Cài Đặt Thông Báo</h3>
+            <div class="space-y-4">
+                <div><input type="text" id="setBannerText" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3 text-white mb-2"><label class="text-white"><input type="checkbox" id="setBannerActive"> Bật Banner</label></div>
+                <div><input type="text" id="setTickerText" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3 text-white mb-2"><label class="text-white"><input type="checkbox" id="setTickerActive"> Bật Ticker</label></div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-white/10"><button onclick="closeSettingsModal()" class="px-5 py-2.5 rounded-xl bg-white/10 text-white">Hủy</button><button onclick="saveSettings()" class="btn-gold px-5 py-2.5 rounded-xl">Lưu</button></div>
+            </div>
+        </div>
+    </div>
+    <div id="comboModal" class="hidden fixed inset-0 z-[110] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-obsidian-900 border border-gold-500/30 rounded-2xl w-full max-w-lg p-6 shadow-2xl">
+            <h3 class="text-xl font-bold text-gold-400 mb-4 border-b border-gold-500/20 pb-2">Thêm / Sửa Combo</h3>
+            <div class="space-y-4">
+                <input type="hidden" id="comboId">
+                <input type="text" id="comboName" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3 text-white mb-2" placeholder="Tên Combo">
+                <input type="text" id="comboPrice" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3 text-white mb-2" placeholder="Giá">
+                <textarea id="comboDesc" rows="3" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3 text-white mb-2" placeholder="Mô tả"></textarea>
+                <input type="file" id="comboImage" accept="image/*" class="w-full text-gray-300 text-sm mb-2">
+                <div class="flex justify-end gap-3 pt-4 border-t border-white/10"><button onclick="closeComboModal()" class="px-5 py-2.5 rounded-xl bg-white/10 text-white">Hủy</button><button onclick="saveCombo()" class="btn-gold px-5 py-2.5 rounded-xl">Lưu</button></div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Script Xử lý -->
+    <script>
+    let siteSettings = { promoBanner: {active: false, text: ""}, liveTicker: {active: false, text: ""}, combos: [] };
+    document.addEventListener('DOMContentLoaded', () => {
+        const seed = document.getElementById('site-settings-data');
+        if (seed && seed.textContent.trim() !== '') { try { siteSettings = JSON.parse(seed.textContent); } catch (e) {} }
+        renderSiteFeatures();
+    });
+
+    function renderSiteFeatures() {
+        const adminClass = window.isAdminActive ? 'block' : 'hidden';
+        const bUI = document.getElementById('promoBannerUI'), tUI = document.getElementById('liveTickerUI');
+        
+        if (siteSettings.promoBanner.active || window.isAdminActive) {
+            bUI.classList.remove('hidden'); document.getElementById('promoBannerText').innerHTML = siteSettings.promoBanner.text;
+            document.getElementById('adminEditPromoBtn').className = `absolute right-4 top-1/2 -translate-y-1/2 text-xs bg-black/40 px-3 py-1.5 rounded-lg hover:bg-black/60 shadow border border-white/20 ${adminClass}`;
+            siteSettings.promoBanner.active ? bUI.classList.remove('opacity-40') : bUI.classList.add('opacity-40');
+        } else bUI.classList.add('hidden');
+
+        if (siteSettings.liveTicker.active || window.isAdminActive) {
+            tUI.classList.remove('hidden'); document.getElementById('liveTickerText').innerHTML = siteSettings.liveTicker.text;
+            document.getElementById('adminEditTickerBtn').className = `absolute right-4 top-1/2 -translate-y-1/2 text-xs bg-black/60 text-white px-3 py-1.5 rounded-lg hover:bg-black/80 z-10 shadow border border-white/20 ${adminClass}`;
+            siteSettings.liveTicker.active ? tUI.classList.remove('opacity-40') : tUI.classList.add('opacity-40');
+        } else tUI.classList.add('hidden');
+
+        const btnAdd = document.getElementById('adminAddComboBtn'); if(btnAdd) btnAdd.className = `btn-gold px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 ${adminClass}`;
+        
+        const grid = document.getElementById('comboGrid');
+        if (grid) {
+            grid.innerHTML = '';
+            siteSettings.combos.forEach(c => {
+                const del = window.isAdminActive ? `<button onclick="deleteCombo('${c.id}')" class="absolute top-3 right-3 bg-red-600/90 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-500 shadow border border-white/20">Xóa</button>` : '';
+                grid.innerHTML += `<div class="glass-card rounded-2xl overflow-hidden relative flex flex-col group border border-gold-500/30"><img src="${c.image || ''}" class="w-full h-44 object-cover">${del}<div class="p-5 flex-1 flex flex-col"><h3 class="text-lg font-bold text-white mb-1">${c.name}</h3><div class="text-2xl font-black text-gold-400 mb-3">${c.price}</div><p class="text-sm text-gray-300 flex-1 leading-relaxed">${c.description}</p><a href="https://zalo.me/0386342147?text=${encodeURIComponent('Đặt ' + c.name)}" target="_blank" class="mt-5 w-full text-center py-3 rounded-xl border border-gold-500/50 text-gold-300 font-bold hover:bg-gold-500 hover:text-black transition">Đặt Combo</a></div></div>`;
+            });
+        }
+    }
+
+    function openSettingsModal() { document.getElementById('setBannerText').value = siteSettings.promoBanner.text; document.getElementById('setBannerActive').checked = siteSettings.promoBanner.active; document.getElementById('setTickerText').value = siteSettings.liveTicker.text; document.getElementById('setTickerActive').checked = siteSettings.liveTicker.active; document.getElementById('settingsModal').classList.remove('hidden'); }
+    function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); }
+    function saveSettings() { siteSettings.promoBanner.text = document.getElementById('setBannerText').value; siteSettings.promoBanner.active = document.getElementById('setBannerActive').checked; siteSettings.liveTicker.text = document.getElementById('setTickerText').value; siteSettings.liveTicker.active = document.getElementById('setTickerActive').checked; updateData(); closeSettingsModal(); }
+
+    function openComboModal() { document.getElementById('comboId').value = 'cb_'+Date.now(); document.getElementById('comboModal').classList.remove('hidden'); }
+    function closeComboModal() { document.getElementById('comboModal').classList.add('hidden'); }
+    function saveCombo() {
+        const id = document.getElementById('comboId').value, name = document.getElementById('comboName').value, price = document.getElementById('comboPrice').value, desc = document.getElementById('comboDesc').value, file = document.getElementById('comboImage');
+        if(!name || !price) return alert("Nhập đủ Tên và Giá!");
+        const finish = (img) => { siteSettings.combos.push({id, name, price, description: desc, image: img}); updateData(); closeComboModal(); };
+        if (file.files.length > 0) { const r = new FileReader(); r.onload = (e) => finish(e.target.result); r.readAsDataURL(file.files[0]); } else finish('');
+    }
+    function deleteCombo(id) { if(confirm('Xóa Combo này?')) { siteSettings.combos = siteSettings.combos.filter(c => c.id !== id); updateData(); } }
+    function updateData() { document.getElementById('site-settings-data').textContent = JSON.stringify(siteSettings, null, 2); renderSiteFeatures(); }
+
+    function submitZaloBooking(e) { e.preventDefault(); const t = document.getElementById('bkTime').value ? new Date(document.getElementById('bkTime').value).toLocaleString('vi-VN') : ''; const msg = `Chào PARIS KTV,\nMình đặt phòng:\n- Tên: ${document.getElementById('bkName').value}\n- SĐT: ${document.getElementById('bkPhone').value}\n- Phòng: ${document.getElementById('bkRoom').value}\n- Giờ: ${t}\n- Ghi chú: ${document.getElementById('bkNote').value}`; window.open('https://zalo.me/0386342147?text=' + encodeURIComponent(msg), '_blank'); }
+
+    // Tích hợp vào nút Admin Mode có sẵn
+    const inheritToggleAdminMode = window.toggleAdminMode;
+    window.toggleAdminMode = function(isUnlock) {
+        if(inheritToggleAdminMode) inheritToggleAdminMode(isUnlock);
+        window.isAdminActive = isUnlock;
+        renderSiteFeatures();
+    };
+    </script>
 </body></html>
