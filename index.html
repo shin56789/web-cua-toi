@@ -153,6 +153,13 @@
     <!-- ==========================================
          EMBEDDED SEED DATA (AUTO-UPDATED WHEN EXPORTING / COPYING HTML FOR GITHUB)
     =========================================== -->
+    <script id="site-settings-data" type="application/json">
+    {
+      "promoBanner": { "active": true, "text": "🔥 KHUYẾN MÃI: Giảm 20% tiền giờ khi đặt phòng trước 18h hàng ngày!" },
+      "liveTicker": { "active": true, "text": "⚡ CẬP NHẬT: Hiện chỉ còn 1 phòng Super VIP trống cho tối nay. Quý khách vui lòng đặt trước để giữ phòng!" },
+      "combos": []
+    }
+    </script>
     <script id="rooms-seed-data" type="application/json">
 {
   "updatedAt": 1792995552270,
@@ -347,7 +354,17 @@
             </div>
         </div>
     </header>
-
+<div id="promoBannerUI" class="bg-red-600 text-white text-center py-2 px-4 text-sm font-bold shadow-md relative group hidden transition-all">
+        <span id="promoBannerText"></span>
+        <button id="adminEditPromoBtn" onclick="openSettingsModal()" class="hidden absolute right-4 top-1/2 -translate-y-1/2 text-xs bg-black/40 px-3 py-1.5 rounded-lg hover:bg-black/60 shadow border border-white/20"><i class="fa-solid fa-pen"></i> Sửa</button>
+    </div>
+    <div id="liveTickerUI" class="bg-obsidian-900 border-b border-gold-500/20 text-gold-300 py-2.5 overflow-hidden flex items-center relative hidden transition-all">
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 flex items-center gap-3">
+            <i class="fa-solid fa-bolt text-red-500 animate-pulse text-lg"></i>
+            <marquee id="liveTickerText" class="text-sm font-semibold tracking-wide" scrollamount="6"></marquee>
+        </div>
+        <button id="adminEditTickerBtn" onclick="openSettingsModal()" class="hidden absolute right-4 top-1/2 -translate-y-1/2 text-xs bg-black/60 text-white px-3 py-1.5 rounded-lg hover:bg-black/80 z-10 shadow border border-white/20"><i class="fa-solid fa-pen"></i> Sửa</button>
+    </div>
     <!-- ==========================================
          HERO SECTION (SIMPLIFIED 1-CLICK CALL & ZALO BOOKING)
     =========================================== -->
@@ -989,7 +1006,36 @@
 
         </div>
     </section>
-
+<section id="comboSection" class="py-14 sm:py-20 bg-obsidian-950 border-b border-gold-500/15">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-end justify-between mb-10">
+                <div><h2 class="font-serif text-2xl sm:text-4xl font-bold text-white">Menu Combo <span class="text-gold-gradient">Siêu Ưu Đãi</span></h2></div>
+                <button type="button" id="adminAddComboBtn" onclick="openComboModal()" class="hidden btn-gold px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-plus"></i> Thêm Combo</button>
+            </div>
+            <div id="comboGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+    <section id="bookingSection" class="py-16 sm:py-20 bg-obsidian-900/40 border-b border-gold-500/15 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl border border-gold-500/40">
+                <div class="text-center mb-8"><h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">Đặt Phòng Nhanh Qua <span class="text-blue-400">Zalo</span></h2></div>
+                <form id="zaloBookingForm" class="space-y-4" onsubmit="submitZaloBooking(event)">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <input type="text" id="bkName" required class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3.5 text-white" placeholder="Tên của bạn *">
+                        <input type="tel" id="bkPhone" required class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3.5 text-white" placeholder="Số điện thoại *">
+                        <select id="bkRoom" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3.5 text-white">
+                            <option value="Phòng Standard">Phòng Standard (Phòng nhỏ)</option>
+                            <option value="Phòng VIP">Phòng VIP Hoàng Gia</option>
+                            <option value="Phòng Super VIP">Phòng Super VIP Đại Tiệc</option>
+                        </select>
+                        <input type="datetime-local" id="bkTime" required class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3.5 text-white text-sm">
+                    </div>
+                    <textarea id="bkNote" rows="2" class="w-full bg-obsidian-950 border border-white/10 rounded-xl p-3.5 text-white mt-4" placeholder="Yêu cầu đặc biệt..."></textarea>
+                    <button type="submit" class="w-full btn-zalo py-4 rounded-xl text-base font-bold flex justify-center items-center gap-2 mt-4"><i class="fa-solid fa-paper-plane"></i> Gửi Yêu Cầu Zalo</button>
+                </form>
+            </div>
+        </div>
+    </section>
     <!-- ==========================================
          GALLERY SECTION (WITH ADMIN DIRECT DEVICE PHOTO UPLOAD)
     =========================================== -->
