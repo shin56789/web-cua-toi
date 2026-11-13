@@ -180,6 +180,8 @@
             <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 ml-auto">
                 <button type="button" onclick="openRoomModal()" class="bg-black hover:bg-gray-900 text-gold-400 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow"><i class="fa-solid fa-plus-circle"></i> Thêm Phòng</button>
                 <button type="button" id="saveGithubBtn" onclick="saveToGithub()" class="bg-purple-900 hover:bg-purple-950 text-purple-100 px-3.5 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow"><i class="fa-brands fa-github"></i> Lưu &amp; Đồng Bộ GitHub</button>
+                <button type="button" onclick="openPromoModal()" class="bg-black hover:bg-gray-900 text-gold-400 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow"><i class="fa-solid fa-tags"></i> Khuyến mãi</button>
+                <button type="button" onclick="downloadBackup()" class="bg-white/70 hover:bg-white text-black px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer" title="Tải bản sao lưu rooms-data.json"><i class="fa-solid fa-download"></i></button>
                 <button type="button" onclick="openAdminLogin()" class="bg-white/70 hover:bg-white text-black px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer" title="Đổi repo / token"><i class="fa-solid fa-gear"></i></button>
                 <button type="button" onclick="toggleAdminMode(false)" class="bg-red-800 hover:bg-red-900 text-white px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">Thoát</button>
             </div>
@@ -190,6 +192,9 @@
     <!-- ==========================================
          STICKY HEADER & NAVIGATION BAR
     =========================================== -->
+    <div id="promoBanner" class="hidden bg-gradient-to-r from-purple-800 via-fuchsia-700 to-purple-800 text-white text-center text-xs sm:text-sm font-semibold px-4 py-2.5">
+        <i class="fa-solid fa-gift text-gold-300 mr-1.5"></i><span id="promoText"></span> <span id="promoNote" class="text-gold-200 text-[11px]"></span>
+    </div>
     <header class="sticky top-0 z-40 bg-obsidian-950/90 backdrop-blur-xl border-b border-gold-500/20 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
             
@@ -552,12 +557,13 @@
                 </div>
 
                 <!-- Upload Photo to Gallery Button (Visible only when Admin is unlocked) -->
-                <div id="adminGalleryUploadBox" class="hidden">
+                <div id="adminGalleryUploadBox" class="hidden flex flex-wrap gap-2">
                     <label for="galleryDirectUploadInput" class="btn-gold px-4 py-2.5 rounded-xl text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                         <span>+ Tải Ảnh Không Gian Từ Máy (Admin)</span>
                     </label>
                     <input type="file" id="galleryDirectUploadInput" accept="image/*" class="hidden" onchange="handleDirectGalleryUpload(event)">
+                    <button type="button" onclick="openAddVideo()" class="btn-zalo px-4 py-2.5 rounded-xl text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer"><i class="fa-solid fa-video"></i><span>+ Thêm Video (Admin)</span></button>
                 </div>
             </div>
 
@@ -826,6 +832,22 @@
                     <textarea id="roomDescInput" rows="2" placeholder="VD: Hệ thống âm thanh Digital sân khấu, 2 màn hình LED 4K..." class="w-full px-4 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-400 focus:outline-none text-sm text-white"></textarea>
                 </div>
 
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1.5">Bảng giá theo khung giờ (không bắt buộc)</label>
+                    <textarea id="roomTiersInput" rows="3" placeholder="Mỗi dòng: Nhãn | giá&#10;Thứ 2 - Thứ 5, 10h-17h | 390000&#10;Thứ 6 - Chủ nhật | 590000" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-500 focus:outline-none text-sm text-white"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-1.5">Video giới thiệu phòng (không bắt buộc)</label>
+                    <input type="text" id="roomVideoInput" oninput="handleRoomVideoLink(this.value)" placeholder="Dán link YouTube / Facebook / TikTok" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-white/15 focus:border-gold-500 focus:outline-none text-sm text-white">
+                    <div class="flex flex-wrap items-center gap-2 mt-2">
+                        <label for="roomVideoFile" class="px-3 py-2 rounded-xl bg-purple-600/30 border border-purple-400/40 text-purple-100 text-xs font-semibold cursor-pointer"><i class="fa-solid fa-video"></i> Chọn file mp4 từ máy</label>
+                        <input type="file" id="roomVideoFile" accept="video/mp4,video/webm" class="hidden" onchange="handleRoomVideoFile(event)">
+                        <button type="button" onclick="clearRoomVideo()" class="px-3 py-2 rounded-xl bg-white/10 text-gray-300 text-xs font-semibold">Bỏ video</button>
+                        <span id="roomVideoStatus" class="text-[11px] text-gray-400">Chưa có video.</span>
+                    </div>
+                </div>
+
                 <div class="pt-3 flex items-center justify-end gap-3 border-t border-white/10">
                     <button type="button" onclick="closeRoomModal()" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs sm:text-sm font-semibold text-gray-300">
                         Hủy
@@ -904,6 +926,39 @@
     </div>
 
     <!-- Hidden file input for quick direct upload on any individual room card -->
+    
+    <div id="promoModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden">
+        <form onsubmit="savePromoForm(event)" class="glass-card rounded-3xl max-w-md w-full p-6 border border-gold-500/40 shadow-2xl space-y-3 text-sm">
+            <h3 class="text-base font-bold text-white"><i class="fa-solid fa-tags text-gold-400"></i> Banner khuyến mãi</h3>
+            <label class="flex items-center gap-2 text-gray-200"><input type="checkbox" id="promoEnabled" class="w-4 h-4"> Bật banner trên đầu trang</label>
+            <textarea id="promoTextInput" rows="2" maxlength="160" placeholder="VD: Giảm 20% khung 10h-17h các ngày trong tuần - gọi 0386.342.147" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white focus:border-gold-500 focus:outline-none"></textarea>
+            <div class="grid grid-cols-2 gap-2">
+                <label class="text-xs text-gray-400">Từ ngày (tùy chọn)<input type="date" id="promoFrom" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white"></label>
+                <label class="text-xs text-gray-400">Đến hết ngày (tùy chọn)<input type="date" id="promoTo" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white"></label>
+            </div>
+            <p class="text-[11px] text-gray-500">Hết ngày kết thúc banner tự ẩn, không cần vào xóa.</p>
+            <div class="flex gap-2 pt-1"><button type="submit" class="flex-1 btn-gold py-2.5 rounded-xl text-xs sm:text-sm cursor-pointer">Áp dụng</button><button type="button" onclick="closePromoModal()" class="px-4 py-2.5 rounded-xl bg-white/10 text-gray-300 text-xs font-semibold">Đóng</button></div>
+        </form>
+    </div>
+
+    <div id="videoModal" class="fixed inset-0 z-[70] bg-black/90 flex items-center justify-center p-3 hidden" onclick="if(event.target===this)closeVideo()">
+        <div class="w-full max-w-4xl">
+            <div class="flex items-center justify-between mb-2"><h4 id="videoTitle" class="text-white font-bold text-sm truncate"></h4><button type="button" onclick="closeVideo()" class="w-9 h-9 rounded-lg bg-white/10 text-white" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></div>
+            <div id="videoStage" class="bg-black rounded-2xl overflow-hidden aspect-video"></div>
+        </div>
+    </div>
+
+    <div id="addVideoModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden">
+        <form onsubmit="addGalleryVideo(event)" class="glass-card rounded-3xl max-w-md w-full p-6 border border-gold-500/40 shadow-2xl space-y-3 text-sm">
+            <h3 class="text-base font-bold text-white"><i class="fa-solid fa-video text-gold-400"></i> Thêm video vào "Không gian"</h3>
+            <input type="text" id="gvTitleInput" placeholder="Tiêu đề (VD: Phòng Super VIP về đêm)" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white focus:border-gold-500 focus:outline-none">
+            <input type="text" id="gvLinkInput" placeholder="Link YouTube / Facebook / TikTok" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white focus:border-gold-500 focus:outline-none">
+            <div class="text-xs text-gray-400">Hoặc chọn file mp4/webm (khuyên dưới 15MB):</div>
+            <input type="file" id="gvFileInput" accept="video/mp4,video/webm" class="w-full text-xs text-gray-300">
+            <div class="flex gap-2 pt-1"><button type="submit" class="flex-1 btn-gold py-2.5 rounded-xl text-xs sm:text-sm cursor-pointer">Thêm video</button><button type="button" onclick="closeAddVideo()" class="px-4 py-2.5 rounded-xl bg-white/10 text-gray-300 text-xs font-semibold">Đóng</button></div>
+        </form>
+    </div>
+
     <input type="file" id="quickCardFileInput" accept="image/*" class="hidden" onchange="handleQuickCardImageUpload(event)">
 
     <!-- ==========================================
@@ -923,6 +978,8 @@ window.__PH = PLACEHOLDER;
 let roomsData = [];
 let galleryData = [];
 let savedSnap = '';
+const EMPTY_PROMO = { enabled: false, text: '', from: '', to: '' };
+let promoData = { ...EMPTY_PROMO };
 let dataLoaded = false;
 let loadError = false;
 let activeFilter = 'all';
@@ -937,7 +994,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const clone = o => JSON.parse(JSON.stringify(o));
 const slug = s => String(s).replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase().slice(0, 40) || 'item';
 const imgSrc = p => previewMap.get(p) || p || PLACEHOLDER;
-const snap = () => JSON.stringify({ rooms: roomsData, gallery: galleryData });
+const snap = () => JSON.stringify({ rooms: roomsData, gallery: galleryData, promo: promoData });
 const formatVND = n => (Number(n) || 0).toLocaleString('vi-VN') + 'đ';
 const $ = id => document.getElementById(id);
 
@@ -947,6 +1004,42 @@ function loadCfg() {
 }
 function saveCfg(c) { try { localStorage.setItem(CFG_KEY, JSON.stringify(c)); } catch { } }
 function clearToken() { const c = loadCfg(); c.token = ''; saveCfg(c); }
+
+/* ---------- video ---------- */
+const pendingVideos = new Map(); // key -> File (chờ lên GitHub)
+let pendingSeq = 0;
+function parseVideo(v) {
+  v = String(v || '').trim(); if (!v) return null;
+  if (v.startsWith('pending-video:')) return { kind: 'file', src: previewMap.get(v) || '' };
+  if (/^videos\//i.test(v) || /^https?:\/\/[^?#]+\.(mp4|webm)(\?|#|$)/i.test(v)) return { kind: 'file', src: v };
+  let m = v.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/i);
+  if (m) return { kind: 'youtube', src: `https://www.youtube-nocookie.com/embed/${m[1]}?autoplay=1&rel=0`, thumb: `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` };
+  m = v.match(/tiktok\.com\/.*?video\/(\d+)/i);
+  if (m) return { kind: 'tiktok', src: `https://www.tiktok.com/embed/v2/${m[1]}` };
+  if (/facebook\.com|fb\.watch/i.test(v)) return { kind: 'facebook', src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(v)}&show_text=false&autoplay=true` };
+  return null;
+}
+function stageVideoFile(file) {
+  if (!/^video\/(mp4|webm)$/.test(file.type)) throw new Error('Chỉ nhận video .mp4 hoặc .webm. Video iPhone (.mov) hãy đổi sang mp4, hoặc đăng YouTube rồi dán link.');
+  if (file.size > 40 * 1024 * 1024) throw new Error('Video nặng quá 40MB. Hãy nén xuống dưới 15MB hoặc đăng YouTube rồi dán link.');
+  const key = 'pending-video:' + (++pendingSeq) + '-' + Date.now();
+  pendingVideos.set(key, file); previewMap.set(key, URL.createObjectURL(file));
+  return key;
+}
+const playBtn = (kind, id) => `<button type="button" data-play="${kind}" data-id="${esc(id)}" aria-label="Xem video" class="absolute inset-0 flex items-center justify-center cursor-pointer"><span class="w-14 h-14 rounded-full bg-gold-500/90 text-black flex items-center justify-center text-xl shadow-xl"><i class="fa-solid fa-play ml-0.5"></i></span></button>`;
+window.openVideo = function (raw, title) {
+  const v = parseVideo(raw);
+  if (!v || !v.src) return showToast({ title: 'Không phát được video', message: 'Link hoặc file video chưa hợp lệ.', type: 'error' });
+  const st = $('videoStage');
+  st.className = 'bg-black rounded-2xl overflow-hidden ' + (v.kind === 'tiktok' ? 'mx-auto h-[80vh] max-w-sm' : 'aspect-video');
+  st.innerHTML = v.kind === 'file'
+    ? `<video src="${esc(v.src)}" controls autoplay playsinline class="w-full h-full"></video>`
+    : `<iframe src="${esc(v.src)}" title="${esc(title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen class="w-full h-full border-0"></iframe>`;
+  $('videoTitle').textContent = title || '';
+  $('videoModal').classList.remove('hidden');
+};
+window.closeVideo = function () { $('videoStage').innerHTML = ''; $('videoModal').classList.add('hidden'); };
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('videoModal').classList.contains('hidden')) closeVideo(); });
 
 /* ---------- toast ---------- */
 window.showToast = function ({ title, message, type = 'success', imagePreview = null }) {
@@ -1001,6 +1094,7 @@ async function loadData() {
     const d = await res.json();
     roomsData = (Array.isArray(d.rooms) ? d.rooms : []).sort((a, b) => (a.order || 99) - (b.order || 99));
     galleryData = Array.isArray(d.gallery) ? d.gallery : [];
+    promoData = { ...EMPTY_PROMO, ...(d.promo || {}) };
     dataLoaded = true; loadError = false;
     savedSnap = snap();
   } catch (e) {
@@ -1011,7 +1105,66 @@ async function loadData() {
 }
 
 /* ---------- render ---------- */
-function renderAllUI() { renderRooms(); renderGallery(); updateDirtyUI(); }
+function renderAllUI() { renderRooms(); renderGallery(); renderPromo(); updateDirtyUI(); }
+
+/* ---------- khuyến mãi ---------- */
+function promoActive(p) {
+  if (!p.enabled || !String(p.text || '').trim()) return false;
+  const today = new Date().toLocaleDateString('en-CA');
+  return (!p.from || today >= p.from) && (!p.to || today <= p.to);
+}
+function renderPromo() {
+  const el = $('promoBanner'); if (!el) return;
+  const live = promoActive(promoData);
+  const show = dataLoaded && (live || (isAdmin && promoData.enabled && promoData.text.trim()));
+  el.classList.toggle('hidden', !show);
+  if (!show) return;
+  $('promoText').textContent = promoData.text;
+  $('promoNote').textContent = live ? '' : '(Khách chưa thấy: ngoài thời gian hiển thị)';
+}
+window.openPromoModal = function () {
+  $('promoEnabled').checked = !!promoData.enabled; $('promoTextInput').value = promoData.text || '';
+  $('promoFrom').value = promoData.from || ''; $('promoTo').value = promoData.to || '';
+  $('promoModal').classList.remove('hidden');
+};
+window.closePromoModal = () => $('promoModal').classList.add('hidden');
+window.savePromoForm = function (e) {
+  e.preventDefault();
+  const from = $('promoFrom').value, to = $('promoTo').value;
+  if (from && to && to < from) return showToast({ title: 'Ngày chưa hợp lý', message: 'Ngày kết thúc phải sau ngày bắt đầu.', type: 'error' });
+  promoData = { enabled: $('promoEnabled').checked, text: $('promoTextInput').value.trim(), from, to };
+  closePromoModal(); changed();
+  showToast({ title: 'Đã cập nhật khuyến mãi', message: 'Bấm "Lưu & Đồng Bộ GitHub" để khách nhìn thấy.' });
+};
+
+/* ---------- bảng giá theo khung giờ: mỗi dòng "Nhãn | giá" ---------- */
+function parseTiers(text) {
+  return String(text || '').split('\n').map(l => {
+    const i = l.lastIndexOf('|'); if (i < 1) return null;
+    const label = l.slice(0, i).trim(), price = Number(l.slice(i + 1).replace(/[^\d]/g, ''));
+    return label && price >= 10000 ? { label, price } : null;
+  }).filter(Boolean);
+}
+const tiersToText = t => (Array.isArray(t) ? t : []).map(x => `${x.label} | ${x.price}`).join('\n');
+
+/* ---------- sao lưu & sắp xếp ---------- */
+window.downloadBackup = function () {
+  applyPendingPriceInputs();
+  const safe = { updatedAt: Date.now(), rooms: roomsData.map(r => ({ ...r, image: /^data:/.test(r.image) ? '' : r.image })), gallery: galleryData.map(g => ({ ...g, image: /^data:/.test(g.image) ? '' : g.image })), promo: promoData };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(safe, null, 2)], { type: 'application/json' }));
+  a.download = 'rooms-data-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+};
+function moveRoom(id, dir) {
+  const vis = activeFilter === 'all' ? roomsData : roomsData.filter(r => r.category === activeFilter);
+  const i = vis.findIndex(r => r.id === id), j = i + dir;
+  if (i < 0 || j < 0 || j >= vis.length) return;
+  const a = roomsData.indexOf(vis[i]), b = roomsData.indexOf(vis[j]);
+  [roomsData[a], roomsData[b]] = [roomsData[b], roomsData[a]];
+  roomsData.forEach((r, k) => { r.order = k + 1; });
+  changed();
+}
 
 window.filterRooms = function (cat) {
   activeFilter = cat;
@@ -1058,6 +1211,10 @@ function renderRooms() {
           </div>
           <button type="button" data-act="save-price" data-id="${id}" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-extrabold cursor-pointer shrink-0"><i class="fa-solid fa-check mr-1"></i> Áp dụng</button>
         </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" data-act="move-up" data-id="${id}" class="py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-gray-200 text-xs font-semibold cursor-pointer"><i class="fa-solid fa-arrow-up"></i> Lên trước</button>
+          <button type="button" data-act="move-down" data-id="${id}" class="py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-gray-200 text-xs font-semibold cursor-pointer"><i class="fa-solid fa-arrow-down"></i> Xuống sau</button>
+        </div>
         <div class="grid grid-cols-3 gap-2">
           <button type="button" data-act="upload-img" data-id="${id}" class="py-2 px-2 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 border border-purple-400/40 text-purple-100 text-xs font-semibold cursor-pointer"><i class="fa-solid fa-camera"></i> Đổi ảnh</button>
           <button type="button" data-act="edit" data-id="${id}" class="py-2 px-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-semibold cursor-pointer"><i class="fa-solid fa-pen"></i> Sửa</button>
@@ -1072,8 +1229,9 @@ function renderRooms() {
                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                onerror="this.onerror=null;this.src=window.__PH">
           <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-black/30"></div>
-          <div class="absolute top-3 left-3"><span class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-black/75 text-gold-400 border border-gold-500/40">${esc(room.category)}</span></div>
-          <div class="absolute top-3 right-3">${badge}</div>
+          ${room.video && parseVideo(room.video) ? playBtn('room', room.id) : ''}
+          <div class="absolute top-3 left-3 pointer-events-none"><span class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-black/75 text-gold-400 border border-gold-500/40">${esc(room.category)}</span></div>
+          <div class="absolute top-3 right-3 pointer-events-none">${badge}</div>
           <div class="absolute bottom-3 left-3 right-3 flex items-end justify-between">
             <span class="text-xs text-gray-200 bg-black/65 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5"><i class="fa-solid fa-users text-gold-400"></i> Sức chứa: <strong>${esc(room.capacity)}</strong></span>
           </div>
@@ -1088,6 +1246,7 @@ function renderRooms() {
           <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Giá phòng niêm yết:</span>
           <div class="text-xl sm:text-2xl font-extrabold text-gold-400">${formatVND(room.price)}<span class="text-xs font-normal text-gray-400"> / Giờ</span></div>
         </div>
+        ${Array.isArray(room.tiers) && room.tiers.length ? `<ul class="mb-3.5 space-y-1 text-xs text-gray-300 bg-white/5 rounded-xl p-3">${room.tiers.map(t => `<li class="flex justify-between gap-3"><span>${esc(t.label)}</span><strong class="text-gold-300 whitespace-nowrap">${formatVND(t.price)}</strong></li>`).join('')}</ul>` : ''}
         <div class="grid grid-cols-2 gap-2.5">
           <a href="tel:${PHONE_TEL}" class="btn-gold py-2.5 px-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1.5 text-center"><i class="fa-solid fa-phone-volume"></i><span>Gọi 0386.342.147</span></a>
           <a href="https://zalo.me/${PHONE_TEL}" target="_blank" rel="noopener noreferrer" class="btn-zalo py-2.5 px-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1.5 text-center"><i class="fa-solid fa-comment-dots"></i><span>Đặt Qua Zalo</span></a>
@@ -1101,16 +1260,22 @@ function renderRooms() {
 function renderGallery() {
   const grid = $('galleryGrid'); if (!grid) return;
   if (!dataLoaded) { grid.innerHTML = Array(4).fill('<div class="h-60 rounded-2xl glass-card animate-pulse"></div>').join(''); return; }
-  grid.innerHTML = galleryData.map(it => `
+  grid.innerHTML = galleryData.map(it => {
+    const v = it.video ? parseVideo(it.video) : null;
+    const media = (v && v.kind === 'file' && v.src)
+      ? `<video src="${esc(v.src)}#t=0.1" preload="metadata" muted playsinline class="w-full h-full object-cover pointer-events-none"></video>`
+      : `<img src="${esc(it.image ? imgSrc(it.image) : (v && v.thumb) || PLACEHOLDER)}" alt="${esc(it.title)}" loading="lazy" decoding="async" width="600" height="400" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src=window.__PH">`;
+    return `
     <div class="group relative h-60 rounded-2xl overflow-hidden glass-card">
-      <img src="${esc(imgSrc(it.image))}" alt="${esc(it.title)}" loading="lazy" decoding="async" width="600" height="400"
-           class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src=window.__PH">
-      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-4">
+      ${media}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-4 pointer-events-none">
         <h4 class="text-sm font-bold text-white">${esc(it.title)}</h4>
-        <p class="text-[11px] text-gold-400">PARIS KTV • 69 Trần Thái Tông</p>
+        <p class="text-[11px] text-gold-400">PARIS KTV • 69 Trần Thái Tông${v ? ' • Video' : ''}</p>
       </div>
-      ${isAdmin ? `<button type="button" data-act="del-photo" data-id="${esc(it.id)}" title="Xóa ảnh này" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-lg bg-red-600/90 hover:bg-red-500 text-white flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-trash text-xs"></i></button>` : ''}
-    </div>`).join('');
+      ${v ? playBtn('gal', it.id) : ''}
+      ${isAdmin ? `<button type="button" data-act="del-photo" data-id="${esc(it.id)}" title="Xóa" class="absolute top-2.5 right-2.5 z-10 w-8 h-8 rounded-lg bg-red-600/90 hover:bg-red-500 text-white flex items-center justify-center shadow cursor-pointer"><i class="fa-solid fa-trash text-xs"></i></button>` : ''}
+    </div>`;
+  }).join('');
 }
 
 /* ---------- trạng thái "chưa lưu" ---------- */
@@ -1187,7 +1352,7 @@ function enterAdmin() { toggleAdminMode(true); }
 window.toggleAdminMode = function (on) {
   if (!on && isDirty()) {
     return openConfirmDialog('Thoát khi chưa lưu?', 'Bạn có thay đổi chưa đồng bộ lên GitHub. Thoát bây giờ sẽ mất các thay đổi đó.', () => {
-      roomsData = JSON.parse(savedSnap).rooms; galleryData = JSON.parse(savedSnap).gallery; applyAdminUI(false);
+      const o = JSON.parse(savedSnap); roomsData = o.rooms; galleryData = o.gallery; promoData = o.promo; applyAdminUI(false);
     });
   }
   applyAdminUI(on);
@@ -1206,7 +1371,7 @@ function applyPendingPriceInputs() {
     if (r && v >= 10000 && v !== r.price) r.price = v;
   });
 }
-const imgPaths = d => new Set([...(d.rooms || []), ...(d.gallery || [])].map(x => x.image).filter(p => typeof p === 'string' && p.startsWith('img/')));
+const imgPaths = d => new Set([...(d.rooms || []), ...(d.gallery || [])].flatMap(x => [x.image, x.video]).filter(p => typeof p === 'string' && /^(img|videos)\//.test(p)));
 
 window.saveToGithub = async function () {
   if (saving) return;
@@ -1220,7 +1385,7 @@ window.saveToGithub = async function () {
   const step = t => { btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${t}`; };
   btn.disabled = true; btn.classList.add('opacity-70');
   try {
-    const out = { rooms: clone(roomsData), gallery: clone(galleryData) };
+    const out = { rooms: clone(roomsData), gallery: clone(galleryData), promo: clone(promoData) };
     step('Đang kết nối...');
     const ref = await gh(`/git/ref/heads/${encodeURIComponent(cfg.branch)}`);
     const headSha = ref.object.sha;
@@ -1244,18 +1409,32 @@ window.saveToGithub = async function () {
         }
       }
     }
-    // xóa ảnh cũ không còn dùng (chỉ file do trang quản trị tạo: img/room-* và img/gal-*)
+    for (const [list, prefix] of [[out.rooms, 'room'], [out.gallery, 'gal']]) {
+      for (const it of list) {
+        if (typeof it.video === 'string' && it.video.startsWith('pending-video:')) {
+          const key = it.video, file = pendingVideos.get(key);
+          if (!file) { delete it.video; continue; }
+          step(`Đang tải video (${(file.size / 1048576).toFixed(1)}MB)...`);
+          const b64 = await new Promise((ok, no) => { const r = new FileReader(); r.onload = () => ok(String(r.result).split(',')[1]); r.onerror = () => no(new Error('Không đọc được file video.')); r.readAsDataURL(file); });
+          const path = `videos/${prefix}-${slug(String(it.id).replace(/^(room|gal)_paris_/, ''))}-${stamp}${++n}.${file.type === 'video/webm' ? 'webm' : 'mp4'}`;
+          const blob = await gh('/git/blobs', { method: 'POST', body: { content: b64, encoding: 'base64' } });
+          tree.push({ path, mode: '100644', type: 'blob', sha: blob.sha });
+          newPreviews.push([path, previewMap.get(key)]); it.video = path;
+        }
+      }
+    }
+    // xóa ảnh/video cũ không còn dùng (chỉ file do trang quản trị tạo: img/room-* và img/gal-*)
     const oldP = imgPaths(JSON.parse(savedSnap)), newP = imgPaths(out);
-    for (const p of oldP) if (!newP.has(p) && /^img\/(room|gal)-/.test(p) && existing.has(p)) tree.push({ path: p, mode: '100644', type: 'blob', sha: null });
+    for (const p of oldP) if (!newP.has(p) && /^(img|videos)\/(room|gal)-/.test(p) && existing.has(p)) tree.push({ path: p, mode: '100644', type: 'blob', sha: null });
 
-    tree.push({ path: DATA_URL, mode: '100644', type: 'blob', content: JSON.stringify({ updatedAt: Date.now(), rooms: out.rooms, gallery: out.gallery }, null, 2) + '\n' });
+    tree.push({ path: DATA_URL, mode: '100644', type: 'blob', content: JSON.stringify({ updatedAt: Date.now(), rooms: out.rooms, gallery: out.gallery, promo: out.promo }, null, 2) + '\n' });
 
     step('Đang commit...');
     const newTree = await gh('/git/trees', { method: 'POST', body: { base_tree: head.tree.sha, tree } });
     const commit = await gh('/git/commits', { method: 'POST', body: { message: 'Cập nhật phòng, giá & hình ảnh từ trang quản trị', tree: newTree.sha, parents: [headSha] } });
     await gh(`/git/refs/heads/${encodeURIComponent(cfg.branch)}`, { method: 'PATCH', body: { sha: commit.sha } });
 
-    newPreviews.forEach(([p, d]) => previewMap.set(p, d));
+    newPreviews.forEach(([p, d]) => previewMap.set(p, d)); pendingVideos.clear();
     roomsData = out.rooms; galleryData = out.gallery; savedSnap = snap();
     renderAllUI();
     showToast({ title: 'Đã đồng bộ lên GitHub!', message: 'GitHub Pages sẽ cập nhật website cho khách sau khoảng 1–2 phút.', type: 'success' });
@@ -1270,6 +1449,8 @@ window.saveToGithub = async function () {
 
 /* ---------- thao tác sửa (chỉ đổi trong bộ nhớ, bấm Lưu mới lên GitHub) ---------- */
 document.addEventListener('click', e => {
+  const pl = e.target.closest('[data-play]');
+  if (pl) { const it = (pl.dataset.play === 'room' ? roomsData : galleryData).find(x => x.id === pl.dataset.id); if (it) openVideo(it.video, it.name || it.title); return; }
   const el = e.target.closest('[data-act]'); if (!el || !isAdmin) return;
   const id = el.dataset.id, act = el.dataset.act;
   const room = roomsData.find(r => r.id === id);
@@ -1281,6 +1462,8 @@ document.addEventListener('click', e => {
   }
   else if (act === 'upload-img') { quickUploadTargetId = id; const f = $('quickCardFileInput'); f.value = ''; f.click(); }
   else if (act === 'edit') openRoomModal(id);
+  else if (act === 'move-up') moveRoom(id, -1);
+  else if (act === 'move-down') moveRoom(id, 1);
   else if (act === 'delete' && room) openConfirmDialog('Xóa phòng hát?', `Xóa "${room.name}" khỏi danh sách? (Chưa lên GitHub cho đến khi bạn bấm Lưu)`, () => { roomsData = roomsData.filter(r => r.id !== id); changed(); });
   else if (act === 'del-photo') openConfirmDialog('Xóa hình ảnh này?', 'Ảnh sẽ bị xóa khỏi bộ sưu tập khi bạn bấm Lưu.', () => { galleryData = galleryData.filter(g => g.id !== id); changed(); });
 });
@@ -1305,7 +1488,40 @@ window.handleDirectGalleryUpload = async function (e) {
   } catch (ex) { showToast({ title: 'Lỗi tải ảnh', message: ex.message, type: 'error' }); }
 };
 
+window.openAddVideo = () => { ['gvTitleInput', 'gvLinkInput', 'gvFileInput'].forEach(i => { $(i).value = ''; }); $('addVideoModal').classList.remove('hidden'); };
+window.closeAddVideo = () => $('addVideoModal').classList.add('hidden');
+window.addGalleryVideo = function (e) {
+  e.preventDefault();
+  const link = $('gvLinkInput').value.trim(), f = $('gvFileInput').files?.[0], title = $('gvTitleInput').value.trim() || 'Video PARIS KTV';
+  let video;
+  try {
+    if (f) video = stageVideoFile(f);
+    else if (parseVideo(link)) video = link;
+    else throw new Error('Hãy dán link YouTube, Facebook hoặc TikTok (dạng đầy đủ), hoặc chọn file mp4.');
+  } catch (ex) { return showToast({ title: 'Chưa thêm được video', message: ex.message, type: 'error' }); }
+  galleryData.unshift({ id: 'gal_paris_' + Date.now(), title, image: '', video, createdAt: Date.now() });
+  closeAddVideo(); changed();
+  showToast({ title: 'Đã thêm video', message: 'Bấm "Lưu & Đồng Bộ GitHub" để đưa video lên website.' });
+};
+
 /* ---------- modal thêm/sửa phòng ---------- */
+let currentModalVideo = '';
+function showRoomVideoStatus() {
+  const v = currentModalVideo, el = $('roomVideoStatus');
+  el.textContent = !v ? 'Chưa có video.' : v.startsWith('pending-video:') ? 'Đã chọn file video từ máy (sẽ lên GitHub khi bấm Lưu).' : (/^videos\//.test(v) ? 'Video đang dùng: ' + v : 'Video đang dùng: ' + v);
+}
+window.handleRoomVideoLink = function (val) {
+  val = (val || '').trim();
+  if (!val) { currentModalVideo = ''; } else if (parseVideo(val)) { currentModalVideo = val; }
+  showRoomVideoStatus();
+};
+window.handleRoomVideoFile = function (e) {
+  const f = e.target.files?.[0]; if (!f) return;
+  try { currentModalVideo = stageVideoFile(f); $('roomVideoInput').value = ''; showRoomVideoStatus(); }
+  catch (ex) { showToast({ title: 'Không chọn được video', message: ex.message, type: 'error' }); }
+  e.target.value = '';
+};
+window.clearRoomVideo = () => { currentModalVideo = ''; $('roomVideoInput').value = ''; showRoomVideoStatus(); };
 window.openRoomModal = function (roomId = null) {
   $('roomUploadOverlayBadge')?.classList.add('hidden');
   const set = (id, v) => { $(id).value = v; };
@@ -1314,14 +1530,15 @@ window.openRoomModal = function (roomId = null) {
     $('roomModalTitle').textContent = 'Chỉnh Sửa Thông Tin & Giá Phòng';
     set('editRoomId', r.id); set('roomNameInput', r.name); set('roomPriceInput', r.price); set('roomCapacityInput', r.capacity);
     set('roomCategoryInput', r.category); set('roomStatusInput', r.status || 'available'); set('roomDescInput', r.description || '');
-    currentModalImage = r.image || '';
+    currentModalImage = r.image || ''; currentModalVideo = r.video || ''; $('roomTiersInput').value = tiersToText(r.tiers);
   } else {
     $('roomModalTitle').textContent = 'Thêm Phòng Hát Mới';
     set('editRoomId', ''); set('roomNameInput', ''); set('roomPriceInput', 450000); set('roomCapacityInput', '10 - 20 người');
     set('roomCategoryInput', 'VIP'); set('roomStatusInput', 'available');
     set('roomDescInput', 'Không gian sang trọng, âm thanh Digital chuẩn sân khấu, màn hình LED 4K.');
-    currentModalImage = 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=900&q=80';
+    currentModalImage = 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=900&q=80'; currentModalVideo = ''; $('roomTiersInput').value = '';
   }
+  $('roomVideoInput').value = /^https?:/.test(currentModalVideo) ? currentModalVideo : ''; showRoomVideoStatus();
   $('roomImagePreview').src = imgSrc(currentModalImage);
   $('roomImageUrlInput').value = /^https?:/.test(currentModalImage) ? currentModalImage : '';
   $('roomModal').classList.remove('hidden');
@@ -1353,6 +1570,8 @@ window.saveRoomForm = function (e) {
     status: $('roomStatusInput').value,
     description: $('roomDescInput').value.trim(),
     image: currentModalImage || 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80',
+    ...(currentModalVideo ? { video: currentModalVideo } : {}),
+    ...(parseTiers($('roomTiersInput').value).length ? { tiers: parseTiers($('roomTiersInput').value) } : {}),
     order: old ? (old.order || 1) : (Math.max(0, ...roomsData.map(r => r.order || 0)) + 1)
   };
   if (old) roomsData[roomsData.indexOf(old)] = obj; else roomsData.push(obj);
