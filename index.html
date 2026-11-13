@@ -21,6 +21,7 @@
       "url": "https://parisktv.top/",
       "image": "https://parisktv.top/banner.jpg",
       "telephone": "+84386342147",
+      "openingHoursSpecification": {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "00:00", "closes": "23:59"},
       "priceRange": "490.000đ - 1.100.000đ",
       "description": "Hệ thống Karaoke Paris KTV - 69 Trần Thái Tông, Cầu Giấy, Hà Nội. Không gian đẳng cấp, đặt phòng VIP nhanh chóng.",
       "address": {
@@ -964,6 +965,82 @@
     <!-- ==========================================
          FIREBASE FIRESTORE, GITHUB SYNC & APPLICATION LOGIC
     =========================================== -->
+    <script type="application/json" id="rooms-fallback">{
+  "updatedAt": 1792995552270,
+  "rooms": [
+    {
+      "id": "room_paris_standard_101",
+      "name": "Phòng Nhỏ",
+      "price": 490000,
+      "capacity": "5 - 10 người",
+      "category": "Standard",
+      "status": "available",
+      "description": "Không gian trẻ trung ấm cúng, màn hình LED 4K sắc nét, hệ thống âm thanh Digital chống hú tuyệt đối.",
+      "image": "img/room-standard-101.jpg",
+      "order": 1
+    },
+    {
+      "id": "room_paris_deluxe_201",
+      "name": "Phòng To",
+      "price": 790000,
+      "capacity": "15 - 30 người",
+      "category": "Standard",
+      "status": "available",
+      "description": "Hệ thống đèn LED vô cực cảm biến theo nhịp nhạc sôi động, sofa da cao cấp, phù hợp sinh nhật & nhóm bạn.",
+      "image": "img/room-deluxe-201.jpg",
+      "order": 2
+    },
+    {
+      "id": "room_paris_vip_301",
+      "name": "Phòng VIP LED Nhỏ",
+      "price": 790000,
+      "capacity": "10 - 20 người",
+      "category": "VIP",
+      "status": "available",
+      "description": "Thiết kế Full LED, âm thanh sân khấu công suất lớn tiếp khách VIP.",
+      "image": "img/room-vip-301.jpg",
+      "order": 3
+    },
+    {
+      "id": "room_paris_supervip_888",
+      "name": "Phòng Super VIP Full LED",
+      "price": 1100000,
+      "capacity": "25 - 40 người",
+      "category": "Super VIP",
+      "status": "available",
+      "description": "Super VIP Full LED. Không gian Đại Tiệc Liên Hoan Công Ty & Sự Kiện Sinh Nhật, sân khấu riêng, ánh sáng Laser Moving Head đỉnh cao.",
+      "image": "img/room-deluxe-201.jpg",
+      "order": 4
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal_paris_1",
+      "title": "Phòng Super VIP Hoàng Gia Paris",
+      "image": "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=900&q=80",
+      "createdAt": 1710000001
+    },
+    {
+      "id": "gal_paris_2",
+      "title": "Hệ Thống Ánh Sáng LED Vô Cực",
+      "image": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
+      "createdAt": 1710000002
+    },
+    {
+      "id": "gal_paris_3",
+      "title": "Âm Thanh Sân Khấu Sống Động",
+      "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=900&q=80",
+      "createdAt": 1710000003
+    },
+    {
+      "id": "gal_paris_4",
+      "title": "Không Gian Tiệc Sinh Nhật & Liên Hoan",
+      "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=900&q=80",
+      "createdAt": 1710000004
+    }
+  ]
+}
+</script>
     <script>
 /* PARIS KTV – dữ liệu phòng/gallery nằm trong rooms-data.json; trang quản trị commit thẳng lên GitHub */
 const DATA_URL = 'rooms-data.json';
@@ -981,6 +1058,7 @@ let savedSnap = '';
 const EMPTY_PROMO = { enabled: false, text: '', from: '', to: '' };
 let promoData = { ...EMPTY_PROMO };
 let dataLoaded = false;
+let fromFallback = false; // đang dùng dữ liệu dự phòng nhúng sẵn, KHÔNG được phép lưu lên GitHub
 let loadError = false;
 let activeFilter = 'all';
 let isAdmin = false;
@@ -1099,7 +1177,13 @@ async function loadData() {
     savedSnap = snap();
   } catch (e) {
     console.error('Không tải được rooms-data.json', e);
-    loadError = true;
+    try {
+      const d = JSON.parse($('rooms-fallback').textContent);
+      roomsData = (d.rooms || []).sort((a, b) => (a.order || 99) - (b.order || 99));
+      galleryData = d.gallery || [];
+      promoData = { ...EMPTY_PROMO };
+      dataLoaded = true; fromFallback = true; loadError = false; savedSnap = snap();
+    } catch { loadError = true; }
   }
   renderAllUI();
 }
@@ -1192,7 +1276,8 @@ function renderRooms() {
     grid.innerHTML = '<div class="col-span-full glass-card rounded-2xl p-10 text-center text-gray-400">Chưa có phòng nào trong danh mục này.</div>';
     return;
   }
-  grid.innerHTML = list.map(room => {
+  const note = fromFallback ? '<p class="col-span-full text-xs text-gold-300 bg-gold-500/10 border border-gold-500/30 rounded-xl px-4 py-2.5">Giá hiển thị mang tính tham khảo. Vui lòng gọi 0386.342.147 để xác nhận giá và tình trạng phòng.</p>' : '';
+  grid.innerHTML = note + list.map(room => {
     const id = esc(room.id);
     const avail = room.status !== 'busy';
     const badge = avail
@@ -1375,7 +1460,7 @@ const imgPaths = d => new Set([...(d.rooms || []), ...(d.gallery || [])].flatMap
 
 window.saveToGithub = async function () {
   if (saving) return;
-  if (!dataLoaded) return showToast({ title: 'Chưa tải được dữ liệu gốc', message: 'Tải lại trang rồi thử lại để tránh ghi đè mất dữ liệu.', type: 'error' });
+  if (!dataLoaded || fromFallback) return showToast({ title: 'Chưa tải được dữ liệu gốc', message: 'Tải lại trang rồi thử lại để tránh ghi đè mất dữ liệu.', type: 'error' });
   const cfg = loadCfg(); if (!cfg.token) return openAdminLogin();
   applyPendingPriceInputs();
   if (snap() === savedSnap) return showToast({ title: 'Không có gì để lưu', message: 'Dữ liệu đã trùng với GitHub.', type: 'info' });
