@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1794558072322,
+  "updatedAt": 1794559713738,
   "rooms": [
     {
       "id": "room_paris_standard_101",
@@ -48,28 +48,39 @@
   ],
   "gallery": [
     {
-      "id": "gal_paris_1794476923457",
-      "title": "Không Gian PARIS KTV 69 Trần Thái Tông",
-      "image": "img/gal-1794476923457-mwdd89wv1.jpg",
-      "createdAt": 1794476923457
+      "id": "gal_paris_1794559688413",
+      "title": "Không Gian Vui Chơi Sang Trọng",
+      "image": "",
+      "video": "videos/gal-1794559688413-mweqia0w1.mp4",
+      "createdAt": 1794559688413
     },
     {
-      "id": "gal_paris_1794476920803",
-      "title": "Không Gian PARIS KTV 69 Trần Thái Tông",
-      "image": "img/gal-1794476920803-mwdd89wv2.jpg",
-      "createdAt": 1794476920803
+      "id": "gal_paris_1794559682492",
+      "title": "Không Gian Vui Chơi Sang Trọng",
+      "image": "",
+      "video": "videos/gal-1794559682492-mweqia0w2.mp4",
+      "createdAt": 1794559682492
     },
     {
-      "id": "gal_paris_1794476918993",
-      "title": "Không Gian PARIS KTV 69 Trần Thái Tông",
-      "image": "img/gal-1794476918993-mwdd89wv3.jpg",
-      "createdAt": 1794476918993
+      "id": "gal_paris_1794559676381",
+      "title": "Không Gian Vui Chơi Sang Trọng",
+      "image": "",
+      "video": "videos/gal-1794559676381-mweqia0w3.mp4",
+      "createdAt": 1794559676381
     },
     {
-      "id": "gal_paris_1794476916748",
-      "title": "Không Gian PARIS KTV 69 Trần Thái Tông",
-      "image": "img/gal-1794476916748-mwdd89wv4.jpg",
-      "createdAt": 1794476916748
+      "id": "gal_paris_1794559670413",
+      "title": "Không Gian Vui Chơi Sang Trọng",
+      "image": "",
+      "video": "videos/gal-1794559670413-mweqia0w4.mp4",
+      "createdAt": 1794559670413
+    },
+    {
+      "id": "gal_paris_1794559659573",
+      "title": "Không Gian Vui Chơi Sang Trọng",
+      "image": "",
+      "video": "videos/gal-1794559659573-mweqia0w5.mp4",
+      "createdAt": 1794559659573
     }
   ],
   "promo": {
