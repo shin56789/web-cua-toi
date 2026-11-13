@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1794557116981,
+  "updatedAt": 1794558072322,
   "rooms": [
     {
       "id": "room_paris_standard_101",
@@ -77,5 +77,8 @@
     "text": "Giảm giá 50% giờ hát từ 13h - 17h hàng ngày!",
     "from": "2026-02-01",
     "to": "2027-01-01"
+  },
+  "contact": {
+    "messenger": "https://m.me/paris.ktv69"
   }
 }
