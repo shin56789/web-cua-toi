@@ -161,6 +161,8 @@
         @media (prefers-reduced-motion: reduce) {
             *, ::before, ::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
         }
+            .btn-messenger { background: linear-gradient(135deg, #0084ff 0%, #a334fa 60%, #ff6968 100%); color: #fff; font-weight: 700; transition: all .3s cubic-bezier(.4,0,.2,1); box-shadow: 0 4px 18px rgba(163, 52, 250, .3); }
+        .btn-messenger:hover { transform: translateY(-2px); filter: brightness(1.08); }
     </style>
 <body class="min-h-screen flex flex-col selection:bg-gold-500 selection:text-black">
 
@@ -181,6 +183,7 @@
             <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 ml-auto">
                 <button type="button" onclick="openRoomModal()" class="bg-black hover:bg-gray-900 text-gold-400 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow"><i class="fa-solid fa-plus-circle"></i> Thêm Phòng</button>
                 <button type="button" id="saveGithubBtn" onclick="saveToGithub()" class="bg-purple-900 hover:bg-purple-950 text-purple-100 px-3.5 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow"><i class="fa-brands fa-github"></i> Lưu &amp; Đồng Bộ GitHub</button>
+                <button type="button" onclick="openContactModal()" class="bg-black hover:bg-gray-900 text-gold-400 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow"><i class="fa-brands fa-facebook-messenger"></i> Messenger</button>
                 <button type="button" onclick="openPromoModal()" class="bg-black hover:bg-gray-900 text-gold-400 px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow"><i class="fa-solid fa-tags"></i> Khuyến mãi</button>
                 <button type="button" onclick="downloadBackup()" class="bg-white/70 hover:bg-white text-black px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer" title="Tải bản sao lưu rooms-data.json"><i class="fa-solid fa-download"></i></button>
                 <button type="button" onclick="openAdminLogin()" class="bg-white/70 hover:bg-white text-black px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer" title="Đổi repo / token"><i class="fa-solid fa-gear"></i></button>
@@ -234,6 +237,10 @@
                     <i class="fa-solid fa-comment-dots"></i>
                     <span class="hidden sm:inline">Chat Zalo</span>
                 </a>
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span class="hidden sm:inline">Chat Zalo</span>
+                </a>
+<a href="#" data-messenger target="_blank" rel="noopener noreferrer" class="hidden btn-messenger px-3.5 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-1.5"><i class="fa-brands fa-facebook-messenger"></i><span>Messenger</span></a>
 
                 <a href="tel:0386342147" class="btn-gold px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2">
                     <i class="fa-solid fa-phone-volume animate-bounce"></i>
@@ -268,6 +275,9 @@
                 <a href="https://zalo.me/0386342147" target="_blank" rel="noopener noreferrer" class="btn-zalo py-3 rounded-xl text-xs flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-comment-dots"></i> Chat Zalo Ngay
                 </a>
+                    <i class="fa-solid fa-comment-dots"></i> Chat Zalo Ngay
+                </a>
+<a href="#" data-messenger target="_blank" rel="noopener noreferrer" class="hidden btn-messenger py-3 rounded-xl text-xs flex items-center justify-center gap-1.5"><i class="fa-brands fa-facebook-messenger"></i><span>Messenger</span></a>
             </div>
         </div>
     </header>
@@ -328,6 +338,10 @@
                             <i class="fa-solid fa-comment-dots"></i>
                             <span>Chat Zalo Đặt Phòng</span>
                         </a>
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <span>Chat Zalo Đặt Phòng</span>
+                        </a>
+<a href="#" data-messenger target="_blank" rel="noopener noreferrer" class="hidden btn-messenger px-6 py-4 rounded-2xl text-base flex items-center gap-2.5"><i class="fa-brands fa-facebook-messenger"></i><span>Messenger</span></a>
                         <button type="button" onclick="scrollToSection('roomsSection')" class="px-5 py-4 rounded-2xl text-base font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/20 flex items-center gap-2 transition cursor-pointer">
                             <i class="fa-solid fa-champagne-glasses text-gold-400"></i>
                             <span>Xem Bảng Giá Phòng</span>
@@ -637,6 +651,10 @@
                                 <i class="fa-solid fa-comment-dots"></i>
                                 <span>Chat Zalo Ngay</span>
                             </a>
+                                <i class="fa-solid fa-comment-dots"></i>
+                                <span>Chat Zalo Ngay</span>
+                            </a>
+<a href="#" data-messenger target="_blank" rel="noopener noreferrer" class="hidden btn-messenger py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 text-center"><i class="fa-brands fa-facebook-messenger"></i><span>Messenger</span></a>
                         </div>
                         <a href="https://www.google.com/maps/dir/?api=1&amp;destination=69+Tr%E1%BA%A7n+Th%C3%A1i+T%C3%B4ng,+C%E1%BA%A7u+Gi%E1%BA%A5y,+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 border border-white/15 transition">
                             <i class="fa-solid fa-diamond-turn-right text-gold-400"></i>
@@ -708,6 +726,9 @@
                         <a href="https://zalo.me/0386342147" target="_blank" rel="noopener noreferrer" class="btn-zalo py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2">
                             <i class="fa-solid fa-comment-dots"></i> Nhắn Zalo Đặt Phòng
                         </a>
+                            <i class="fa-solid fa-comment-dots"></i> Nhắn Zalo Đặt Phòng
+                        </a>
+<a href="#" data-messenger target="_blank" rel="noopener noreferrer" class="hidden btn-messenger py-2.5 px-4 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2"><i class="fa-brands fa-facebook-messenger"></i><span>Messenger</span></a>
                     </div>
                 </div>
             </div>
@@ -737,6 +758,10 @@
             <i class="fa-solid fa-comment-dots"></i>
             <span>Chat Zalo Ngay</span>
         </a>
+            <i class="fa-solid fa-comment-dots"></i>
+            <span>Chat Zalo Ngay</span>
+        </a>
+<a href="#" data-messenger target="_blank" rel="noopener noreferrer" class="hidden flex-1 btn-messenger py-3 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 shadow"><i class="fa-brands fa-facebook-messenger"></i><span>Messenger</span></a>
     </div>
 
     <!-- ==========================================
@@ -928,6 +953,16 @@
 
     <!-- Hidden file input for quick direct upload on any individual room card -->
     
+
+    <div id="contactModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden">
+        <form onsubmit="saveContactForm(event)" class="glass-card rounded-3xl max-w-md w-full p-6 border border-gold-500/40 shadow-2xl space-y-3 text-sm">
+            <h3 class="text-base font-bold text-white"><i class="fa-brands fa-facebook-messenger text-gold-400"></i> Link chat Messenger</h3>
+            <input type="text" id="messengerInput" placeholder="https://m.me/ten-trang-cua-ban" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white focus:border-gold-500 focus:outline-none">
+            <p class="text-[11px] text-gray-400 leading-relaxed">Dán link m.me của Fanpage (hoặc chỉ gõ tên trang, ví dụ <code class="text-gold-300">parisktv</code>). Để trống để ẩn nút Messenger. Sau khi lưu, nút sẽ hiện ở thẻ phòng, đầu trang, mục liên hệ, chân trang và thanh dưới điện thoại.</p>
+            <div class="flex gap-2 pt-1"><button type="submit" class="flex-1 btn-gold py-2.5 rounded-xl text-xs sm:text-sm cursor-pointer">Áp dụng</button><button type="button" onclick="closeContactModal()" class="px-4 py-2.5 rounded-xl bg-white/10 text-gray-300 text-xs font-semibold">Đóng</button></div>
+        </form>
+    </div>
+
     <div id="promoModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden">
         <form onsubmit="savePromoForm(event)" class="glass-card rounded-3xl max-w-md w-full p-6 border border-gold-500/40 shadow-2xl space-y-3 text-sm">
             <h3 class="text-base font-bold text-white"><i class="fa-solid fa-tags text-gold-400"></i> Banner khuyến mãi</h3>
@@ -1055,6 +1090,7 @@ window.__PH = PLACEHOLDER;
 let roomsData = [];
 let galleryData = [];
 let savedSnap = '';
+let contactData = { messenger: '' };
 const EMPTY_PROMO = { enabled: false, text: '', from: '', to: '' };
 let promoData = { ...EMPTY_PROMO };
 let dataLoaded = false;
@@ -1072,7 +1108,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const clone = o => JSON.parse(JSON.stringify(o));
 const slug = s => String(s).replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase().slice(0, 40) || 'item';
 const imgSrc = p => previewMap.get(p) || p || PLACEHOLDER;
-const snap = () => JSON.stringify({ rooms: roomsData, gallery: galleryData, promo: promoData });
+const snap = () => JSON.stringify({ rooms: roomsData, gallery: galleryData, promo: promoData, contact: contactData });
 const formatVND = n => (Number(n) || 0).toLocaleString('vi-VN') + 'đ';
 const $ = id => document.getElementById(id);
 
@@ -1140,7 +1176,8 @@ window.showToast = function ({ title, message, type = 'success', imagePreview = 
 window.reloadHomeFromTop = function (e) {
   if (e) e.preventDefault();
   history.replaceState(null, '', location.pathname + location.search);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo(0, 0);
+  location.reload();
 };
 window.scrollToSection = id => { const el = $(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
 window.toggleMobileMenu = () => $('mobileMenu')?.classList.toggle('hidden');
@@ -1173,6 +1210,7 @@ async function loadData() {
     roomsData = (Array.isArray(d.rooms) ? d.rooms : []).sort((a, b) => (a.order || 99) - (b.order || 99));
     galleryData = Array.isArray(d.gallery) ? d.gallery : [];
     promoData = { ...EMPTY_PROMO, ...(d.promo || {}) };
+    contactData = { messenger: '', ...(d.contact || {}) };
     dataLoaded = true; loadError = false;
     savedSnap = snap();
   } catch (e) {
@@ -1181,7 +1219,7 @@ async function loadData() {
       const d = JSON.parse($('rooms-fallback').textContent);
       roomsData = (d.rooms || []).sort((a, b) => (a.order || 99) - (b.order || 99));
       galleryData = d.gallery || [];
-      promoData = { ...EMPTY_PROMO };
+      promoData = { ...EMPTY_PROMO }; contactData = { messenger: '' };
       dataLoaded = true; fromFallback = true; loadError = false; savedSnap = snap();
     } catch { loadError = true; }
   }
@@ -1189,7 +1227,29 @@ async function loadData() {
 }
 
 /* ---------- render ---------- */
-function renderAllUI() { renderRooms(); renderGallery(); renderPromo(); updateDirtyUI(); }
+function renderAllUI() { renderRooms(); renderGallery(); renderPromo(); applyContact(); updateDirtyUI(); }
+
+/* ---------- liên kết Messenger (tùy chỉnh trong admin) ---------- */
+function normalizeMessenger(v) {
+  v = String(v || '').trim(); if (!v) return '';
+  if (/^[\w.-]+$/.test(v)) return 'https://m.me/' + v;                      // chỉ nhập tên trang
+  if (/^(m\.me|messenger\.com|facebook\.com|www\.facebook\.com|fb\.com)\//i.test(v)) v = 'https://' + v;
+  try { const u = new URL(v); if (u.protocol === 'https:' && /(^|\.)(m\.me|messenger\.com|facebook\.com|fb\.com|fb\.me)$/i.test(u.hostname)) return u.href; } catch { }
+  return null;
+}
+function applyContact() {
+  const link = contactData.messenger || '';
+  document.querySelectorAll('[data-messenger]').forEach(a => { if (link) a.href = link; a.classList.toggle('hidden', !link); });
+}
+window.openContactModal = function () { $('messengerInput').value = contactData.messenger || ''; $('contactModal').classList.remove('hidden'); };
+window.closeContactModal = () => $('contactModal').classList.add('hidden');
+window.saveContactForm = function (e) {
+  e.preventDefault();
+  const n = normalizeMessenger($('messengerInput').value);
+  if (n === null) return showToast({ title: 'Link chưa đúng', message: 'Dùng dạng https://m.me/tên-trang, hoặc link Facebook/Messenger của bạn.', type: 'error' });
+  contactData = { messenger: n }; closeContactModal(); changed();
+  showToast({ title: n ? 'Đã cập nhật link Messenger' : 'Đã tắt nút Messenger', message: 'Bấm "Lưu & Đồng Bộ GitHub" để khách nhìn thấy.' });
+};
 
 /* ---------- khuyến mãi ---------- */
 function promoActive(p) {
@@ -1234,7 +1294,7 @@ const tiersToText = t => (Array.isArray(t) ? t : []).map(x => `${x.label} | ${x.
 /* ---------- sao lưu & sắp xếp ---------- */
 window.downloadBackup = function () {
   applyPendingPriceInputs();
-  const safe = { updatedAt: Date.now(), rooms: roomsData.map(r => ({ ...r, image: /^data:/.test(r.image) ? '' : r.image })), gallery: galleryData.map(g => ({ ...g, image: /^data:/.test(g.image) ? '' : g.image })), promo: promoData };
+  const safe = { updatedAt: Date.now(), rooms: roomsData.map(r => ({ ...r, image: /^data:/.test(r.image) ? '' : r.image })), gallery: galleryData.map(g => ({ ...g, image: /^data:/.test(g.image) ? '' : g.image })), promo: promoData, contact: contactData };
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(safe, null, 2)], { type: 'application/json' }));
   a.download = 'rooms-data-backup-' + new Date().toISOString().slice(0, 10) + '.json';
@@ -1335,6 +1395,7 @@ function renderRooms() {
         <div class="grid grid-cols-2 gap-2.5">
           <a href="tel:${PHONE_TEL}" class="btn-gold py-2.5 px-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1.5 text-center"><i class="fa-solid fa-phone-volume"></i><span>Gọi 0386.342.147</span></a>
           <a href="https://zalo.me/${PHONE_TEL}" target="_blank" rel="noopener noreferrer" class="btn-zalo py-2.5 px-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1.5 text-center"><i class="fa-solid fa-comment-dots"></i><span>Đặt Qua Zalo</span></a>
+          ${contactData.messenger ? `<a href="${esc(contactData.messenger)}" target="_blank" rel="noopener noreferrer" class="btn-messenger col-span-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-1.5 text-center"><i class="fa-brands fa-facebook-messenger"></i><span>Nhắn Messenger</span></a>` : ''}
         </div>
         ${admin}
       </div>
@@ -1437,7 +1498,7 @@ function enterAdmin() { toggleAdminMode(true); }
 window.toggleAdminMode = function (on) {
   if (!on && isDirty()) {
     return openConfirmDialog('Thoát khi chưa lưu?', 'Bạn có thay đổi chưa đồng bộ lên GitHub. Thoát bây giờ sẽ mất các thay đổi đó.', () => {
-      const o = JSON.parse(savedSnap); roomsData = o.rooms; galleryData = o.gallery; promoData = o.promo; applyAdminUI(false);
+      const o = JSON.parse(savedSnap); roomsData = o.rooms; galleryData = o.gallery; promoData = o.promo; contactData = o.contact; applyAdminUI(false);
     });
   }
   applyAdminUI(on);
@@ -1470,7 +1531,7 @@ window.saveToGithub = async function () {
   const step = t => { btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${t}`; };
   btn.disabled = true; btn.classList.add('opacity-70');
   try {
-    const out = { rooms: clone(roomsData), gallery: clone(galleryData), promo: clone(promoData) };
+    const out = { rooms: clone(roomsData), gallery: clone(galleryData), promo: clone(promoData), contact: clone(contactData) };
     step('Đang kết nối...');
     const ref = await gh(`/git/ref/heads/${encodeURIComponent(cfg.branch)}`);
     const headSha = ref.object.sha;
@@ -1512,7 +1573,7 @@ window.saveToGithub = async function () {
     const oldP = imgPaths(JSON.parse(savedSnap)), newP = imgPaths(out);
     for (const p of oldP) if (!newP.has(p) && /^(img|videos)\/(room|gal)-/.test(p) && existing.has(p)) tree.push({ path: p, mode: '100644', type: 'blob', sha: null });
 
-    tree.push({ path: DATA_URL, mode: '100644', type: 'blob', content: JSON.stringify({ updatedAt: Date.now(), rooms: out.rooms, gallery: out.gallery, promo: out.promo }, null, 2) + '\n' });
+    tree.push({ path: DATA_URL, mode: '100644', type: 'blob', content: JSON.stringify({ updatedAt: Date.now(), rooms: out.rooms, gallery: out.gallery, promo: out.promo, contact: out.contact }, null, 2) + '\n' });
 
     step('Đang commit...');
     const newTree = await gh('/git/trees', { method: 'POST', body: { base_tree: head.tree.sha, tree } });
