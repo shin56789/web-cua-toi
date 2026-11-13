@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1794476932258,
+  "updatedAt": 1794557116981,
   "rooms": [
     {
       "id": "room_paris_standard_101",
@@ -71,5 +71,11 @@
       "image": "img/gal-1794476916748-mwdd89wv4.jpg",
       "createdAt": 1794476916748
     }
-  ]
+  ],
+  "promo": {
+    "enabled": true,
+    "text": "Giảm giá 50% giờ hát từ 13h - 17h hàng ngày!",
+    "from": "2026-02-01",
+    "to": "2027-01-01"
+  }
 }
